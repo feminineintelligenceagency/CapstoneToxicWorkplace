@@ -28,7 +28,7 @@ export const LobbyJoin = () => {
   const handleJoin = async () => {
     if (!lobbyCode.trim()) return;
     
-    const success = await joinLobby(lobbyCode.toUpperCase());
+    const success = await joinLobby(lobbyCode.toUpperCase(), 'Player');
     if (success) {
       navigate(`/lobby/${lobbyCode.toUpperCase()}`);
     }

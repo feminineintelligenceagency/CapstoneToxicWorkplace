@@ -37,6 +37,8 @@ const LobbyEntry = () => {
     }
 
     const playerNameToUse = playerName.trim() || 'Player';
+    console.log('LobbyEntry - Player name to use:', playerNameToUse); // Debug log
+    console.log('LobbyEntry - Raw player name input:', playerName); // Debug log
     const success = await joinLobby(lobbyCode.toUpperCase(), playerNameToUse);
     if (success) {
       navigate(`/lobby/${lobbyCode.toUpperCase()}`);

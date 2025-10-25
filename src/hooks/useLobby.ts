@@ -76,19 +76,31 @@ export const useLobby = (lobbyCode?: string) => {
     }
   };
 
-  const joinLobby = async (code: string) => {
+  const joinLobby = async (code: string, playerName: string = 'Player') => {
     setLoading(true);
     try {
+      console.log('Joining lobby with player name:', playerName); // Debug log
       const { data: lobbyData } = await supabase.from('lobbies').select('*').eq('code', code.toUpperCase()).eq('status', 'waiting').single();
       if (!lobbyData) { toast.error('Lobby not found'); return false; }
       const { data: existingPlayers } = await supabase.from('lobby_players').select('player_number').eq('lobby_id', lobbyData.id);
       const playerCount = existingPlayers?.length || 0;
       if (playerCount >= lobbyData.num_players) { toast.error('Lobby is full'); return false; }
-      const { data: playerData } = await supabase.from('lobby_players').insert({ lobby_id: lobbyData.id, player_number: playerCount + 1, player_name: `Player ${playerCount + 1}` }).select().single();
+      
+      const insertData = { 
+        lobby_id: lobbyData.id, 
+        player_number: playerCount + 1, 
+        player_name: playerName 
+      };
+      console.log('Inserting player data:', insertData); // Debug log
+      
+      const { data: playerData } = await supabase.from('lobby_players').insert(insertData).select().single();
+      console.log('Player data after insert:', playerData); // Debug log
+      
       if (playerData) setMyPlayerId(playerData.id);
       toast.success(`Joined lobby ${code}!`);
       return true;
     } catch (error) {
+      console.error('Error joining lobby:', error); // Debug log
       toast.error('Failed to join lobby');
       return false;
     } finally {
