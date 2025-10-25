@@ -1,0 +1,109 @@
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { Lobby, LobbyPlayer } from '@/types/lobby';
+import { toast } from 'sonner';
+
+export const useLobby = (lobbyCode?: string) => {
+  const [lobby, setLobby] = useState<Lobby | null>(null);
+  const [players, setPlayers] = useState<LobbyPlayer[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [myPlayerId, setMyPlayerId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!lobbyCode) return;
+
+    const fetchLobby = async () => {
+      const { data: lobbyData } = await supabase
+        .from('lobbies')
+        .select('*')
+        .eq('code', lobbyCode)
+        .single();
+
+      if (lobbyData) {
+        setLobby(lobbyData);
+        
+        const { data: playersData } = await supabase
+          .from('lobby_players')
+          .select('*')
+          .eq('lobby_id', lobbyData.id)
+          .order('player_number', { ascending: true });
+
+        if (playersData) {
+          setPlayers(playersData);
+        }
+      }
+    };
+
+    fetchLobby();
+
+    const lobbyChannel = supabase
+      .channel(`lobby:${lobbyCode}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'lobbies', filter: `code=eq.${lobbyCode}` },
+        (payload) => { if (payload.eventType === 'UPDATE') setLobby(payload.new as Lobby); })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'lobby_players' },
+        async () => {
+          if (lobby) {
+            const { data } = await supabase.from('lobby_players').select('*').eq('lobby_id', lobby.id).order('player_number', { ascending: true });
+            if (data) setPlayers(data);
+          }
+        })
+      .subscribe();
+
+    return () => { supabase.removeChannel(lobbyChannel); };
+  }, [lobbyCode, lobby?.id]);
+
+  const createLobby = async (numPlayers: number) => {
+    setLoading(true);
+    try {
+      let code = '', isUnique = false;
+      while (!isUnique) {
+        const { data } = await supabase.rpc('generate_lobby_code');
+        code = data as string;
+        const { data: existing } = await supabase.from('lobbies').select('id').eq('code', code).single();
+        if (!existing) isUnique = true;
+      }
+      const { data: lobbyData, error } = await supabase.from('lobbies').insert({ code, host_id: crypto.randomUUID(), num_players: numPlayers, status: 'waiting' }).select().single();
+      if (error) throw error;
+      const { data: playerData } = await supabase.from('lobby_players').insert({ lobby_id: lobbyData.id, player_number: 1, player_name: 'Player 1' }).select().single();
+      if (playerData) setMyPlayerId(playerData.id);
+      toast.success(`Lobby created! Code: ${code}`);
+      return code;
+    } catch (error) {
+      toast.error('Failed to create lobby');
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const joinLobby = async (code: string) => {
+    setLoading(true);
+    try {
+      const { data: lobbyData } = await supabase.from('lobbies').select('*').eq('code', code.toUpperCase()).eq('status', 'waiting').single();
+      if (!lobbyData) { toast.error('Lobby not found'); return false; }
+      const { data: existingPlayers } = await supabase.from('lobby_players').select('player_number').eq('lobby_id', lobbyData.id);
+      const playerCount = existingPlayers?.length || 0;
+      if (playerCount >= lobbyData.num_players) { toast.error('Lobby is full'); return false; }
+      const { data: playerData } = await supabase.from('lobby_players').insert({ lobby_id: lobbyData.id, player_number: playerCount + 1, player_name: `Player ${playerCount + 1}` }).select().single();
+      if (playerData) setMyPlayerId(playerData.id);
+      toast.success(`Joined lobby ${code}!`);
+      return true;
+    } catch (error) {
+      toast.error('Failed to join lobby');
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateLobby = async (updates: Partial<Lobby>) => {
+    if (!lobby) return;
+    await supabase.from('lobbies').update(updates).eq('id', lobby.id);
+  };
+
+  const updatePlayer = async (playerId: string, updates: Partial<LobbyPlayer>) => {
+    await supabase.from('lobby_players').update(updates).eq('id', playerId);
+  };
+
+  return { lobby, players, loading, myPlayerId, createLobby, joinLobby, updateLobby, updatePlayer };
+};
