@@ -86,6 +86,22 @@ All colors MUST be HSL.
     background: var(--gradient-card);
   }
   
+  .gradient-text-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  
+  .gradient-text-accent {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  
   .shadow-glow {
     box-shadow: var(--shadow-glow);
   }

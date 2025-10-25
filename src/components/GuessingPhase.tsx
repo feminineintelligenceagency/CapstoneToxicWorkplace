@@ -21,7 +21,7 @@ export const GuessingPhase = ({ lobby, players, myPlayerId, isMyTurn, onGuess, o
   const handleGuess = (role: Role) => {
     if (!targetPlayer || !isMyTurn) return;
     onGuess(targetPlayer.id, role);
-    onNext();
+    // Don't call onNext here - let the parent component handle turn advancement
   };
 
   if (!currentPlayer || !targetPlayer || !myPlayer) return null;

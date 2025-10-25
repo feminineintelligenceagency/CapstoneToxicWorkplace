@@ -56,7 +56,56 @@ const Lobby = () => {
   const handleGuess = async (targetId: string, role: Role) => {
     if (!myPlayerId) return;
     const cp = players.find(p => p.id === myPlayerId);
-    if (cp) await updatePlayer(myPlayerId, { guesses: { ...cp.guesses, [targetId]: role } });
+    if (cp) {
+      // Update the player's guesses
+      const updatedGuesses = { ...cp.guesses, [targetId]: role };
+      await updatePlayer(myPlayerId, { guesses: updatedGuesses });
+      
+      // Manually advance the turn logic here instead of relying on handleNextPhase
+      await advanceTurnAfterGuess(targetId);
+    }
+  };
+
+  const advanceTurnAfterGuess = async (targetId: string) => {
+    if (!lobby || !players.length) return;
+    
+    const currentPlayer = players[lobby.current_player_index];
+    const currentPlayerWithGuess = { ...currentPlayer, guesses: { ...currentPlayer.guesses, [targetId]: currentPlayer.guesses[targetId] || 'guessed' } };
+    
+    let nextTarget = lobby.current_guess_target;
+    
+    // Find next valid target (skip self and already guessed players)
+    while (nextTarget < players.length && 
+           (nextTarget === lobby.current_player_index || 
+            currentPlayerWithGuess.guesses[players[nextTarget].id])) {
+      nextTarget++;
+    }
+    
+    if (nextTarget >= players.length) {
+      // Current player has guessed everyone, move to next player
+      const nextPlayerIndex = lobby.current_player_index + 1;
+      
+      if (nextPlayerIndex >= players.length) {
+        // All players have finished guessing, calculate scores and end game
+        for (const p of players) {
+          let score = 0;
+          Object.entries(p.guesses).forEach(([tid, g]) => { 
+            const t = players.find(x => x.id === tid); 
+            if (t && g === t.role) score++; 
+          });
+          await updatePlayer(p.id, { score });
+        }
+        await updateLobby({ current_phase: 'results', status: 'completed' });
+        return;
+      }
+      
+      // Move to next player
+      const nextValidTarget = nextPlayerIndex === 0 ? 1 : 0;
+      await updateLobby({ current_player_index: nextPlayerIndex, current_guess_target: nextValidTarget });
+    } else {
+      // Move to next target for current player
+      await updateLobby({ current_guess_target: nextTarget });
+    }
   };
 
   if (!lobby || !players.length) return <div className="min-h-screen flex items-center justify-center"><p className="text-xl">Loading...</p></div>;

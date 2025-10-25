@@ -28,12 +28,12 @@ export const Results = ({ players, onReset }: ResultsProps) => {
               No correct guesses. Better luck next time!
             </p>
           ) : winners.length === 1 ? (
-            <p className="text-xl gradient-accent bg-clip-text text-transparent font-bold">
+            <p className="text-xl gradient-text-accent font-bold">
               🎉 Winner: {winners[0].player_name} with {maxScore} correct{' '}
               {maxScore === 1 ? 'guess' : 'guesses'}!
             </p>
           ) : (
-            <p className="text-xl gradient-accent bg-clip-text text-transparent font-bold">
+            <p className="text-xl gradient-text-accent font-bold">
               🎉 Tie between: {winners.map((w) => w.player_name).join(', ')} (each {maxScore} correct)
             </p>
           )}
@@ -54,7 +54,7 @@ export const Results = ({ players, onReset }: ResultsProps) => {
                         </p>
                       </div>
                       <div className="text-right">
-                        <div className="text-3xl font-bold gradient-accent bg-clip-text text-transparent">
+                        <div className="text-3xl font-bold gradient-text-accent">
                           {player.score}
                         </div>
                         <div className="text-sm text-muted-foreground">

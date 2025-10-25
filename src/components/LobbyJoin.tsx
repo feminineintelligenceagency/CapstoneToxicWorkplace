@@ -44,7 +44,7 @@ export const LobbyJoin = () => {
                 <Shield className="w-12 h-12 text-primary-foreground" />
               </div>
             </div>
-            <h1 className="text-5xl font-bold gradient-primary bg-clip-text text-transparent">
+            <h1 className="text-5xl font-bold gradient-text-primary">
               Role Reveal
             </h1>
             <p className="text-muted-foreground text-lg">
