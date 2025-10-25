@@ -13,8 +13,19 @@ interface LobbyWaitingProps {
 }
 
 export const LobbyWaiting = ({ lobby, players, myPlayerId, onStartGame }: LobbyWaitingProps) => {
-  const isHost = players[0]?.id === myPlayerId;
+  // Find the host by looking for player_number: 1, not by array position
+  const hostPlayer = players.find(p => p.player_number === 1);
+  const isHost = hostPlayer?.id === myPlayerId;
   const canStart = players.length >= 2;
+
+  console.log('LobbyWaiting Debug:', { 
+    players, 
+    myPlayerId, 
+    hostPlayer,
+    isHost, 
+    canStart, 
+    playerCount: players.length 
+  }); // Debug log
 
   const copyCode = () => {
     navigator.clipboard.writeText(lobby.code);
@@ -64,7 +75,7 @@ export const LobbyWaiting = ({ lobby, players, myPlayerId, onStartGame }: LobbyW
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    {index === 0 && <Crown className="w-5 h-5 text-accent" />}
+                    {player.player_number === 1 && <Crown className="w-5 h-5 text-accent" />}
                     <span className="font-medium">{player.player_name}</span>
                     {player.id === myPlayerId && (
                       <Badge variant="outline" className="text-xs">

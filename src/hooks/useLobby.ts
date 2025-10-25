@@ -7,7 +7,13 @@ export const useLobby = (lobbyCode?: string) => {
   const [lobby, setLobby] = useState<Lobby | null>(null);
   const [players, setPlayers] = useState<LobbyPlayer[]>([]);
   const [loading, setLoading] = useState(false);
-  const [myPlayerId, setMyPlayerId] = useState<string | null>(null);
+  const [myPlayerId, setMyPlayerId] = useState<string | null>(() => {
+    // Initialize from localStorage if available
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('myPlayerId');
+    }
+    return null;
+  });
 
   useEffect(() => {
     if (!lobbyCode) return;
@@ -29,6 +35,8 @@ export const useLobby = (lobbyCode?: string) => {
           .order('player_number', { ascending: true });
 
         if (playersData) {
+          console.log('Fetched players:', playersData); // Debug log
+          console.log('Current myPlayerId:', myPlayerId); // Debug log
           setPlayers(playersData);
         }
       }
@@ -65,7 +73,11 @@ export const useLobby = (lobbyCode?: string) => {
       const { data: lobbyData, error } = await supabase.from('lobbies').insert({ code, host_id: crypto.randomUUID(), num_players: numPlayers, status: 'waiting' }).select().single();
       if (error) throw error;
       const { data: playerData } = await supabase.from('lobby_players').insert({ lobby_id: lobbyData.id, player_number: 1, player_name: playerName }).select().single();
-      if (playerData) setMyPlayerId(playerData.id);
+      if (playerData) {
+        console.log('CreateLobby - Setting myPlayerId to:', playerData.id); // Debug log
+        setMyPlayerId(playerData.id);
+        localStorage.setItem('myPlayerId', playerData.id);
+      }
       toast.success(`Lobby created! Code: ${code}`);
       return code;
     } catch (error) {
@@ -96,7 +108,11 @@ export const useLobby = (lobbyCode?: string) => {
       const { data: playerData } = await supabase.from('lobby_players').insert(insertData).select().single();
       console.log('Player data after insert:', playerData); // Debug log
       
-      if (playerData) setMyPlayerId(playerData.id);
+      if (playerData) {
+        console.log('Setting myPlayerId to:', playerData.id); // Debug log
+        setMyPlayerId(playerData.id);
+        localStorage.setItem('myPlayerId', playerData.id);
+      }
       toast.success(`Joined lobby ${code}!`);
       return true;
     } catch (error) {
@@ -117,5 +133,21 @@ export const useLobby = (lobbyCode?: string) => {
     await supabase.from('lobby_players').update(updates).eq('id', playerId);
   };
 
-  return { lobby, players, loading, myPlayerId, createLobby, joinLobby, updateLobby, updatePlayer };
+  const clearMyPlayerId = () => {
+    setMyPlayerId(null);
+    localStorage.removeItem('myPlayerId');
+  };
+
+  // Verify that myPlayerId is valid for the current lobby
+  useEffect(() => {
+    if (myPlayerId && players.length > 0) {
+      const isPlayerInLobby = players.some(p => p.id === myPlayerId);
+      if (!isPlayerInLobby) {
+        console.log('Player not found in current lobby, clearing myPlayerId');
+        clearMyPlayerId();
+      }
+    }
+  }, [myPlayerId, players]);
+
+  return { lobby, players, loading, myPlayerId, createLobby, joinLobby, updateLobby, updatePlayer, clearMyPlayerId };
 };
