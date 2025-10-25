@@ -52,7 +52,7 @@ export const useLobby = (lobbyCode?: string) => {
     return () => { supabase.removeChannel(lobbyChannel); };
   }, [lobbyCode, lobby?.id]);
 
-  const createLobby = async (numPlayers: number) => {
+  const createLobby = async (numPlayers: number, playerName: string = 'Player 1') => {
     setLoading(true);
     try {
       let code = '', isUnique = false;
@@ -64,7 +64,7 @@ export const useLobby = (lobbyCode?: string) => {
       }
       const { data: lobbyData, error } = await supabase.from('lobbies').insert({ code, host_id: crypto.randomUUID(), num_players: numPlayers, status: 'waiting' }).select().single();
       if (error) throw error;
-      const { data: playerData } = await supabase.from('lobby_players').insert({ lobby_id: lobbyData.id, player_number: 1, player_name: 'Player 1' }).select().single();
+      const { data: playerData } = await supabase.from('lobby_players').insert({ lobby_id: lobbyData.id, player_number: 1, player_name: playerName }).select().single();
       if (playerData) setMyPlayerId(playerData.id);
       toast.success(`Lobby created! Code: ${code}`);
       return code;

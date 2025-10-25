@@ -22,10 +22,10 @@ const LobbyEntry = () => {
       return;
     }
 
-    const code = await createLobby(num);
+    const playerNameToUse = playerName.trim() || 'Player 1';
+    const code = await createLobby(num, playerNameToUse);
     if (code) {
-      const playerNameToUse = playerName.trim() || 'Player 1';
-      await joinLobby(code, playerNameToUse);
+      // Don't call joinLobby again - createLobby already adds the first player
       navigate(`/lobby/${code}`);
     }
   };
