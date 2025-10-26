@@ -11,7 +11,7 @@ const Game = () => {
   const [searchParams] = useSearchParams();
   const lobbyCode = searchParams.get('code');
   const navigate = useNavigate();
-  const { lobby, players } = useLobby(lobbyCode || undefined);
+  const { lobby, players, myPlayerId } = useLobby(lobbyCode || undefined);
 
   useEffect(() => {
     if (!lobbyCode) {
@@ -43,14 +43,31 @@ const Game = () => {
     );
   }
 
-  // Game phases will be implemented with multiplayer logic
+  // Game phases with proper props
+  const myPlayer = players.find(p => p.id === myPlayerId);
+  const isMyTurn = myPlayer?.id === players[lobby.current_player_index]?.id;
+
   switch (lobby.current_phase) {
     case 'roleReveal':
-      return <RoleReveal />;
+      return <RoleReveal 
+        players={players} 
+        myPlayerId={myPlayerId} 
+        onNext={() => {}} // This should be handled by the lobby component
+      />;
     case 'guessing':
-      return <GuessingPhase />;
+      return <GuessingPhase 
+        lobby={lobby}
+        players={players} 
+        myPlayerId={myPlayerId} 
+        isMyTurn={isMyTurn}
+        onGuess={() => {}} // This should be handled by the lobby component
+        onNext={() => {}} // This should be handled by the lobby component
+      />;
     case 'results':
-      return <Results />;
+      return <Results 
+        players={players} 
+        onReset={() => navigate('/')} 
+      />;
     default:
       return (
         <div className="min-h-screen flex items-center justify-center">

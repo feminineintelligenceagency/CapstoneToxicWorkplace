@@ -21,7 +21,8 @@ export const GuessingPhase = ({ lobby, players, myPlayerId, isMyTurn, onGuess, o
   const handleGuess = (role: Role) => {
     if (!targetPlayer || !isMyTurn) return;
     onGuess(targetPlayer.id, role);
-    // Don't call onNext here - let the parent component handle turn advancement
+    // Note: onNext is not called here - the parent component handles turn advancement
+    // This prevents double turn advancement in both solo and multiplayer modes
   };
 
   if (!currentPlayer || !targetPlayer || !myPlayer) return null;

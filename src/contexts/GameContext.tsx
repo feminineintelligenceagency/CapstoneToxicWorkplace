@@ -109,7 +109,47 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       const currentPlayer = updatedPlayers[prev.currentPlayerIndex];
       currentPlayer.guesses[targetId] = role;
       
-      return { ...prev, players: updatedPlayers };
+      // After making a guess, advance the turn
+      const updatedState = { ...prev, players: updatedPlayers };
+      
+      // Calculate next target/player
+      let nextTarget = prev.currentGuessTarget;
+      
+      // Find next valid target (skip self and already guessed players)
+      while (nextTarget < updatedPlayers.length && 
+             (nextTarget === prev.currentPlayerIndex || 
+              currentPlayer.guesses[updatedPlayers[nextTarget].id] !== undefined)) {
+        nextTarget++;
+      }
+      
+      if (nextTarget >= updatedPlayers.length) {
+        // Current player has guessed everyone, move to next player
+        const nextPlayerIndex = prev.currentPlayerIndex + 1;
+        
+        if (nextPlayerIndex >= updatedPlayers.length) {
+          // All players have finished guessing, calculate scores and end game
+          const playersWithScores = updatedPlayers.map(p => {
+            let score = 0;
+            Object.entries(p.guesses).forEach(([targetIdStr, guess]) => {
+              const targetId = Number(targetIdStr);
+              const target = updatedPlayers.find(pl => pl.id === targetId);
+              if (target && guess === target.role) {
+                score++;
+              }
+            });
+            return { ...p, score };
+          });
+          
+          return { ...updatedState, phase: 'results', players: playersWithScores };
+        }
+        
+        // Move to next player
+        const nextValidTarget = nextPlayerIndex === 0 ? 1 : 0;
+        return { ...updatedState, currentPlayerIndex: nextPlayerIndex, currentGuessTarget: nextValidTarget };
+      } else {
+        // Move to next target for current player
+        return { ...updatedState, currentGuessTarget: nextTarget };
+      }
     });
   };
 

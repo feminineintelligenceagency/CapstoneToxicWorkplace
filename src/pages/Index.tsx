@@ -32,6 +32,7 @@ const SoloGame = () => {
 
   const handleGuess = (targetId: string, role: any) => {
     makeGuess(Number(targetId), role);
+    // Don't call handleNext here - makeGuess now handles turn advancement internally
   };
 
   const handleReset = () => {

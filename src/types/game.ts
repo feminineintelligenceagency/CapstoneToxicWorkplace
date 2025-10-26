@@ -5,7 +5,8 @@ export const BASE_ROLES = [
   'Thief',
   'Prophet',
   'Bodyguard',
-  'Seer'
+  'Seer',
+  'Test'
 ] as const;
 
 export type Role = typeof BASE_ROLES[number];

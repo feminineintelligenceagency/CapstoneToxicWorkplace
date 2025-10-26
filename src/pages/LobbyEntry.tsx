@@ -56,7 +56,7 @@ const LobbyEntry = () => {
               </div>
             </div>
             <h1 className="text-5xl font-bold gradient-text-primary">
-              Role Reveal
+              Toxic Workplace Mystery Game
             </h1>
             <p className="text-muted-foreground text-lg">
               Multiplayer social deduction game
@@ -84,14 +84,6 @@ const LobbyEntry = () => {
               Join Lobby
             </Button>
 
-            <Button
-              onClick={() => navigate('/solo')}
-              variant="secondary"
-              size="lg"
-              className="w-full"
-            >
-              Solo Mode
-            </Button>
           </div>
         </div>
       </div>

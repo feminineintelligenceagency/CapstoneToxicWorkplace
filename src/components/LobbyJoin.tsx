@@ -45,7 +45,7 @@ export const LobbyJoin = () => {
               </div>
             </div>
             <h1 className="text-5xl font-bold gradient-text-primary">
-              Role Reveal
+              Toxic Workplace Mystery Game
             </h1>
             <p className="text-muted-foreground text-lg">
               Join or create a multiplayer lobby
