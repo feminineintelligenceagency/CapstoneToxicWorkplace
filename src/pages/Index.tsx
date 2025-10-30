@@ -18,6 +18,7 @@ const SoloGame = () => {
       player_number: index + 1,
       player_name: player.name,
       role: player.role,
+      role_goal: player.roleGoals,
       guesses: Object.fromEntries(
         Object.entries(player.guesses).map(([key, value]) => [key.toString(), value])
       ),
