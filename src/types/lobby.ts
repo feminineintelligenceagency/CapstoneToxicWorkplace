@@ -17,8 +17,8 @@ export interface LobbyPlayer {
   player_number: number;
   player_name: string;
   role: string | null;
-  role_description: string | string;
-  nicknames: string | string;
+  role_description: string;
+  nicknames: string;
   guesses: Record<string, string>;
   score: number;
   joined_at: string;

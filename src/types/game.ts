@@ -15,7 +15,8 @@ export interface Player {
   role: Role;
   guesses: Record<number, Role>;
   score: number;
-  roleGoals: Record<Role, string>;
+  roleDescription: string;
+  nicknames: string;
 }
 
 export const roleDescription: Record<Role, string> = {
