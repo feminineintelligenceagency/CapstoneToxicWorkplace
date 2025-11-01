@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Eye, EyeOff } from "lucide-react";
 import { LobbyPlayer } from "@/types/lobby";
-import { roleDescription, Role } from "@/types/game";
+import { roleDescription, roleAlways, roleNever, Role } from "@/types/game";
 
 interface RoleRevealProps {
   players: LobbyPlayer[];
@@ -24,7 +24,11 @@ export const RoleReveal = ({
   // Prefer the server-provided role goal; fall back to local roleGoals mapping
   const roleDescriptionText =
     myPlayer.role_description ||
-    (myPlayer.role ? roleDescription[myPlayer.role as Role as Role] : "");
+    (myPlayer.role ? roleDescription[myPlayer.role as Role] : "");
+
+  // Pull the Always/Never lists from the local role tables so the UI can show them
+  const alwaysList = myPlayer.role ? roleAlways[myPlayer.role as Role] : [];
+  const neverList = myPlayer.role ? roleNever[myPlayer.role as Role] : [];
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -70,13 +74,39 @@ export const RoleReveal = ({
                   </p>
                 </div>
 
-                <div className="bg-primary/5 p-4 rounded-md">
-                  <p className="text-sm text-primary-foreground/80 mb-1">
-                    Your Role Description:
-                  </p>
-                  <p className="text-sm text-primary-foreground leading-relaxed">
-                    {roleDescriptionText}
-                  </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-primary/5 p-4 rounded-md">
+                    <p className="text-sm text-primary-foreground/80 mb-1">
+                      Your Role Description:
+                    </p>
+                    <p className="text-sm text-primary-foreground leading-relaxed">
+                      {roleDescriptionText}
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="bg-secondary/5 p-4 rounded-md">
+                      <p className="text-sm text-primary-foreground/80 mb-1">
+                        Always
+                      </p>
+                      <ul className="list-disc ml-4 text-sm text-primary-foreground">
+                        {alwaysList.map((a, i) => (
+                          <li key={i}>{a}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="bg-destructive/5 p-4 rounded-md">
+                      <p className="text-sm text-secondary-foreground/80 mb-1">
+                        Never
+                      </p>
+                      <ul className="list-disc ml-4 text-sm text-secondary-foreground">
+                        {neverList.map((n, i) => (
+                          <li key={i}>{n}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="bg-secondary/5 p-4 rounded-md">

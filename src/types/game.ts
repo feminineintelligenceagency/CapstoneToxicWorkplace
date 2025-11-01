@@ -17,6 +17,11 @@ export interface Player {
   score: number;
   roleDescription: string;
   nicknames: string;
+  // Always/Never are lists intended to describe consistent (Always) and avoided (Never) behaviors
+  // for a player's assigned role. These are exported here so UI components can display them
+  // during role reveal without requiring the server to provide them each time.
+  always: string[];
+  never: string[];
 }
 
 export const roleDescription: Record<Role, string> = {
@@ -54,6 +59,101 @@ export const nicknames: Record<Role, string> = {
   "The Complainer": "Pity-Party Parker",
   "The Buzzkill": "Blunt Bailey",
   "The Enforcer": "Menacing Marley",
+};
+
+// Behavior lists to complement `roleDescription` and `nicknames`.
+// These can be imported by UI components (for example the role reveal screen)
+// so the "Always" and "Never" lists are displayed when a player reveals their role.
+export const roleAlways: Record<Role, string[]> = {
+  "The Micromanager": [
+    "Enforces rules",
+    "Issues orders",
+    "Corrects others publicly",
+    "Checks everyone's work twice",
+    "Thinks efficiency equals obedience",
+    "Believes their way is the right way and that structure prevents failure",
+  ],
+  "The Office Gossip": [
+    "Collects and shares rumors",
+    "Starts private conversations about others",
+    "Asks probing personal questions",
+    "Seems to always know what's happening",
+    "Uses information to connect with others",
+  ],
+  "The Charmer": [
+    "Compliments and flatters others",
+    "Makes strong first impressions",
+    "Smooths tensions with charm",
+    "Adapts persona to fit the room",
+    "Uses charisma to influence outcomes",
+  ],
+  "The Complainer": [
+    "Points out problems and flaws",
+    "Highlights potential negatives",
+    "Voices dissatisfaction frequently",
+    "Seeks agreement about what's wrong",
+    "Focuses on what isn't working",
+  ],
+  "The Buzzkill": [
+    "Offers blunt or critical feedback",
+    "Questions hype and optimism",
+    "Demands rigor and accuracy",
+    "Punctures unfounded enthusiasm",
+    "Brings conversations back to facts",
+  ],
+  "The Enforcer": [
+    "Uses intimidation to gain compliance",
+    "Calls out perceived disloyalty",
+    "Publicly disciplines to set examples",
+    "Maintains strict control",
+    "Tests loyalty and enforces rules",
+  ],
+};
+
+export const roleNever: Record<Role, string[]> = {
+  "The Micromanager": [
+    "Admits fault quickly",
+    "Delegates trust",
+    "Shows uncertainty",
+    "Tolerates creative detours without oversight",
+    "Asks for input often",
+    "Breaks established protocol",
+  ],
+  "The Office Gossip": [
+    "Keeps confidences",
+    "Respects strict privacy",
+    "Avoids speculation",
+    "Remains neutral in personal disputes",
+    "Refuses to spread rumor",
+  ],
+  "The Charmer": [
+    "Openly admits manipulative motives",
+    "Displays sustained vulnerability",
+    "Fails to tailor their approach to others",
+    "Creates awkward social friction",
+    "Publicly harms their own charm",
+  ],
+  "The Complainer": [
+    "Proposes constructive solutions readily",
+    "Accepts changes with optimism",
+    "Takes responsibility for implementation",
+    "Keeps praise to themselves",
+    "Stays quiet when needed",
+  ],
+  "The Buzzkill": [
+    "Gives uncritical praise",
+    "Ignores factual inconsistencies",
+    "Embraces groupthink",
+    "Prioritizes feelings over truth",
+    "Softens critique for the sake of comfort",
+  ],
+  "The Enforcer": [
+    "Shows consistent empathy",
+    "Lets rules slide without consequence",
+    "Encourages open dissent without tests",
+    "Forgives infractions casually",
+    "Delegates authority that undermines control",
+  ],
 };
 
 export type GamePhase = "setup" | "roleReveal" | "guessing" | "results";
