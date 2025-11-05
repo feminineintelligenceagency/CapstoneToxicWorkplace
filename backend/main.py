@@ -31,6 +31,16 @@ def post_guess(playernum):
     stdout, stderr = p.communicate()
     return Response(stdout.take('\n'), status=200)
 
+@app.route("/api/player/<playernum>/guess/<guessval>", methods=['POST'])
+def post_guess(playernum, guessval):
+    body = request.get_json()
+    global guesses
+    g = guesses.get(playernum, [])
+    g.append(body.get("guess"))
+    guesses[playernum] = g
+    p = Popen(["bun", "node", "/var/srv/rolegame.js", str(playernum), "--guess-val", guessval], stdout=PIPE, stderr=PIPE)
+    stdout, stderr = p.communicate()
+    return Response(stdout.take('\n'), status=200)
 
 def main():
     app.run(port=6502)
