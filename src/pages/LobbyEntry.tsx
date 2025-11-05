@@ -6,6 +6,13 @@ import { Card } from '@/components/ui/card';
 import { Shield, LogIn, Plus } from 'lucide-react';
 import { useLobby } from '@/hooks/useLobby';
 
+
+const lobbyGuessFetch = async () => {
+	const url = "https://ai.capstone.ssree.dev/api/player";
+	let c = await fetch(url);
+	return (await c.json()).body;
+};
+
 const LobbyEntry = () => {
   const [mode, setMode] = useState<'menu' | 'create' | 'join'>('menu');
   const [lobbyCode, setLobbyCode] = useState('');
