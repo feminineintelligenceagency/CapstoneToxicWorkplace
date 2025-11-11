@@ -5,7 +5,7 @@ import { RoleplayTimer } from "@/components/RoleplayTimer";
 import { GuessingPhase } from "@/components/GuessingPhase";
 import { Results } from "@/components/Results";
 import { useGame } from "@/contexts/GameContext";
-import { Player, Role } from "@/types/game";
+import { Player } from "@/types/game";
 import { LobbyPlayer, Lobby } from "@/types/lobby";
 import { useState, useEffect } from "react";
 
@@ -29,13 +29,14 @@ const SoloGame = () => {
       lobby_id: "solo",
       player_number: index + 1,
       player_name: player.name,
-      role: player.role,
-      role_description: player.roleDescription,
-      nicknames: player.nicknames,
+      role: player.roleDetails.personality, // Use personality as the role identifier
+      role_description: player.roleDetails.roleDescription,
+      nicknames: player.roleDetails.roleName, // Use roleName as nickname
+      guidelines: player.roleDetails.guidelines,
       guesses: Object.fromEntries(
         Object.entries(player.guesses).map(([key, value]) => [
           key.toString(),
-          value,
+          value, // value is now a personality string
         ]),
       ),
       score: player.score,
@@ -51,8 +52,8 @@ const SoloGame = () => {
     nextPhase();
   };
 
-  const handleGuess = (targetId: string, role: Role) => {
-    makeGuess(Number(targetId), role);
+  const handleGuess = (targetId: string, personality: string) => {
+    makeGuess(Number(targetId), personality);
     // Don't call handleNext here - makeGuess now handles turn advancement internally
   };
 
@@ -96,6 +97,8 @@ const SoloGame = () => {
         />
       );
     case "guessing":
+      // Get available personalities from the selected scenario
+      const availablePersonalities = gameState.selectedScenario?.roles.map(r => r.personality) || [];
       return (
         <GuessingPhase
           lobby={
@@ -109,6 +112,7 @@ const SoloGame = () => {
           isMyTurn={gameState.currentPlayerIndex === 0}
           onGuess={handleGuess}
           onNext={handleNext}
+          availablePersonalities={availablePersonalities}
         />
       );
     case "results":

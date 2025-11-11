@@ -6,7 +6,7 @@ import { RoleReveal } from '@/components/RoleReveal';
 import { RoleplayTimer } from '@/components/RoleplayTimer';
 import { GuessingPhase } from '@/components/GuessingPhase';
 import { Results } from '@/components/Results';
-import { BASE_ROLES, Role } from '@/types/game';
+import { BASE_SCENARIOS, RoleDetails } from '@/types/game';
 
 const shuffle = <T,>(arr: T[]): T[] => { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
@@ -19,10 +19,37 @@ const Lobby = () => {
 
   const handleStartGame = async () => {
     if (!lobby || players.length < 2) return;
-    const rolesPool: Role[] = [];
-    while (rolesPool.length < players.length) rolesPool.push(...BASE_ROLES);
-    const roles = shuffle(rolesPool.slice(0, players.length));
-    for (let i = 0; i < players.length; i++) await updatePlayer(players[i].id, { role: roles[i] });
+    
+    // Select scenario (default to first one for now)
+    const selectedScenario = BASE_SCENARIOS[0];
+    if (!selectedScenario) {
+      console.error("No scenarios available");
+      return;
+    }
+
+    // Get available roles from the scenario
+    const availableRoles = [...selectedScenario.roles];
+    
+    // If we need more roles than available, duplicate them
+    const rolesPool: RoleDetails[] = [];
+    while (rolesPool.length < players.length) {
+      rolesPool.push(...availableRoles);
+    }
+    
+    // Shuffle and assign roles
+    const assignedRoles = shuffle(rolesPool.slice(0, players.length));
+
+    // Assign full role information to each player
+    for (let i = 0; i < players.length; i++) {
+      const roleDetails = assignedRoles[i];
+      await updatePlayer(players[i].id, {
+        role: roleDetails.personality,
+        role_description: roleDetails.roleDescription,
+        nicknames: roleDetails.roleName,
+        guidelines: roleDetails.guidelines, // Store guidelines as JSONB array
+      });
+    }
+    
     await updateLobby({ status: 'in_progress', current_phase: 'roleReveal', current_player_index: 0 });
   };
 
@@ -61,7 +88,11 @@ const Lobby = () => {
         if (npi >= players.length) {
           for (const p of players) {
             let s = 0;
-            Object.entries(p.guesses).forEach(([tid, g]) => { const t = players.find(x => x.id === tid); if (t && g === t.role) s++; });
+            Object.entries(p.guesses).forEach(([tid, g]) => { 
+              const t = players.find(x => x.id === tid); 
+              // Compare guessed personality with target's role (personality)
+              if (t && g === t.role) s++; 
+            });
             await updatePlayer(p.id, { score: s });
           }
           await updateLobby({ current_phase: 'results', status: 'completed' });
@@ -74,12 +105,12 @@ const Lobby = () => {
     }
   };
 
-  const handleGuess = async (targetId: string, role: Role) => {
+  const handleGuess = async (targetId: string, personality: string) => {
     if (!myPlayerId) return;
     const cp = players.find(p => p.id === myPlayerId);
     if (cp) {
-      // Update the player's guesses
-      const updatedGuesses = { ...cp.guesses, [targetId]: role };
+      // Update the player's guesses (now using personality strings)
+      const updatedGuesses = { ...cp.guesses, [targetId]: personality };
       await updatePlayer(myPlayerId, { guesses: updatedGuesses });
       
       // Manually advance the turn logic here instead of relying on handleNextPhase
@@ -112,6 +143,7 @@ const Lobby = () => {
           let score = 0;
           Object.entries(p.guesses).forEach(([tid, g]) => { 
             const t = players.find(x => x.id === tid); 
+            // Compare guessed personality with target's role (personality)
             if (t && g === t.role) score++; 
           });
           await updatePlayer(p.id, { score });
@@ -139,7 +171,12 @@ const Lobby = () => {
 
   if (lobby.current_phase === 'roleReveal') return <RoleReveal players={players} myPlayerId={myPlayerId} onNext={handleNextPhase} />;
   if (lobby.current_phase === 'roleplay') return <RoleplayTimer lobby={lobby} isHost={isHost} onTimerEnd={handleNextPhase} />;
-  if (lobby.current_phase === 'guessing') return <GuessingPhase lobby={lobby} players={players} myPlayerId={myPlayerId} isMyTurn={isMyTurn} onGuess={handleGuess} onNext={handleNextPhase} />;
+  if (lobby.current_phase === 'guessing') {
+    // first scenario is defaulted here for now
+    const selectedScenario = BASE_SCENARIOS[0];
+    const availablePersonalities = selectedScenario?.roles.map(r => r.personality) || [];
+    return <GuessingPhase lobby={lobby} players={players} myPlayerId={myPlayerId} isMyTurn={isMyTurn} onGuess={handleGuess} onNext={handleNextPhase} availablePersonalities={availablePersonalities} />;
+  }
   if (lobby.current_phase === 'results') return <Results players={players} onReset={() => navigate('/')} />;
   return null;
 };

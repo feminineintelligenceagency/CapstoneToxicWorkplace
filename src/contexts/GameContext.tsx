@@ -2,19 +2,15 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 import {
   GameState,
   Player,
-  Role,
-  BASE_ROLES,
-  roleDescription,
-  nicknames,
-  roleAlways,
-  roleNever,
+  BASE_SCENARIOS,
+  RoleDetails,
 } from "@/types/game";
 
 interface GameContextType {
   gameState: GameState;
-  startGame: (numPlayers: number) => void;
+  startGame: (numPlayers: number, scenarioIndex?: number) => void;
   nextPhase: () => void;
-  makeGuess: (targetId: number, role: Role) => void;
+  makeGuess: (targetId: number, personality: string) => void;
   resetGame: () => void;
 }
 
@@ -34,28 +30,38 @@ const initialGameState: GameState = {
   players: [],
   currentPlayerIndex: 0,
   currentGuessTarget: 0,
+  selectedScenario: null,
 };
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [gameState, setGameState] = useState<GameState>(initialGameState);
 
-  const startGame = (numPlayers: number) => {
-    const rolesPool: Role[] = [];
-    while (rolesPool.length < numPlayers) {
-      rolesPool.push(...BASE_ROLES);
+  const startGame = (numPlayers: number, scenarioIndex: number = 0) => {
+    // Select scenario (default to first one, or use provided index)
+    const selectedScenario = BASE_SCENARIOS[scenarioIndex];
+    if (!selectedScenario) {
+      console.error("Invalid scenario index");
+      return;
     }
+
+    // Get available roles from the scenario
+    const availableRoles = [...selectedScenario.roles];
+    
+    // If we need more roles than available, duplicate them
+    const rolesPool: RoleDetails[] = [];
+    while (rolesPool.length < numPlayers) {
+      rolesPool.push(...availableRoles);
+    }
+    
+    // Shuffle and assign roles
     const assignedRoles = shuffle(rolesPool.slice(0, numPlayers));
 
     const players: Player[] = Array.from({ length: numPlayers }, (_, i) => ({
       id: i + 1,
       name: `Player ${i + 1}`,
-      role: assignedRoles[i],
-      roleDescription: roleDescription[assignedRoles[i]],
-      nicknames: nicknames[assignedRoles[i]],
-      guesses: {} as Record<number, Role>,
+      roleDetails: assignedRoles[i],
+      guesses: {} as Record<number, string>,
       score: 0,
-      always: roleAlways[assignedRoles[i]],
-      never: roleNever[assignedRoles[i]],
     }));
 
     setGameState({
@@ -63,6 +69,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       players,
       currentPlayerIndex: 0,
       currentGuessTarget: 0,
+      selectedScenario,
     });
   };
 
@@ -108,7 +115,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
               Object.entries(p.guesses).forEach(([targetIdStr, guess]) => {
                 const targetId = Number(targetIdStr);
                 const target = prev.players.find((pl) => pl.id === targetId);
-                if (target && guess === target.role) {
+                // Check if the guessed personality matches the target's role personality
+                if (target && guess === target.roleDetails.personality) {
                   score++;
                 }
               });
@@ -134,11 +142,11 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const makeGuess = (targetId: number, role: Role) => {
+  const makeGuess = (targetId: number, personality: string) => {
     setGameState((prev) => {
       const updatedPlayers = [...prev.players];
       const currentPlayer = updatedPlayers[prev.currentPlayerIndex];
-      currentPlayer.guesses[targetId] = role;
+      currentPlayer.guesses[targetId] = personality;
 
       // After making a guess, advance the turn
       const updatedState = { ...prev, players: updatedPlayers };
@@ -166,7 +174,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
             Object.entries(p.guesses).forEach(([targetIdStr, guess]) => {
               const targetId = Number(targetIdStr);
               const target = updatedPlayers.find((pl) => pl.id === targetId);
-              if (target && guess === target.role) {
+              // Check if the guessed personality matches the target's role personality
+              if (target && guess === target.roleDetails.personality) {
                 score++;
               }
             });

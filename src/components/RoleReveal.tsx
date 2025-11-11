@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Eye, EyeOff } from "lucide-react";
 import { LobbyPlayer } from "@/types/lobby";
-import { roleDescription, roleAlways, roleNever, Role } from "@/types/game";
 
 interface RoleRevealProps {
   players: LobbyPlayer[];
@@ -21,22 +20,19 @@ export const RoleReveal = ({
 
   if (!myPlayer) return null;
 
-  // Prefer the server-provided role goal; fall back to local roleGoals mapping
-  const roleDescriptionText =
-    myPlayer.role_description ||
-    (myPlayer.role ? roleDescription[myPlayer.role as Role] : "");
-
-  // Pull the Always/Never lists from the local role tables so the UI can show them
-  const alwaysList = myPlayer.role ? roleAlways[myPlayer.role as Role] : [];
-  const neverList = myPlayer.role ? roleNever[myPlayer.role as Role] : [];
+  // Use the role description from the player data (converted from scenario roleDetails)
+  const roleDescriptionText = myPlayer.role_description || "";
+  const roleName = myPlayer.nicknames || myPlayer.role || ""; // roleName is stored in nicknames field
+  const personality = myPlayer.role || "";
+  const guidelines = myPlayer.guidelines || [];
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-2xl space-y-8">
         <div className="text-center space-y-2">
-          <h2 className="text-3xl font-bold">Your Secret Personality</h2>
+          <h2 className="text-3xl font-bold">Your Toxic Personality</h2>
           <p className="text-muted-foreground">
-            View your personality and prepare for the roleplay phase
+            View your persona and prepare for the roleplay phase
           </p>
         </div>
 
@@ -67,58 +63,55 @@ export const RoleReveal = ({
               <div className="gradient-primary p-6 rounded-lg shadow-glow animate-in fade-in duration-500 space-y-4">
                 <div className="text-center">
                   <p className="text-sm text-primary-foreground/80 mb-2">
-                    Your Role:
+                    Your Personality (Do not reveal this to anyone):
                   </p>
                   <p className="text-4xl font-bold text-primary-foreground">
-                    {myPlayer.role}
+                    {personality}
                   </p>
+                  {roleName && (
+                    <p className="text-lg text-primary-foreground/80 mt-2">
+                      {roleName} <label className="text-lg">(PUBLIC)</label>
+                    </p>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-primary/5 p-4 rounded-md">
                     <p className="text-sm text-primary-foreground/80 mb-1">
-                      Your Role Description:
+                      Your Personality Description:
                     </p>
                     <p className="text-sm text-primary-foreground leading-relaxed">
                       {roleDescriptionText}
                     </p>
                   </div>
 
-                  <div className="space-y-4">
-                    <div className="bg-secondary/5 p-4 rounded-md">
-                      <p className="text-sm text-primary-foreground/80 mb-1">
-                        Always
-                      </p>
-                      <ul className="list-disc ml-4 text-sm text-primary-foreground">
-                        {alwaysList.map((a, i) => (
-                          <li key={i}>{a}</li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="bg-destructive/5 p-4 rounded-md">
-                      <p className="text-sm text-secondary-foreground/80 mb-1">
-                        Never
-                      </p>
-                      <ul className="list-disc ml-4 text-sm text-secondary-foreground">
-                        {neverList.map((n, i) => (
-                          <li key={i}>{n}</li>
-                        ))}
-                      </ul>
-                    </div>
+                  <div className="bg-secondary/5 p-4 rounded-md">
+                    <p className="text-sm text-primary-foreground/80 mb-1">
+                      Guessing Objective
+                    </p>
+                    <p className="text-sm text-primary-foreground leading-relaxed">
+                      During the guessing phase your goal is to correctly identify
+                      other players' personalities. Be strategic — each correct guess
+                      helps increase your score and brings you closer to winning.
+                    </p>
                   </div>
                 </div>
 
-                <div className="bg-secondary/5 p-4 rounded-md">
-                  <p className="text-sm text-secondary-foreground/80 mb-1">
-                    Guessing Objective
-                  </p>
-                  <p className="text-sm text-secondary-foreground leading-relaxed">
-                    During the guessing phase your goal is to correctly identify
-                    other players' personalities. Be strategic — each correct guess
-                    helps increase your score and brings you closer to winning.
-                  </p>
-                </div>
+                {guidelines.length > 0 && (
+                  <div className="bg-accent/5 p-4 rounded-md border border-accent/20">
+                    <p className="text-sm text-primary-foreground/80 mb-2 font-semibold">
+                      Roleplay Guidelines:
+                    </p>
+                    <ul className="space-y-2">
+                      {guidelines.map((guideline, index) => (
+                        <li key={index} className="text-sm text-primary-foreground flex items-start">
+                          <span className="mr-2 text-accent font-bold">•</span>
+                          <span className="leading-relaxed">{guideline}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
           </div>

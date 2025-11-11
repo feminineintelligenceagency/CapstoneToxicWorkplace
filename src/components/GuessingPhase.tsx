@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { BASE_ROLES, Role } from '@/types/game';
 import { Lobby, LobbyPlayer } from '@/types/lobby';
 import { Users } from 'lucide-react';
 
@@ -9,18 +8,23 @@ interface GuessingPhaseProps {
   players: LobbyPlayer[];
   myPlayerId: string | null;
   isMyTurn: boolean;
-  onGuess: (targetId: string, role: Role) => void;
+  onGuess: (targetId: string, personality: string) => void;
   onNext: () => void;
+  availablePersonalities?: string[]; // Optional: if provided, use these; otherwise extract from players
 }
 
-export const GuessingPhase = ({ lobby, players, myPlayerId, isMyTurn, onGuess, onNext }: GuessingPhaseProps) => {
+export const GuessingPhase = ({ lobby, players, myPlayerId, isMyTurn, onGuess, onNext, availablePersonalities }: GuessingPhaseProps) => {
   const currentPlayer = players[lobby.current_player_index];
   const targetPlayer = players[lobby.current_guess_target];
   const myPlayer = players.find((p) => p.id === myPlayerId);
 
-  const handleGuess = (role: Role) => {
+  // Get available personalities - use provided list or extract unique ones from players
+  const personalities = availablePersonalities || 
+    Array.from(new Set(players.map(p => p.role).filter(Boolean) as string[]));
+
+  const handleGuess = (personality: string) => {
     if (!targetPlayer || !isMyTurn) return;
-    onGuess(targetPlayer.id, role);
+    onGuess(targetPlayer.id, personality);
     // Note: onNext is not called here - the parent component handles turn advancement
     // This prevents double turn advancement in both solo and multiplayer modes
   };
@@ -61,15 +65,15 @@ export const GuessingPhase = ({ lobby, players, myPlayerId, isMyTurn, onGuess, o
 
         <Card className="gradient-card p-8 shadow-card">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {BASE_ROLES.map((role) => (
+            {personalities.map((personality) => (
               <Button
-                key={role}
-                onClick={() => handleGuess(role)}
+                key={personality}
+                onClick={() => handleGuess(personality)}
                 variant="secondary"
                 size="lg"
                 className="h-20 text-base font-semibold hover:gradient-accent hover:text-accent-foreground transition-smooth"
               >
-                {role}
+                {personality}
               </Button>
             ))}
           </div>

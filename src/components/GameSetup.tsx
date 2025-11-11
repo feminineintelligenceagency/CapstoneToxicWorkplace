@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Shield } from 'lucide-react';
 import { useGame } from '@/contexts/GameContext';
-import { BASE_ROLES } from '@/types/game';
 
 export const GameSetup = () => {
   const [numPlayers, setNumPlayers] = useState('4');
@@ -68,11 +67,6 @@ export const GameSetup = () => {
         <div className="text-sm text-muted-foreground space-y-2">
           <p className="font-semibold text-foreground">Available Roles:</p>
           <div className="flex flex-wrap justify-center gap-2">
-            {BASE_ROLES.map((role) => (
-              <span key={role} className="px-3 py-1 bg-secondary rounded-full text-xs">
-                {role}
-              </span>
-            ))}
           </div>
         </div>
       </div>
