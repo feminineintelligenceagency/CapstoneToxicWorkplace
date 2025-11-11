@@ -32,7 +32,7 @@ export const RoleReveal = ({
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-8">
+      <div className="w-full max-w-2xl space-y-8">
         <div className="text-center space-y-2">
           <h2 className="text-3xl font-bold">Your Secret Role</h2>
           <p className="text-muted-foreground">
