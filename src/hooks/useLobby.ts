@@ -26,7 +26,7 @@ export const useLobby = (lobbyCode?: string) => {
         .single();
 
       if (lobbyData) {
-        setLobby(lobbyData);
+        setLobby(lobbyData as Lobby);
         
         const { data: playersData } = await supabase
           .from('lobby_players')
@@ -37,7 +37,15 @@ export const useLobby = (lobbyCode?: string) => {
         if (playersData) {
           console.log('Fetched players:', playersData); // Debug log
           console.log('Current myPlayerId:', myPlayerId); // Debug log
-          setPlayers(playersData);
+          // Map players data to include missing fields with defaults
+          const mappedPlayers: LobbyPlayer[] = playersData.map((p: any) => ({
+            ...p,
+            role_description: p.role_description || '',
+            nicknames: p.nicknames || '',
+            guesses: (p.guesses as Record<string, string>) || {},
+            score: p.score || 0,
+          }));
+          setPlayers(mappedPlayers);
         }
       }
     };
@@ -52,7 +60,17 @@ export const useLobby = (lobbyCode?: string) => {
         async () => {
           if (lobby) {
             const { data } = await supabase.from('lobby_players').select('*').eq('lobby_id', lobby.id).order('player_number', { ascending: true });
-            if (data) setPlayers(data);
+            if (data) {
+              // Map players data to include missing fields with defaults
+              const mappedPlayers: LobbyPlayer[] = data.map((p: any) => ({
+                ...p,
+                role_description: p.role_description || '',
+                nicknames: p.nicknames || '',
+                guesses: (p.guesses as Record<string, string>) || {},
+                score: p.score || 0,
+              }));
+              setPlayers(mappedPlayers);
+            }
           }
         })
       .subscribe();
@@ -70,7 +88,7 @@ export const useLobby = (lobbyCode?: string) => {
         const { data: existing } = await supabase.from('lobbies').select('id').eq('code', code).single();
         if (!existing) isUnique = true;
       }
-      const { data: lobbyData, error } = await supabase.from('lobbies').insert({ code, host_id: crypto.randomUUID(), num_players: numPlayers, status: 'waiting' }).select().single();
+      const { data: lobbyData, error } = await supabase.from('lobbies').insert({ code, host_id: crypto.randomUUID(), num_players: numPlayers, status: 'waiting', roleplay_timer_duration: 5 }).select().single();
       if (error) throw error;
       const { data: playerData } = await supabase.from('lobby_players').insert({ lobby_id: lobbyData.id, player_number: 1, player_name: playerName }).select().single();
       if (playerData) {

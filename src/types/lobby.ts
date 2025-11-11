@@ -6,6 +6,7 @@ export interface Lobby {
   num_players: number;
   current_phase: "setup" | "roleReveal" | "roleplay" | "guessing" | "results";
   roleplay_timer_end?: string;
+  roleplay_timer_duration?: number; // in minutes
   current_player_index: number;
   current_guess_target: number;
   created_at: string;

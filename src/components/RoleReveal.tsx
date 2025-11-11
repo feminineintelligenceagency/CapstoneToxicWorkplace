@@ -36,7 +36,7 @@ export const RoleReveal = ({
         <div className="text-center space-y-2">
           <h2 className="text-3xl font-bold">Your Secret Role</h2>
           <p className="text-muted-foreground">
-            View your role and prepare for the guessing phase
+            View your role and prepare for the roleplay phase
           </p>
         </div>
 
@@ -131,7 +131,7 @@ export const RoleReveal = ({
             size="lg"
             className="w-full"
           >
-            Ready for Guessing Phase
+            Ready for Roleplay Phase
           </Button>
         )}
       </div>

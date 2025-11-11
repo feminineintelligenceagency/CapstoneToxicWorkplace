@@ -26,11 +26,17 @@ const Lobby = () => {
     await updateLobby({ status: 'in_progress', current_phase: 'roleReveal', current_player_index: 0 });
   };
 
+  const handleUpdateSettings = async (settings: {roleplay_timer_duration: number}) => {
+    if (!lobby) return;
+    await updateLobby({ roleplay_timer_duration: settings.roleplay_timer_duration });
+  };
+
   const handleNextPhase = async () => {
     if (!lobby || !players.length) return;
     if (lobby.current_phase === 'roleReveal') {
-      // 5 minute timer for roleplay phase
-      const timerEnd = new Date(Date.now() + 1 * 60 * 1000).toISOString();
+      // 1 minute timer for roleplay phase
+      const durationMinutes = lobby.roleplay_timer_duration || 5;
+      const timerEnd = new Date(Date.now() + durationMinutes * 60 * 1000).toISOString();
       await updateLobby({ 
         current_phase: 'roleplay', 
         roleplay_timer_end: timerEnd 
@@ -124,7 +130,7 @@ const Lobby = () => {
   };
 
   if (!lobby || !players.length) return <div className="min-h-screen flex items-center justify-center"><p className="text-xl">Loading...</p></div>;
-  if (lobby.status === 'waiting') return <LobbyWaiting lobby={lobby} players={players} myPlayerId={myPlayerId} onStartGame={handleStartGame} />;
+  if (lobby.status === 'waiting') return <LobbyWaiting lobby={lobby} players={players} myPlayerId={myPlayerId} onStartGame={handleStartGame} onUpdateSettings={handleUpdateSettings} />;
 
   const myPlayer = players.find(p => p.id === myPlayerId);
   const isMyTurn = myPlayer?.id === players[lobby.current_player_index]?.id;
