@@ -4,7 +4,12 @@ export interface Lobby {
   host_id: string;
   status: "waiting" | "in_progress" | "completed";
   num_players: number;
-  current_phase: "setup" | "roleReveal" | "guessing" | "results";
+  current_phase:
+    | "setup"
+    | "roleSelection"
+    | "roleReveal"
+    | "guessing"
+    | "results";
   current_player_index: number;
   current_guess_target: number;
   created_at: string;
@@ -19,6 +24,7 @@ export interface LobbyPlayer {
   role: string | null;
   role_description: string;
   nicknames: string;
+  ranked_choices?: string[];
   guesses: Record<string, string>;
   score: number;
   joined_at: string;

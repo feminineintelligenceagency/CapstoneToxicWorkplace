@@ -35,7 +35,7 @@ export const roleDescription: Record<Role, string> = {
     "their tendency to share confidential or speculative information complicates their relationships with colleagues.",
   "The Charmer":
     "The Charmer is a master of first impressions, exuding charisma and confidence that make them extremely likable and engaging at first" +
-    "encounter.Beneath their polished exterior, however, lies a calculating individual with selfish motives and a lack of empathy for others." +
+    "encounter. Beneath their polished exterior, however, lies a calculating individual with selfish motives and a lack of empathy for others." +
     "Their primary goal is to manipulate situations and people to their advantage, often at the expense of others' well-being.",
   "The Complainer":
     "The Complainer is the person everyone knows will have something negative to say about any situation. They frequently voice dissatisfaction" +
@@ -156,7 +156,12 @@ export const roleNever: Record<Role, string[]> = {
   ],
 };
 
-export type GamePhase = "setup" | "roleReveal" | "guessing" | "results";
+export type GamePhase =
+  | "setup"
+  | "roleSelection"
+  | "roleReveal"
+  | "guessing"
+  | "results";
 
 export interface GameState {
   phase: GamePhase;
