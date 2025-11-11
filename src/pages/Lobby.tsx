@@ -6,9 +6,8 @@ import { RoleReveal } from '@/components/RoleReveal';
 import { RoleplayTimer } from '@/components/RoleplayTimer';
 import { GuessingPhase } from '@/components/GuessingPhase';
 import { Results } from '@/components/Results';
-import { BASE_SCENARIOS, RoleDetails } from '@/types/game';
-
-const shuffle = <T,>(arr: T[]): T[] => { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+import RoleSelection from '@/components/RoleSelection';
+import { BASE_SCENARIOS } from '@/types/game';
 
 const Lobby = () => {
   const { code } = useParams<{ code: string }>();
@@ -19,38 +18,12 @@ const Lobby = () => {
 
   const handleStartGame = async () => {
     if (!lobby || players.length < 2) return;
-    
-    // Select scenario (default to first one for now)
-    const selectedScenario = BASE_SCENARIOS[0];
-    if (!selectedScenario) {
-      console.error("No scenarios available");
-      return;
-    }
-
-    // Get available roles from the scenario
-    const availableRoles = [...selectedScenario.roles];
-    
-    // If we need more roles than available, duplicate them
-    const rolesPool: RoleDetails[] = [];
-    while (rolesPool.length < players.length) {
-      rolesPool.push(...availableRoles);
-    }
-    
-    // Shuffle and assign roles
-    const assignedRoles = shuffle(rolesPool.slice(0, players.length));
-
-    // Assign full role information to each player
-    for (let i = 0; i < players.length; i++) {
-      const roleDetails = assignedRoles[i];
-      await updatePlayer(players[i].id, {
-        role: roleDetails.personality,
-        role_description: roleDetails.roleDescription,
-        nicknames: roleDetails.roleName,
-        guidelines: roleDetails.guidelines, // Store guidelines as JSONB array
-      });
-    }
-    
-    await updateLobby({ status: 'in_progress', current_phase: 'roleReveal', current_player_index: 0 });
+    // Move game into the role selection phase where players submit ranked ballots.
+    await updateLobby({
+      status: "in_progress",
+      current_phase: "roleSelection",
+      current_player_index: 0,
+    });
   };
 
   const handleUpdateSettings = async (settings: {roleplay_timer_duration: number}) => {
@@ -169,6 +142,16 @@ const Lobby = () => {
   const hostPlayer = players.find(p => p.player_number === 1);
   const isHost = hostPlayer?.id === myPlayerId;
 
+  if (lobby.current_phase === "roleSelection")
+    return (
+      <RoleSelection
+        lobby={lobby}
+        players={players}
+        myPlayerId={myPlayerId}
+        updatePlayer={updatePlayer}
+        updateLobby={updateLobby}
+      />
+    );
   if (lobby.current_phase === 'roleReveal') return <RoleReveal players={players} myPlayerId={myPlayerId} onNext={handleNextPhase} />;
   if (lobby.current_phase === 'roleplay') return <RoleplayTimer lobby={lobby} isHost={isHost} onTimerEnd={handleNextPhase} />;
   if (lobby.current_phase === 'guessing') {

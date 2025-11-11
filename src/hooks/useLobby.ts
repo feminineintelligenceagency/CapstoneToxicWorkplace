@@ -37,12 +37,13 @@ export const useLobby = (lobbyCode?: string) => {
         if (playersData) {
           console.log('Fetched players:', playersData); // Debug log
           console.log('Current myPlayerId:', myPlayerId); // Debug log
-          // Map players data - role_description, nicknames, and guidelines should now be in database
+          // Map players data - role_description, nicknames, guidelines, and ranked_choices should now be in database
           const mappedPlayers: LobbyPlayer[] = playersData.map((p: any) => ({
             ...p,
             role_description: p.role_description ?? '',
             nicknames: p.nicknames ?? '',
             guidelines: (p.guidelines as readonly string[]) || [],
+            ranked_choices: (p.ranked_choices as string[]) || undefined,
             guesses: (p.guesses as Record<string, string>) || {},
             score: p.score ?? 0,
           }));
@@ -62,12 +63,13 @@ export const useLobby = (lobbyCode?: string) => {
           if (lobby) {
             const { data } = await supabase.from('lobby_players').select('*').eq('lobby_id', lobby.id).order('player_number', { ascending: true });
             if (data) {
-              // Map players data - role_description, nicknames, and guidelines should now be in database
+              // Map players data - role_description, nicknames, guidelines, and ranked_choices should now be in database
               const mappedPlayers: LobbyPlayer[] = data.map((p: any) => ({
                 ...p,
                 role_description: p.role_description ?? '',
                 nicknames: p.nicknames ?? '',
                 guidelines: (p.guidelines as readonly string[]) || [],
+                ranked_choices: (p.ranked_choices as string[]) || undefined,
                 guesses: (p.guesses as Record<string, string>) || {},
                 score: p.score ?? 0,
               }));
