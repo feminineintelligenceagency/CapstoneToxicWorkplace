@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useLobby } from '@/hooks/useLobby';
 import { RoleReveal } from '@/components/RoleReveal';
+import { RoleplayTimer } from '@/components/RoleplayTimer';
 import { GuessingPhase } from '@/components/GuessingPhase';
 import { Results } from '@/components/Results';
 import { Card } from '@/components/ui/card';
@@ -46,6 +47,8 @@ const Game = () => {
   // Game phases with proper props
   const myPlayer = players.find(p => p.id === myPlayerId);
   const isMyTurn = myPlayer?.id === players[lobby.current_player_index]?.id;
+  const hostPlayer = players.find(p => p.player_number === 1);
+  const isHost = hostPlayer?.id === myPlayerId;
 
   switch (lobby.current_phase) {
     case 'roleReveal':
@@ -53,6 +56,12 @@ const Game = () => {
         players={players} 
         myPlayerId={myPlayerId} 
         onNext={() => {}} // This should be handled by the lobby component
+      />;
+    case 'roleplay':
+      return <RoleplayTimer 
+        lobby={lobby} 
+        isHost={isHost} 
+        onTimerEnd={() => {}} // This should be handled by the lobby component
       />;
     case 'guessing':
       return <GuessingPhase 

@@ -4,7 +4,8 @@ export interface Lobby {
   host_id: string;
   status: "waiting" | "in_progress" | "completed";
   num_players: number;
-  current_phase: "setup" | "roleReveal" | "guessing" | "results";
+  current_phase: "setup" | "roleReveal" | "roleplay" | "guessing" | "results";
+  roleplay_timer_end?: string;
   current_player_index: number;
   current_guess_target: number;
   created_at: string;

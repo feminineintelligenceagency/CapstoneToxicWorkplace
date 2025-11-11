@@ -1,14 +1,26 @@
 import { GameProvider } from "@/contexts/GameContext";
 import { GameSetup } from "@/components/GameSetup";
 import { RoleReveal } from "@/components/RoleReveal";
+import { RoleplayTimer } from "@/components/RoleplayTimer";
 import { GuessingPhase } from "@/components/GuessingPhase";
 import { Results } from "@/components/Results";
 import { useGame } from "@/contexts/GameContext";
 import { Player, Role } from "@/types/game";
-import { LobbyPlayer } from "@/types/lobby";
+import { LobbyPlayer, Lobby } from "@/types/lobby";
+import { useState, useEffect } from "react";
 
 const SoloGame = () => {
   const { gameState, nextPhase, makeGuess, resetGame } = useGame();
+  const [roleplayTimerEnd, setRoleplayTimerEnd] = useState<string | null>(null);
+
+  // Set timer when transitioning to roleplay phase
+  useEffect(() => {
+    if (gameState.phase === "roleplay" && !roleplayTimerEnd) {
+      setRoleplayTimerEnd(new Date(Date.now() + 5 * 60 * 1000).toISOString());
+    } else if (gameState.phase !== "roleplay") {
+      setRoleplayTimerEnd(null);
+    }
+  }, [gameState.phase, roleplayTimerEnd]);
 
   // Convert Player[] to LobbyPlayer[] for component compatibility
   const convertPlayersToLobbyPlayers = (players: Player[]): LobbyPlayer[] => {
@@ -35,6 +47,10 @@ const SoloGame = () => {
     nextPhase();
   };
 
+  const handleTimerEnd = () => {
+    nextPhase();
+  };
+
   const handleGuess = (targetId: string, role: Role) => {
     makeGuess(Number(targetId), role);
     // Don't call handleNext here - makeGuess now handles turn advancement internally
@@ -52,6 +68,32 @@ const SoloGame = () => {
     case "roleReveal":
       return (
         <RoleReveal players={lobbyPlayers} myPlayerId="1" onNext={handleNext} />
+      );
+    case "roleplay":
+      // For solo play, create a mock lobby with timer
+      if (!roleplayTimerEnd) {
+        // Timer not set yet, wait for useEffect to set it
+        return <div className="min-h-screen flex items-center justify-center"><p>Loading...</p></div>;
+      }
+      const soloLobby: Lobby = {
+        id: "solo",
+        code: "SOLO",
+        host_id: "1",
+        status: "in_progress",
+        num_players: 1,
+        current_phase: "roleplay",
+        current_player_index: 0,
+        current_guess_target: 0,
+        roleplay_timer_end: roleplayTimerEnd,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+      return (
+        <RoleplayTimer
+          lobby={soloLobby}
+          isHost={true}
+          onTimerEnd={handleTimerEnd}
+        />
       );
     case "guessing":
       return (

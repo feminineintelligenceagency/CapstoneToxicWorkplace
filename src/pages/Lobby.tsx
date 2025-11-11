@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useLobby } from '@/hooks/useLobby';
 import { LobbyWaiting } from '@/components/LobbyWaiting';
 import { RoleReveal } from '@/components/RoleReveal';
+import { RoleplayTimer } from '@/components/RoleplayTimer';
 import { GuessingPhase } from '@/components/GuessingPhase';
 import { Results } from '@/components/Results';
 import { BASE_ROLES, Role } from '@/types/game';
@@ -28,7 +29,21 @@ const Lobby = () => {
   const handleNextPhase = async () => {
     if (!lobby || !players.length) return;
     if (lobby.current_phase === 'roleReveal') {
-      await updateLobby({ current_phase: 'guessing', current_player_index: 0, current_guess_target: 1 });
+      // 5 minute timer for roleplay phase
+      const timerEnd = new Date(Date.now() + 1 * 60 * 1000).toISOString();
+      await updateLobby({ 
+        current_phase: 'roleplay', 
+        roleplay_timer_end: timerEnd 
+      });
+      return;
+    }
+    if (lobby.current_phase === 'roleplay') {
+      // Transition from roleplay to guessing phase
+      await updateLobby({ 
+        current_phase: 'guessing', 
+        current_player_index: 0, 
+        current_guess_target: 1 
+      });
       return;
     }
     if (lobby.current_phase === 'guessing') {
@@ -113,8 +128,11 @@ const Lobby = () => {
 
   const myPlayer = players.find(p => p.id === myPlayerId);
   const isMyTurn = myPlayer?.id === players[lobby.current_player_index]?.id;
+  const hostPlayer = players.find(p => p.player_number === 1);
+  const isHost = hostPlayer?.id === myPlayerId;
 
   if (lobby.current_phase === 'roleReveal') return <RoleReveal players={players} myPlayerId={myPlayerId} onNext={handleNextPhase} />;
+  if (lobby.current_phase === 'roleplay') return <RoleplayTimer lobby={lobby} isHost={isHost} onTimerEnd={handleNextPhase} />;
   if (lobby.current_phase === 'guessing') return <GuessingPhase lobby={lobby} players={players} myPlayerId={myPlayerId} isMyTurn={isMyTurn} onGuess={handleGuess} onNext={handleNextPhase} />;
   if (lobby.current_phase === 'results') return <Results players={players} onReset={() => navigate('/')} />;
   return null;

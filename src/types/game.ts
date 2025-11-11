@@ -156,7 +156,7 @@ export const roleNever: Record<Role, string[]> = {
   ],
 };
 
-export type GamePhase = "setup" | "roleReveal" | "guessing" | "results";
+export type GamePhase = "setup" | "roleReveal" | "roleplay" | "guessing" | "results";
 
 export interface GameState {
   phase: GamePhase;

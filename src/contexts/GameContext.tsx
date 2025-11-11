@@ -6,6 +6,8 @@ import {
   BASE_ROLES,
   roleDescription,
   nicknames,
+  roleAlways,
+  roleNever,
 } from "@/types/game";
 
 interface GameContextType {
@@ -52,6 +54,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       nicknames: nicknames[assignedRoles[i]],
       guesses: {} as Record<number, Role>,
       score: 0,
+      always: roleAlways[assignedRoles[i]],
+      never: roleNever[assignedRoles[i]],
     }));
 
     setGameState({
@@ -65,6 +69,13 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const nextPhase = () => {
     setGameState((prev) => {
       if (prev.phase === "roleReveal") {
+        return {
+          ...prev,
+          phase: "roleplay",
+        };
+      }
+
+      if (prev.phase === "roleplay") {
         return {
           ...prev,
           phase: "guessing",
