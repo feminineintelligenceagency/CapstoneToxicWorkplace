@@ -8,8 +8,6 @@ interface RoleplayTimerProps {
   onTimerEnd: () => void;
 }
 
-const ROLEPLAY_DURATION_MINUTES = 5;
-
 export const RoleplayTimer = ({ lobby, isHost, onTimerEnd }: RoleplayTimerProps) => {
   const [timeRemaining, setTimeRemaining] = useState<number>(0);
   const [isExpired, setIsExpired] = useState(false);
@@ -104,6 +102,15 @@ export const RoleplayTimer = ({ lobby, isHost, onTimerEnd }: RoleplayTimerProps)
                 Timer expired. Transitioning to guessing phase...
               </p>
             )}
+
+            <div className="pt-4 border-t">
+              <p className="text-xl text-muted-foreground">
+                Scenario: 
+              </p>
+              <p className="text-lg text-muted-foreground">
+                
+              </p>
+            </div>
 
             <div className="pt-4 border-t">
               <p className="text-sm text-muted-foreground">

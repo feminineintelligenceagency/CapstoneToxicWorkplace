@@ -34,9 +34,9 @@ export const RoleReveal = ({
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-2xl space-y-8">
         <div className="text-center space-y-2">
-          <h2 className="text-3xl font-bold">Your Secret Role</h2>
+          <h2 className="text-3xl font-bold">Your Secret Personality</h2>
           <p className="text-muted-foreground">
-            View your role and prepare for the roleplay phase
+            View your personality and prepare for the roleplay phase
           </p>
         </div>
 
@@ -115,7 +115,7 @@ export const RoleReveal = ({
                   </p>
                   <p className="text-sm text-secondary-foreground leading-relaxed">
                     During the guessing phase your goal is to correctly identify
-                    other players' roles. Be strategic — each correct guess
+                    other players' personalities. Be strategic — each correct guess
                     helps increase your score and brings you closer to winning.
                   </p>
                 </div>
