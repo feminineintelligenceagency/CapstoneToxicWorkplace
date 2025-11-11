@@ -174,6 +174,7 @@ const Lobby = () => {
         myPlayerId={myPlayerId}
         updatePlayer={updatePlayer}
         updateLobby={updateLobby}
+        onNext={handleNextPhase}
       />
     );
   if (lobby.current_phase === "roleReveal")

@@ -13,6 +13,7 @@ interface RoleSelectionProps {
     updates: Partial<LobbyPlayer>,
   ) => Promise<void>;
   updateLobby: (updates: Partial<Lobby>) => Promise<void>;
+  onNext: () => void;
 }
 
 /**
@@ -34,6 +35,7 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
   myPlayerId,
   updatePlayer,
   updateLobby,
+  onNext,
 }) => {
   const [localRanks, setLocalRanks] = useState<Record<string, number | null>>(
     {},
@@ -102,6 +104,7 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
     const ballot = buildBallotFromLocal();
     await updatePlayer(myPlayerId, { ranked_choices: ballot });
     setSubmitted(true);
+    // onNext();
   };
 
   // Check whether current player already submitted a ballot (persisted in DB)
