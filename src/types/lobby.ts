@@ -9,6 +9,7 @@ export interface Lobby {
   roleplay_timer_duration?: number; // in minutes
   current_player_index: number;
   current_guess_target: number;
+  scenario_index?: number; // Index of selected scenario
   created_at: string;
   updated_at: string;
 }

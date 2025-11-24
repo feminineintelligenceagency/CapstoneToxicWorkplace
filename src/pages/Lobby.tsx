@@ -18,11 +18,17 @@ const Lobby = () => {
 
   const handleStartGame = async () => {
     if (!lobby || players.length < 2) return;
+    // Randomize scenario on game start if not already set
+    let scenarioIndex = lobby.scenario_index;
+    if (scenarioIndex === undefined || scenarioIndex === null) {
+      scenarioIndex = Math.floor(Math.random() * BASE_SCENARIOS.length);
+    }
     // Move game into the role selection phase where players submit ranked ballots.
     await updateLobby({
       status: "in_progress",
       current_phase: "roleSelection",
       current_player_index: 0,
+      scenario_index: scenarioIndex,
     });
   };
 
@@ -153,10 +159,15 @@ const Lobby = () => {
       />
     );
   if (lobby.current_phase === 'roleReveal') return <RoleReveal players={players} myPlayerId={myPlayerId} onNext={handleNextPhase} />;
-  if (lobby.current_phase === 'roleplay') return <RoleplayTimer lobby={lobby} isHost={isHost} onTimerEnd={handleNextPhase} />;
+  if (lobby.current_phase === 'roleplay') {
+    const scenarioIndex = lobby.scenario_index ?? 0;
+    const selectedScenario = BASE_SCENARIOS[scenarioIndex];
+    return <RoleplayTimer lobby={lobby} isHost={isHost} onTimerEnd={handleNextPhase} scenarioDescription={selectedScenario?.description} />;
+  }
   if (lobby.current_phase === 'guessing') {
-    // first scenario is defaulted here for now
-    const selectedScenario = BASE_SCENARIOS[0];
+    // Get scenario based on stored index
+    const scenarioIndex = lobby.scenario_index ?? 0;
+    const selectedScenario = BASE_SCENARIOS[scenarioIndex];
     const availablePersonalities = selectedScenario?.roles.map(r => r.personality) || [];
     return <GuessingPhase lobby={lobby} players={players} myPlayerId={myPlayerId} isMyTurn={isMyTurn} onGuess={handleGuess} onNext={handleNextPhase} availablePersonalities={availablePersonalities} />;
   }

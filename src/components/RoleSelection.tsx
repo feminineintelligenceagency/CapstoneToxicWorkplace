@@ -41,8 +41,19 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
   const [submitted, setSubmitted] = useState(false);
   const numSlots = players.length;
 
-  // Select scenario (default to first one for now)
-  const selectedScenario = BASE_SCENARIOS[0];
+  // Randomize scenario selection if not already set (explicitly check for null/undefined)
+  useEffect(() => {
+    if (lobby.scenario_index === undefined || lobby.scenario_index === null) {
+      const randomIndex = Math.floor(Math.random() * BASE_SCENARIOS.length);
+      updateLobby({ scenario_index: randomIndex });
+    }
+  }, [lobby.scenario_index, updateLobby]);
+
+  // Select scenario based on stored index
+  const selectedScenario = lobby.scenario_index !== undefined 
+    ? BASE_SCENARIOS[lobby.scenario_index] 
+    : BASE_SCENARIOS[0];
+    
   if (!selectedScenario) {
     return (
       <div className="min-h-screen flex items-center justify-center">

@@ -6,9 +6,10 @@ interface RoleplayTimerProps {
   lobby: Lobby;
   isHost: boolean;
   onTimerEnd: () => void;
+  scenarioDescription?: string;
 }
 
-export const RoleplayTimer = ({ lobby, isHost, onTimerEnd }: RoleplayTimerProps) => {
+export const RoleplayTimer = ({ lobby, isHost, onTimerEnd, scenarioDescription }: RoleplayTimerProps) => {
   const [timeRemaining, setTimeRemaining] = useState<number>(0);
   const [isExpired, setIsExpired] = useState(false);
   const hasTriggeredRef = useRef(false);
@@ -103,14 +104,16 @@ export const RoleplayTimer = ({ lobby, isHost, onTimerEnd }: RoleplayTimerProps)
               </p>
             )}
 
-            <div className="pt-4 border-t">
-              <p className="text-xl text-muted-foreground">
-                Scenario: 
-              </p>
-              <p className="text-lg text-muted-foreground">
-                
-              </p>
-            </div>
+            {scenarioDescription && (
+              <div className="pt-4 border-t">
+                <p className="text-sm text-muted-foreground uppercase tracking-wide mb-2">
+                  Scenario Context
+                </p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {scenarioDescription}
+                </p>
+              </div>
+            )}
 
             <div className="pt-4 border-t">
               <p className="text-sm text-muted-foreground">
