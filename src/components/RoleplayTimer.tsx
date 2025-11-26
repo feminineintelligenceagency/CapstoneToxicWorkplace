@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from 'react';
-import { Card } from '@/components/ui/card';
-import { Lobby } from '@/types/lobby';
+import { useEffect, useState, useRef } from "react";
+import { Card } from "@/components/ui/card";
+import { Lobby } from "@/types/lobby";
 
 interface RoleplayTimerProps {
   lobby: Lobby;
@@ -9,7 +9,12 @@ interface RoleplayTimerProps {
   scenarioDescription?: string;
 }
 
-export const RoleplayTimer = ({ lobby, isHost, onTimerEnd, scenarioDescription }: RoleplayTimerProps) => {
+export const RoleplayTimer = ({
+  lobby,
+  isHost,
+  onTimerEnd,
+  scenarioDescription,
+}: RoleplayTimerProps) => {
   const [timeRemaining, setTimeRemaining] = useState<number>(0);
   const [isExpired, setIsExpired] = useState(false);
   const hasTriggeredRef = useRef(false);
@@ -41,7 +46,7 @@ export const RoleplayTimer = ({ lobby, isHost, onTimerEnd, scenarioDescription }
     const interval = setInterval(() => {
       const remaining = calculateRemaining();
       setTimeRemaining(remaining);
-      
+
       if (remaining <= 0 && !hasTriggeredRef.current) {
         setIsExpired(true);
         hasTriggeredRef.current = true;
@@ -58,13 +63,13 @@ export const RoleplayTimer = ({ lobby, isHost, onTimerEnd, scenarioDescription }
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
   const getTimeColor = (seconds: number): string => {
-    if (seconds <= 30) return 'text-destructive';
-    if (seconds <= 60) return 'text-orange-500';
-    return 'text-primary';
+    if (seconds <= 30) return "text-destructive";
+    if (seconds <= 60) return "text-orange-500";
+    return "text-primary";
   };
 
   return (
@@ -80,12 +85,12 @@ export const RoleplayTimer = ({ lobby, isHost, onTimerEnd, scenarioDescription }
         <Card className="gradient-card p-12 shadow-card">
           <div className="text-center space-y-6">
             <div className="space-y-2">
-              <p className="text-sm text-muted-foreground uppercase tracking-wide">
+              <p className="text-lg font-semibold text-muted-foreground uppercase tracking-wide">
                 Time Remaining
               </p>
               <div
                 className={`text-8xl font-bold font-mono transition-colors duration-300 ${getTimeColor(
-                  timeRemaining
+                  timeRemaining,
                 )}`}
               >
                 {formatTime(timeRemaining)}
@@ -93,7 +98,7 @@ export const RoleplayTimer = ({ lobby, isHost, onTimerEnd, scenarioDescription }
             </div>
 
             {timeRemaining <= 30 && timeRemaining > 0 && (
-              <p className="text-sm text-destructive animate-pulse">
+              <p className="text-lg text-destructive animate-pulse">
                 Time is running out!
               </p>
             )}
@@ -106,10 +111,10 @@ export const RoleplayTimer = ({ lobby, isHost, onTimerEnd, scenarioDescription }
 
             {scenarioDescription && (
               <div className="pt-4 border-t">
-                <p className="text-sm text-muted-foreground uppercase tracking-wide mb-2">
+                <p className="text-lg font-bold text-muted-foreground uppercase tracking-wide mb-2">
                   Scenario Context
                 </p>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-base text-muted-foreground leading-relaxed">
                   {scenarioDescription}
                 </p>
               </div>
@@ -117,8 +122,8 @@ export const RoleplayTimer = ({ lobby, isHost, onTimerEnd, scenarioDescription }
 
             <div className="pt-4 border-t">
               <p className="text-sm text-muted-foreground">
-                Use this time to roleplay your character and observe others.
-                The guessing phase will begin automatically when the timer ends.
+                Use this time to roleplay your character and observe others. The
+                guessing phase will begin automatically when the timer ends.
               </p>
             </div>
           </div>
@@ -127,4 +132,3 @@ export const RoleplayTimer = ({ lobby, isHost, onTimerEnd, scenarioDescription }
     </div>
   );
 };
-
