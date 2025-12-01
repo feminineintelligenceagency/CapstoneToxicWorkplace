@@ -25,7 +25,7 @@ const App = () => {
         width: "100%",
         zIndex: 1000,
         backgroundColor: "240 18% 8%",
-        backdropFilter: "blur(10px)",
+        backdropFilter: "blur(9px)",
       }}
       className="text-muted-foreground"
     >
@@ -34,8 +34,6 @@ const App = () => {
           display: "flex",
           justifyContent: "center",
           gap: "30px",
-          // borderBottom: "2px solid #444",
-          // paddingBottom: "10px",
         }}
       >
         <Link to="/" style={{ color: "white", textDecoration: "none" }}>
