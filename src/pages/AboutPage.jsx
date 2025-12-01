@@ -7,7 +7,14 @@ export default function About() {
   const roles = Object.keys(rolesData);
 
   return (
-    <div style={{ Width: "100%", lineHeight: "1.6", textAlign: "left" }}>
+    <div
+      style={{
+        Width: "100%",
+        lineHeight: "1.6",
+        textAlign: "left",
+        marginTop: "10px",
+      }}
+    >
       <h2
         style={{
           padding: "20px",
