@@ -92,7 +92,7 @@ export default function About() {
           <h2 style={{ textAlign: "center" }} className="text-2xl">
             {rolesData[selectedRole].roleName}
           </h2>
-          <h3 style={{ textAlign: "center" }} className="text-base">
+          <h3 style={{ textAlign: "center" }} className="text-muted-foreground">
             {" "}
             A.K.A {rolesData[selectedRole].nickname}
           </h3>
