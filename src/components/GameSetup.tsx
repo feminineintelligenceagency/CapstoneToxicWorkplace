@@ -11,8 +11,8 @@ export const GameSetup = () => {
 
   const handleStart = () => {
     const num = parseInt(numPlayers, 10);
-    if (isNaN(num) || num < 2 || num > 50) {
-      setError('Please enter a number between 2 and 50');
+    if (isNaN(num) || num < 2 || num > 5) {
+      setError('Please enter a number between 2 and 5');
       return;
     }
     setError('');
