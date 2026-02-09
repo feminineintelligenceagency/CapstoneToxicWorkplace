@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const lobbyGuessFetch = async () => {
   const url = "https://ai.capstone.ssree.dev/api/player";
-  let c = await fetch(url);
+  const c = await fetch(url);
   return (await c.json()).body;
 };
 
@@ -23,21 +23,35 @@ const LobbyEntry = () => {
   const navigate = useNavigate();
   const { createLobby, joinLobby, loading } = useLobby();
   const { toast } = useToast();
+  const cultJamEnabled = false;
+  const toxicFamilyEnabled = false;
 
   const handleCultJamClick = (isCreate: boolean) => {
-    toast({
-      title: "Coming Soon",
-      description: "Cult Jam is not available yet!",
-      variant: "destructive",
-    });
+    if (!cultJamEnabled) {
+      toast({
+        title: "Coming Soon",
+        description: "Cult Jam is not available yet!",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const state = { slug: "cultJam" };
+    history.pushState(state, "");
   };
 
   const handleToxicFamilyClick = (isCreate: boolean) => {
-    toast({
-      title: "Coming Soon",
-      description: "Toxic Family is not available yet!",
-      variant: "destructive",
-    });
+    if (!toxicFamilyEnabled) {
+      toast({
+        title: "Coming Soon",
+        description: "Toxic Family is not available yet!",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const state = { slug: "toxicFamily" };
+    history.pushState(state, "");
   };
 
   const handleToxicWorkplaceCreate = () => {
