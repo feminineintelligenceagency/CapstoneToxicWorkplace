@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { Shield, LogIn, Plus } from 'lucide-react';
 import { useLobby } from '@/hooks/useLobby';
 import { useToast } from '@/hooks/use-toast';
@@ -83,7 +84,8 @@ const LobbyEntry = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-48">
 
             {/* CARD 1 */}
-            <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center">
+            <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative">
+                <Badge className="absolute top-4 right-4 bg-red-600 hover:bg-red-700">Coming Soon</Badge>
                 <div className="space-y-2">
                     <div className="flex justify-center">
                         <div className="p-3 rounded-full gradient-primary shadow-glow">
@@ -92,7 +94,7 @@ const LobbyEntry = () => {
                     </div>
                     <h2 className="text-2xl font-bold">Cult Jam</h2>
                     <p className="text-sm text-muted-foreground">
-                        Multiplayer Social Deduction Game
+                        Cult Identification Game
                     </p>
                 </div>
 
@@ -118,7 +120,8 @@ const LobbyEntry = () => {
             </div>
 
             {/* CARD 2 */}
-            <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center">
+            <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative">
+                <Badge className="absolute top-4 right-4 opacity-1">New</Badge>
                 <div className="space-y-2">
                     <div className="flex justify-center">
                         <div className="p-3 rounded-full gradient-primary shadow-glow">
@@ -127,7 +130,7 @@ const LobbyEntry = () => {
                     </div>
                     <h2 className="text-2xl font-bold">Toxic Workplace</h2>
                     <p className="text-sm text-muted-foreground">
-                        Multiplayer Social Deduction Game
+                        Toxic Workplace Social Deduction Game
                     </p>
                 </div>
 
@@ -153,7 +156,8 @@ const LobbyEntry = () => {
             </div>
 
             {/* CARD 3 */}
-            <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center">
+            <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative">
+                <Badge className="absolute top-4 right-4 bg-red-600 hover:bg-red-700">Coming Soon</Badge>
                 <div className="space-y-2">
                     <div className="flex justify-center">
                         <div className="p-3 rounded-full gradient-primary shadow-glow">
@@ -162,7 +166,7 @@ const LobbyEntry = () => {
                     </div>
                     <h2 className="text-2xl font-bold">Toxic Family</h2>
                     <p className="text-sm text-muted-foreground">
-                        Multiplayer Social Deduction Game
+                        Toxic Family Identification Game
                     </p>
                 </div>
 
