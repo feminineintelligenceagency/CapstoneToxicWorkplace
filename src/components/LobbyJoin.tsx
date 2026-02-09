@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card } from '@/components/ui/card';
-import { Shield, Users, LogIn } from 'lucide-react';
-import { useLobby } from '@/hooks/useLobby';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Shield, Users, LogIn } from "lucide-react";
+import { useLobby } from "@/hooks/useLobby";
+import { useNavigate } from "react-router-dom";
 
 export const LobbyJoin = () => {
-  const [lobbyCode, setLobbyCode] = useState('');
-  const [numPlayers, setNumPlayers] = useState('4');
-  const [mode, setMode] = useState<'menu' | 'create' | 'join'>('menu');
+  const [lobbyCode, setLobbyCode] = useState("");
+  const [numPlayers, setNumPlayers] = useState("4");
+  const [mode, setMode] = useState<"menu" | "create" | "join">("menu");
   const { createLobby, joinLobby, loading } = useLobby();
   const navigate = useNavigate();
 
@@ -27,14 +27,14 @@ export const LobbyJoin = () => {
 
   const handleJoin = async () => {
     if (!lobbyCode.trim()) return;
-    
-    const success = await joinLobby(lobbyCode.toUpperCase(), 'Player');
+
+    const success = await joinLobby(lobbyCode.toUpperCase(), "Player");
     if (success) {
       navigate(`/lobby/${lobbyCode.toUpperCase()}`);
     }
   };
 
-  if (mode === 'menu') {
+  if (mode === "menu") {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-md space-y-8 text-center">
@@ -53,20 +53,20 @@ export const LobbyJoin = () => {
           </div>
 
           <div className="gradient-card rounded-xl p-8 shadow-card space-y-4">
-            <Button 
-              onClick={() => setMode('create')} 
-              variant="game" 
-              size="xl" 
+            <Button
+              onClick={() => setMode("create")}
+              variant="game"
+              size="xl"
               className="w-full"
             >
               <Users className="mr-2" />
               Create Lobby
             </Button>
 
-            <Button 
-              onClick={() => setMode('join')} 
-              variant="accent" 
-              size="xl" 
+            <Button
+              onClick={() => setMode("join")}
+              variant="accent"
+              size="xl"
               className="w-full"
             >
               <LogIn className="mr-2" />
@@ -78,7 +78,7 @@ export const LobbyJoin = () => {
     );
   }
 
-  if (mode === 'create') {
+  if (mode === "create") {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-md space-y-8">
@@ -104,20 +104,20 @@ export const LobbyJoin = () => {
             </div>
 
             <div className="space-y-3">
-              <Button 
-                onClick={handleCreate} 
-                variant="game" 
-                size="xl" 
+              <Button
+                onClick={handleCreate}
+                variant="game"
+                size="xl"
                 className="w-full"
                 disabled={loading}
               >
-                {loading ? 'Creating...' : 'Create Lobby'}
+                {loading ? "Creating..." : "Create Lobby"}
               </Button>
 
-              <Button 
-                onClick={() => setMode('menu')} 
-                variant="secondary" 
-                size="lg" 
+              <Button
+                onClick={() => setMode("menu")}
+                variant="secondary"
+                size="lg"
                 className="w-full"
               >
                 Back
@@ -154,20 +154,20 @@ export const LobbyJoin = () => {
           </div>
 
           <div className="space-y-3">
-            <Button 
-              onClick={handleJoin} 
-              variant="accent" 
-              size="xl" 
+            <Button
+              onClick={handleJoin}
+              variant="accent"
+              size="xl"
               className="w-full"
               disabled={loading || !lobbyCode.trim()}
             >
-              {loading ? 'Joining...' : 'Join Lobby'}
+              {loading ? "Joining..." : "Join Lobby"}
             </Button>
 
-            <Button 
-              onClick={() => setMode('menu')} 
-              variant="secondary" 
-              size="lg" 
+            <Button
+              onClick={() => setMode("menu")}
+              variant="secondary"
+              size="lg"
               className="w-full"
             >
               Back

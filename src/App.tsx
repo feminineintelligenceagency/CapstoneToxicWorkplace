@@ -36,13 +36,13 @@ const App = () => {
           gap: "30px",
         }}
       >
-        <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+        <Link to="/" style={{ color: "black", textDecoration: "none" }}>
           Play
         </Link>
-        <Link to="/about" style={{ color: "white", textDecoration: "none" }}>
+        <Link to="/about" style={{ color: "black", textDecoration: "none" }}>
           About
         </Link>
-        <Link to="/contact" style={{ color: "white", textDecoration: "none" }}>
+        <Link to="/contact" style={{ color: "black", textDecoration: "none" }}>
           Contact
         </Link>
       </nav>

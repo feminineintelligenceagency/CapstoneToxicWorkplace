@@ -1,35 +1,34 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card } from '@/components/ui/card';
-import { Shield, LogIn, Plus } from 'lucide-react';
-import { useLobby } from '@/hooks/useLobby';
-
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Shield, LogIn, Plus } from "lucide-react";
+import { useLobby } from "@/hooks/useLobby";
 
 const lobbyGuessFetch = async () => {
-	const url = "https://ai.capstone.ssree.dev/api/player";
-	let c = await fetch(url);
-	return (await c.json()).body;
+  const url = "https://ai.capstone.ssree.dev/api/player";
+  let c = await fetch(url);
+  return (await c.json()).body;
 };
 
 const LobbyEntry = () => {
-  const [mode, setMode] = useState<'menu' | 'create' | 'join'>('menu');
-  const [lobbyCode, setLobbyCode] = useState('');
-  const [playerName, setPlayerName] = useState('');
-  const [numPlayers, setNumPlayers] = useState('4');
-  const [error, setError] = useState('');
+  const [mode, setMode] = useState<"menu" | "create" | "join">("menu");
+  const [lobbyCode, setLobbyCode] = useState("");
+  const [playerName, setPlayerName] = useState("");
+  const [numPlayers, setNumPlayers] = useState("4");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { createLobby, joinLobby, loading } = useLobby();
 
   const handleCreateLobby = async () => {
     const num = parseInt(numPlayers, 10);
     if (isNaN(num) || num < 2 || num > 50) {
-      setError('Please enter a number between 2 and 50');
+      setError("Please enter a number between 2 and 50");
       return;
     }
 
-    const playerNameToUse = playerName.trim() || 'Player 1';
+    const playerNameToUse = playerName.trim() || "Player 1";
     const code = await createLobby(num, playerNameToUse);
     if (code) {
       // Don't call joinLobby again - createLobby already adds the first player
@@ -39,20 +38,20 @@ const LobbyEntry = () => {
 
   const handleJoinLobby = async () => {
     if (!lobbyCode.trim()) {
-      setError('Please enter a lobby code');
+      setError("Please enter a lobby code");
       return;
     }
 
-    const playerNameToUse = playerName.trim() || 'Player';
-    console.log('LobbyEntry - Player name to use:', playerNameToUse); // Debug log
-    console.log('LobbyEntry - Raw player name input:', playerName); // Debug log
+    const playerNameToUse = playerName.trim() || "Player";
+    console.log("LobbyEntry - Player name to use:", playerNameToUse); // Debug log
+    console.log("LobbyEntry - Raw player name input:", playerName); // Debug log
     const success = await joinLobby(lobbyCode.toUpperCase(), playerNameToUse);
     if (success) {
       navigate(`/lobby/${lobbyCode.toUpperCase()}`);
     }
   };
 
-  if (mode === 'menu') {
+  if (mode === "menu") {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-md space-y-8 text-center">
@@ -72,7 +71,7 @@ const LobbyEntry = () => {
 
           <div className="gradient-card rounded-xl p-8 shadow-card space-y-4">
             <Button
-              onClick={() => setMode('create')}
+              onClick={() => setMode("create")}
               variant="game"
               size="xl"
               className="w-full"
@@ -82,22 +81,21 @@ const LobbyEntry = () => {
             </Button>
 
             <Button
-              onClick={() => setMode('join')}
-              variant="accent"
+              onClick={() => setMode("join")}
+              variant="game"
               size="xl"
               className="w-full"
             >
               <LogIn className="w-5 h-5 mr-2" />
               Join Lobby
             </Button>
-
           </div>
         </div>
       </div>
     );
   }
 
-  if (mode === 'create') {
+  if (mode === "create") {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-md space-y-8">
@@ -134,7 +132,7 @@ const LobbyEntry = () => {
                 value={numPlayers}
                 onChange={(e) => {
                   setNumPlayers(e.target.value);
-                  setError('');
+                  setError("");
                 }}
                 className="text-center text-lg h-12"
                 placeholder="Enter 2-50"
@@ -144,8 +142,8 @@ const LobbyEntry = () => {
 
             <div className="flex gap-3">
               <Button
-                onClick={() => setMode('menu')}
-                variant="secondary"
+                onClick={() => setMode("menu")}
+                variant="game"
                 size="lg"
                 className="flex-1"
               >
@@ -172,9 +170,7 @@ const LobbyEntry = () => {
       <div className="w-full max-w-md space-y-8">
         <div className="text-center space-y-2">
           <h2 className="text-3xl font-bold">Join Lobby</h2>
-          <p className="text-muted-foreground">
-            Enter the lobby code to join
-          </p>
+          <p className="text-muted-foreground">Enter the lobby code to join</p>
         </div>
 
         <Card className="gradient-card p-8 shadow-card space-y-6">
@@ -200,7 +196,7 @@ const LobbyEntry = () => {
               value={lobbyCode}
               onChange={(e) => {
                 setLobbyCode(e.target.value.toUpperCase());
-                setError('');
+                setError("");
               }}
               placeholder="XXXXXX"
               className="text-center text-2xl h-14 tracking-widest uppercase font-bold"
@@ -211,8 +207,8 @@ const LobbyEntry = () => {
 
           <div className="flex gap-3">
             <Button
-              onClick={() => setMode('menu')}
-              variant="secondary"
+              onClick={() => setMode("menu")}
+              variant="game"
               size="lg"
               className="flex-1"
             >
@@ -220,7 +216,7 @@ const LobbyEntry = () => {
             </Button>
             <Button
               onClick={handleJoinLobby}
-              variant="accent"
+              variant="game"
               size="lg"
               className="flex-1"
               disabled={loading}
