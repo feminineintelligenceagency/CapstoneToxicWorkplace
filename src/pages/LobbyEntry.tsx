@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Shield, LogIn, Plus } from 'lucide-react';
 import { useLobby } from '@/hooks/useLobby';
+import { useToast } from '@/hooks/use-toast';
 
 
 const lobbyGuessFetch = async () => {
@@ -21,6 +22,31 @@ const LobbyEntry = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { createLobby, joinLobby, loading } = useLobby();
+  const { toast } = useToast();
+
+  const handleCultJamClick = (isCreate: boolean) => {
+    toast({
+      title: "Coming Soon",
+      description: "Cult Jam is not available yet!",
+      variant: "destructive",
+    });
+  };
+
+  const handleToxicFamilyClick = (isCreate: boolean) => {
+    toast({
+      title: "Coming Soon",
+      description: "Toxic Family is not available yet!",
+      variant: "destructive"
+    });
+  };
+
+  const handleToxicWorkplaceCreate = () => {
+    setMode('create');
+  };
+
+  const handleToxicWorkplaceJoin = () => {
+    setMode('join');
+  };
 
   const handleCreateLobby = async () => {
     const num = parseInt(numPlayers, 10);
@@ -71,7 +97,7 @@ const LobbyEntry = () => {
                 </div>
 
                 <Button
-                    onClick={() => setMode('create')}
+                    onClick={() => handleCultJamClick(true)}
                     variant="game"
                     size="xl"
                     className="w-full"
@@ -81,7 +107,7 @@ const LobbyEntry = () => {
                 </Button>
 
                 <Button
-                    onClick={() => setMode('join')}
+                    onClick={() => handleCultJamClick(false)}
                     variant="accent"
                     size="xl"
                     className="w-full"
@@ -106,7 +132,7 @@ const LobbyEntry = () => {
                 </div>
 
                 <Button
-                    onClick={() => setMode('create')}
+                    onClick={() => handleToxicWorkplaceCreate()}
                     variant="game"
                     size="xl"
                     className="w-full"
@@ -116,7 +142,7 @@ const LobbyEntry = () => {
                 </Button>
 
                 <Button
-                    onClick={() => setMode('join')}
+                    onClick={() => handleToxicWorkplaceJoin()}
                     variant="accent"
                     size="xl"
                     className="w-full"
@@ -141,7 +167,7 @@ const LobbyEntry = () => {
                 </div>
 
                 <Button
-                    onClick={() => setMode('create')}
+                    onClick={() => handleToxicFamilyClick(true)}
                     variant="game"
                     size="xl"
                     className="w-full"
@@ -151,7 +177,7 @@ const LobbyEntry = () => {
                 </Button>
 
                 <Button
-                    onClick={() => setMode('join')}
+                    onClick={() => handleToxicFamilyClick(false)}
                     variant="accent"
                     size="xl"
                     className="w-full"
