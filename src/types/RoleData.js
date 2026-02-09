@@ -28,9 +28,9 @@ const rolesData = {
         ],
 
         description:
-            "The Micromanager is characterized by a deep- seated need to control every aspect of work within their team.Often lacking trust in their" +
-            "employees' abilities to perform tasks without oversight, they feel compelled to oversee all details, no matter how minor, believing that without" + 
-            "their involvement, nothing will be done correctly.",
+            "The Micromanager is characterized by a deep-seated need to control every aspect of work within their team. Often lacking trust in their" +
+            " employees' abilities to perform tasks without oversight, they feel compelled to oversee all details, no matter how minor, believing that without" + 
+            " their involvement, nothing will be done correctly.",
 
         keyBehaviors: [
             "Constantly checks on employees' progress, often interrupting work flow.",
@@ -57,7 +57,7 @@ const rolesData = {
 
         motivation:
             "Driven by a fear of failure and a strong desire to prove competence through visible control over work processes. This character often" +
-            "lacks confidence in their leadership capabilities and compensates by exerting control wherever possible."
+            " lacks confidence in their leadership capabilities and compensates by exerting control wherever possible."
     },
 
     OfficeGossip: {
@@ -87,13 +87,13 @@ const rolesData = {
         ],
 
         description:
-            "The Office Gossip is notorious for their knack for knowing everything about everyone in the office.From pending promotions to secret" +
-            "relationships or personal struggles, no piece of information is too private or insignificant.While they can be engaging and sociable," + 
-            "their tendency to share confidential or speculative information complicates their relationships with colleagues.",
+            "The Office Gossip is notorious for their knack for knowing everything about everyone in the office. From pending promotions to secret" +
+            " relationships or personal struggles, no piece of information is too private or insignificant. While they can be engaging and sociable," + 
+            " their tendency to share confidential or speculative information complicates their relationships with colleagues.",
 
         keyBehaviors: [
             "Frequently found engaging colleagues around communal areas, often initiating conversations with whispers or hushed tones.",
-            "Commonly starts discussions with phrases like, \"Did you hear about...? \" or \"I shouldn’t be telling you this, but...\"",
+            "Commonly starts discussions with phrases like, \"Did you hear about...? \" or \"I shouldn't be telling you this, but...\"",
             "Uses gossip as a tool to bond with others, often sharing or soliciting sensitive information to create connections.",
             "Lacks discretion in timing and place when sharing sensitive information.",
             "Sometimes manipulates office dynamics subtly through the strategic spread of rumors."
@@ -114,7 +114,7 @@ const rolesData = {
 
         motivation:
             " Driven by a desire for social recognition and relevance, the Office Gossip thrives on being seen as the hub of information, often" +
-            "feeling more secure when perceived as a knowledgeable insider."
+            " feeling more secure when perceived as a knowledgeable insider."
     },
 
     Charmer: {
@@ -145,8 +145,8 @@ const rolesData = {
 
         description:
             "The Charmer is a master of first impressions, exuding charisma and confidence that make them extremely likable and engaging at first" +
-            "encounter.Beneath their polished exterior, however, lies a calculating individual with selfish motives and a lack of empathy for others." +
-            "Their primary goal is to manipulate situations and people to their advantage, often at the expense of others' well-being.",
+            " encounter. Beneath their polished exterior, however, lies a calculating individual with selfish motives and a lack of empathy for others." +
+            " Their primary goal is to manipulate situations and people to their advantage, often at the expense of others' well-being.",
 
         keyBehaviors: [
             "Exhibits high levels of charm and confidence, making them highly persuasive and appealing to colleagues.",
@@ -171,7 +171,7 @@ const rolesData = {
 
         motivation:
             "Driven by a desire for power, control, and success, The Charmer views interpersonal relationships as opportunities for advancement rather than " +
-            "mutual growth.Their actions are motivated by a deep- seated need to dominate and win, regardless of the ethical implications."
+            "mutual growth. Their actions are motivated by a deep-seated need to dominate and win, regardless of the ethical implications."
     },
 
     Complainer: {
@@ -202,12 +202,12 @@ const rolesData = {
 
         description:
             "The Complainer is the person everyone knows will have something negative to say about any situation. They frequently voice dissatisfaction" +
-            "about various aspects of the workplace—from the mundane, like office supplies, to the more critical, such as management decisions.While they" +
-            "are quick to highlight problems, they rarely offer solutions or take initiative to resolve the issues they complain about.This behavior can be" +
-            "demoralizing for teams and disruptive to workplace harmony",
+            " about various aspects of the workplace-from the mundane, like office supplies, to the more critical, such as management decisions. While they" +
+            " are quick to highlight problems, they rarely offer solutions or take initiative to resolve the issues they complain about. This behavior can be" +
+            " demoralizing for teams and disruptive to workplace harmony",
 
         keyBehaviors: [
-            "Often starts conversations by pointing out what is wrong, whether it’s minor annoyances or larger organizational issues.",
+            "Often starts conversations by pointing out what is wrong, whether it's minor annoyances or larger organizational issues.",
             "Tends to focus on problems rather than potential solutions, creating a negative atmosphere.",
             "Rarely volunteers to help with solutions, preferring to criticize from the sidelines.",
             "Expresses dissatisfaction in various settings, potentially influencing new team members or affecting overall team morale.",
@@ -229,7 +229,7 @@ const rolesData = {
         ],
 
         motivation:
-            "Driven by a desire to avoid change and maintain the status quo, The Complainer often feels threatened by alterations in their work environment." + 
+            "Driven by a desire to avoid change and maintain the status quo, The Complainer often feels threatened by alterations in their work environment. " + 
             "Their complaints can be a defense mechanism against feeling out of control or inadequate."
     },
 
@@ -260,9 +260,9 @@ const rolesData = {
         ],
 
         description: 
-            "The Buzzkill prides themselves on cutting through the noise. To them, clarity is kindness, and enthusiasm without rigor is dangerous. They don’t mean to deflate the" +
-            "team — they’re just constitutionally allergic to hype.Their sharp intelligence and moral precision make them a truth- teller in theory and a nightmare in practice.Every" +
-            "brainstorm feels like a debate, every pep talk becomes a logic exam.The intent is integrity; the effect is exhaustion.",
+            "The Buzzkill prides themselves on cutting through the noise. To them, clarity is kindness, and enthusiasm without rigor is dangerous. They don't mean to deflate the" +
+            " team - they're just constitutionally allergic to hype. Their sharp intelligence and moral precision make them a truth-teller in theory and a nightmare in practice. Every" +
+            " brainstorm feels like a debate, every pep talk becomes a logic exam.The intent is integrity; the effect is exhaustion.",
 
 
         keyBehaviors: [
@@ -270,13 +270,13 @@ const rolesData = {
             "Uses dry humor or flat literalism to puncture group excitement.",
             "Calls out contradictions between stated values and real behavior.",
             "Treats every new initiative like a philosophical puzzle to be solved.",
-            "Brings discussions back to the “actual point,” even when everyone just wants to leave the meeting feeling hopeful."
+            "Brings discussions back to the \"actual point,\" even when everyone just wants to leave the meeting feeling hopeful."
         ],
 
         internalRules: [
             "Truth Over Tact: Accuracy matters more than morale.",
             "Rationality Is Respect: Sugarcoating is deception.",
-            "Integrity Above Comfort: If it’s inconsistent, it’s wrong — no exceptions.",
+            "Integrity Above Comfort: If it's inconsistent, it's wrong - no exceptions.",
             "Hype Is Hazardous: Excitement blinds people to flaws.",
             "Honesty Is a Duty: People need to hear the truth, even if they hate you for it."
         ],
@@ -284,14 +284,14 @@ const rolesData = {
         teamImpact: [
             "Raises the intellectual standard but lowers morale. ",
             "Meetings slow to a crawl as ideas are dissected to death",
-            "Colleagues feel small, nervous, or defensive — unsure whether they’ll be corrected next",
+            "Colleagues feel small, nervous, or defensive - unsure whether they'll be corrected next",
             "Over time, the team produces stronger work, but with less joy.",
             "What should feel like collaboration starts to feel like quality control."
         ],
 
         motivation: 
-            "The Buzzkill isn’t malicious — they’re terrified of group delusion. Precision is their form of safety. They equate clarity with control and confusion with danger." +
-            "When others cheer, they scan for cracks in the foundation.It’s not sabotage; it’s vigilance.They can’t help it — someone has to keep reality intact."
+            "The Buzzkill isn't malicious - they're terrified of group delusion. Precision is their form of safety. They equate clarity with control and confusion with danger." +
+            " When others cheer, they scan for cracks in the foundation. It's not sabotage; it's vigilance. They can't help it - someone has to keep reality intact."
     },
 
     Enforcer: {
@@ -302,7 +302,7 @@ const rolesData = {
             "Menacing Marley",
 
         objective: 
-            "Wants everyone to stay on edge and prove their loyalty—using intimidation and sudden outbursts to keep control of the team.",
+            "Wants everyone to stay on edge and prove their loyalty — using intimidation and sudden outbursts to keep control of the team.",
 
         always: [
             "Uses tone, volume, or proximity to unsettle others.",
@@ -321,21 +321,21 @@ const rolesData = {
         ],
 
         description:
-            "The Enforcer rules by tension. They maintain control through calculated volatility — everyone knows they could explode, even if they don’t today. Their presence changes" +
-            "how people speak, breathe, and even think.Meetings become performance zones where everyone manages optics, not ideas. To leadership, they can look like “high performers”" +
-            "who “get results.” Behind the scenes, morale collapses under the constant threat of humiliation or reprisal. Their power doesn’t come from competence — it comes from fear of the alternative.",
+            "The Enforcer rules by tension. They maintain control through calculated volatility - everyone knows they could explode, even if they don't today. Their presence changes " +
+            "how people speak, breathe, and even think. Meetings become performance zones where everyone manages optics, not ideas. To leadership, they can look like \"high performers\"" +
+            " who \"get results.\" Behind the scenes, morale collapses under the constant threat of humiliation or reprisal. Their power doesn't come from competence - it comes from fear of the alternative.",
 
         keyBehaviors: [
             "Criticizes subordinates harshly in front of others to signal dominance.",
             "Alternates between kindness and aggression to destabilize loyalty.",
             "Manufactures drama to reassert authority.",
-            "Keeps tabs on conversations, emails, or alliances to detect “disloyalty.”",
+            "Keeps tabs on conversations, emails, or alliances to detect \"disloyalty.\"",
             "Undermines peer bonds to ensure all power flows upward."
         ],
 
         internalRules: [
-            "Fear = Respect: People only obey when they’re afraid to defy me.",
-            "Control Prevents Chaos: If I’m not in charge, everything will fall apart.",
+            "Fear = Respect: People only obey when they're afraid to defy me.",
+            "Control Prevents Chaos: If I'm not in charge, everything will fall apart.",
             "Intimidation Is Efficiency: Fear gets faster results than discussion.",
             "Loyalty Must Be Tested: Trust is proven through endurance.",
             "Calm = Weakness: Relaxation signals loss of control."
@@ -346,12 +346,12 @@ const rolesData = {
             "Employees become hyper-vigilant, over-editing themselves to avoid triggering the next outburst",
             "Innovation dies; honesty evaporates.",
             "The most competent staff quietly exit, leaving behind the fearful and compliant.",
-            "The workplace runs on adrenaline and silence — efficient on paper, dead in spirit."
+            "The workplace runs on adrenaline and silence - efficient on paper, dead in spirit."
         ],
 
         motivation:
             "Driven by deep insecurity and a history of instability, The Enforcer confuses dominance with safety. Their aggression masks a terror of vulnerability and loss of" +
-            "control.By keeping everyone afraid, they never have to face their own fear of irrelevance."
+            " control. By keeping everyone afraid, they never have to face their own fear of irrelevance."
     },
 
     Watchdog: {
@@ -381,13 +381,13 @@ const rolesData = {
         ],
 
         description:
-            "The Watchdog lives on high alert. Every workplace, to them, is a nest of competing agendas. They see patterns everywhere — favoritism, sabotage, “hidden directives.” Their" +
-            "hyper- vigilance masquerades as diligence, and at first they seem invaluable: detail - oriented, careful, politically aware. But their constant suspicion corrodes" +
-            "collaboration.They read normal human behavior through a lens of threat, transforming the workplace into a battlefield of invisible enemies. They don’t mean to be toxic; they think they’re protecting the group.The cost is trust itself.",
+            "The Watchdog lives on high alert. Every workplace, to them, is a nest of competing agendas. They see patterns everywhere - favoritism, sabotage, \"hidden directives.\" Their " +
+            "hyper-vigilance masquerades as diligence, and at first they seem invaluable: detail - oriented, careful, politically aware. But their constant suspicion corrodes " +
+            "collaboration. They read normal human behavior through a lens of threat, transforming the workplace into a battlefield of invisible enemies. They don't mean to be toxic; they think they're protecting the group. The cost is trust itself.",
 
         keyBehaviors: [
-            "Keeps private copies of documents “just in case.”",
-            "Questions everyone’s motives instead of their work.",
+            "Keeps private copies of documents \"just in case.\"",
+            "Questions everyone's motives instead of their work.",
             "Divides the office into insiders and outsiders.",
             "Connects unrelated events to support a theory of deceit.",
             "Justifies every decision in advance of imagined criticism."
@@ -404,14 +404,14 @@ const rolesData = {
         teamImpact: [
             "Destabilizes psychological safety.",
             "Colleagues start censoring themselves to avoid misinterpretation.",
-            " Routine meetings spiral into post-mortems about “what leadership really meant.”",
+            " Routine meetings spiral into post-mortems about \"what leadership really meant.\"",
             "Team cohesion fractures as people choose sides or withdraw entirely.",
             "Eventually, energy that should fuel creativity is spent managing paranoia."
         ],
 
         motivation:
-            "Driven by fear of humiliation and abandonment, The Watchdog equates control with security. Their suspicion is a coping mechanism for past experiences of betrayal or" + 
-            "exclusion.They’d rather alienate everyone than feel naïve again."
+            "Driven by fear of humiliation and abandonment, The Watchdog equates control with security. Their suspicion is a coping mechanism for past experiences of betrayal or " + 
+            "exclusion. They'd rather alienate everyone than feel naive again."
     },
 
     Disrupter: {
@@ -441,23 +441,23 @@ const rolesData = {
         ],
 
         description:
-            "The Disruptor is the team’s shot of espresso — thrilling in small doses, toxic in excess. Ainsley lives for the surge: the big pitch, the all-nighter, the impossible" +
-            "deadline pulled off at the last second.They thrive on chaos because it keeps them from feeling ordinary.Under pressure, they’re magnetic; in calm, they’re bored and" +
-            "dangerous.The line between “heroic effort” and “avoidable disaster” is the only one they ever walk.",
+            "The Disruptor is the team's shot of espresso - thrilling in small doses, toxic in excess. Ainsley lives for the surge: the big pitch, the all-nighter, the impossible" +
+            "deadline pulled off at the last second. They thrive on chaos because it keeps them from feeling ordinary. Under pressure, they're magnetic; in calm, they're bored and" +
+            "dangerous. The line between \"heroic effort\" and \"avoidable disaster\" is the only one they ever walk.",
 
         keyBehaviors: [
             "Manufactures urgency to recreate the high of a crisis.",
-            "Pushes others past their limits “for the experience.”",
+            "Pushes others past their limits \"for the experience.\"",
             "Takes impulsive shortcuts that later require cleanup.",
-            "Charms management with confidence and “big energy,” masking risk as innovation.",
-            "Equates exhaustion with excellence — if you’re not sweating, you’re not trying."
+            "Charms management with confidence and \"big energy,\" masking risk as innovation.",
+            "Equates exhaustion with excellence - if you're not sweating, you're not trying."
         ],
 
         internalRules: [
             "Pressure = Purpose: Calm means stagnation.",
-            "Speed = Skill: The fastest wins, even if the outcome’s shaky.",
+            "Speed = Skill: The fastest wins, even if the outcome's shaky.",
             "Rules = Suggestions: Structure kills adrenaline.",
-            "Failure = Fuel: If I crash, I’ll just rise bigger.",
+            "Failure = Fuel: If I crash, I'll just rise bigger.",
             "Boredom = Death: The only real sin is being dull."
         ],
 
@@ -465,12 +465,12 @@ const rolesData = {
             "Ignites short-term excellence and long-term fatigue.",
             "Their energy can rally a team through crisis but destroys sustainability.",
             "Deadlines become survival games; boundaries blur between bravery and recklessness.",
-            "When they leave — often suddenly — burnout and cleanup remain."
+            "When they leave - often suddenly - burnout and cleanup remain."
         ],
 
         motivation: 
-            "Beneath the bravado lies addiction to intensity. The thrill validates worth; the crash feels like emptiness. Ainsley isn’t trying to cause chaos — they’re chasing the" +
-            "pulse that tells them they’re still alive."
+            "Beneath the bravado lies addiction to intensity. The thrill validates worth; the crash feels like emptiness. Ainsley isn't trying to cause chaos - they're chasing the " +
+            "pulse that tells them they're still alive."
     },
 
     Optimist: {
@@ -481,7 +481,7 @@ const rolesData = {
             "Avoidant Alex",
 
         objective: 
-            "Wants to stay in control by keeping distance—charming enough to avoid confrontation but never committing to real teamwork.",
+            "Wants to stay in control by keeping distance-charming enough to avoid confrontation but never committing to real teamwork.",
 
         always: [
             "Radiates calm and cheer, even when things are falling apart.",
@@ -500,36 +500,36 @@ const rolesData = {
         ],
 
         description:
-            "The Eternal Optimist means well, but their relentless positivity turns human experience into a performance. They call it morale; others call it denial. Underneath the pep" +
-            "talks is anxiety — a deep fear that if things feel bad, they are bad.By insisting that everything’s fine, they erase the complexity that makes teams resilient.It’s not" +
-            "cruelty — it’s avoidance dressed as inspiration.",
+            "The Eternal Optimist means well, but their relentless positivity turns human experience into a performance. They call it morale; others call it denial. Underneath the pep " +
+            "talks is anxiety - a deep fear that if things feel bad, they are bad. By insisting that everything's fine, they erase the complexity that makes teams resilient. It's not" +
+            " cruelty - it's avoidance dressed as inspiration.",
 
         keyBehaviors: [
-            "Responds to legitimate issues with clichés: “Everything happens for a reason.”",
+            "Responds to legitimate issues with cliches: \"Everything happens for a reason.\"",
             "Rushes to fix emotional tension with humor or forced gratitude.",
-            "Publicly praises “positive energy” while privately resenting negativity.",
-            "Avoids tough conversations by framing dissent as “toxic.”",
+            "Publicly praises \"positive energy\" while privately resenting negativity.",
+            "Avoids tough conversations by framing dissent as \"toxic.\"",
             "Uses optimism to control tone rather than to solve problems."
         ],
 
         internalRules: [
-            "Negativity Is Contagion: Don’t let bad feelings spread.",
+            "Negativity Is Contagion: Don't let bad feelings spread.",
             "Harmony Equals Safety: If everyone smiles, no one leaves.",
             "Positivity Is Power: Being upbeat means being in control.",
             "Conflict Destroys Teams: Honest disagreement equals danger.",
-            "Optimism = Worth: If I’m not the bright one, I’m nothing."
+            "Optimism = Worth: If I'm not the bright one, I'm nothing."
         ],
 
         teamImpact: [
             "Creates a veneer of calm while reality rots underneath.",
             "Colleagues learn to self-censor, suppress complaints, and fake contentment.",
             "Real problems go unresolved; burnout hides behind smiles.",
-            "Over time, the office becomes a kind of emotional dictatorship — where dissent is impolite, and truth feels unsafe."
+            "Over time, the office becomes a kind of emotional dictatorship - where dissent is impolite, and truth feels unsafe."
         ],
 
         motivation:
-            "Beneath the glow is fear — fear that authenticity will lead to abandonment, and that sadness equals failure. The Eternal Optimist clings to cheerfulness to avoid " +
-            "emotional chaos.Their brightness isn’t hope — it’s control."
+            "Beneath the glow is fear - fear that authenticity will lead to abandonment, and that sadness equals failure. The Eternal Optimist clings to cheerfulness to avoid " +
+            "emotional chaos. Their brightness isn't hope - it's control."
     },
 
     Expert: {
@@ -559,13 +559,13 @@ const rolesData = {
         ],
 
         description: 
-            "The Expert is a walking TED Talk that never ends. Every conversation becomes a podium. They dominate discussions with certainty and disdain for ambiguity, forcing others" +
-            "into passive roles.Their confidence can initially look like competence, but it quickly curdles into intellectual bullying. To The Expert, being right isn’t about truth — it’s" +
-            "about control.The goal isn’t progress, but dominance.Their presence drains psychological safety, because every idea must first survive their approval.",
+            "The Expert is a walking TED Talk that never ends. Every conversation becomes a podium. They dominate discussions with certainty and disdain for ambiguity, forcing others " +
+            "into passive roles. Their confidence can initially look like competence, but it quickly curdles into intellectual bullying. To The Expert, being right isn't about truth - it's" +
+            " about control. The goal isn't progress, but dominance. Their presence drains psychological safety, because every idea must first survive their approval.",
 
         keyBehaviors: [
-            "Talks over others and dismisses input as naïve or irrelevant.",
-            "Interrupts constantly to “fix” minor errors in language or detail.",
+            "Talks over others and dismisses input as naive or irrelevant.",
+            "Interrupts constantly to \"fix\" minor errors in language or detail.",
             "Demands proof from others while offering none themselves.",
             "Repeats their points until everyone stops engaging.",
             "Uses tone, jargon, or eye-rolls to imply others are beneath them."
@@ -573,9 +573,9 @@ const rolesData = {
 
         internalRules: [
             "Knowledge = Worth: Being right proves I deserve respect.",
-            "Disagreement = Threat: If someone challenges me, they’re undermining me.",
+            "Disagreement = Threat: If someone challenges me, they're undermining me.",
             "Certainty = Safety: Ambiguity feels like chaos; I must restore order.",
-            "Superiority = Connection: People only value me if I’m above them.",
+            "Superiority = Connection: People only value me if I'm above them.",
             "Humility = Weakness: Admitting fault invites loss of control."
         ],
 
@@ -584,12 +584,12 @@ const rolesData = {
             "Meetings become competitions, not explorations.",
             "People stop sharing ideas to avoid humiliation.",
             "The smartest voices retreat, innovation slows, and morale plummets.",
-            "Over time, teams adapt by deferring automatically — not out of respect, but self-protection.",
+            "Over time, teams adapt by deferring automatically - not out of respect, but self-protection.",
             "The Expert mistakes this silence for admiration, reinforcing the cycle."
         ],
 
         motivation:
-            "The Expert is driven by fragile pride — a terror of being seen as ordinary. Their need to dominate intellectually hides deep insecurity about relevance and value. They " +
+            "The Expert is driven by fragile pride - a terror of being seen as ordinary. Their need to dominate intellectually hides deep insecurity about relevance and value. They " +
             "conflate being correct with being safe, and being challenged with being humiliated."
     },
 
@@ -620,42 +620,42 @@ const rolesData = {
         ],
 
         description:
-            "The Innovator is the team’s storm front — thrilling, unpredictable, and alive with ideas. When they walk into a room, the atmosphere changes; suddenly anything feels" +
-            "possible.They make work feel like play, and play feel like progress.Their humor disarms hierarchy, their imagination disorients structure, and their enthusiasm pulls" +
-            "everyone forward — sometimes off a cliff. At their best, they’re visionary and generous, giving others permission to think bigger.At their worst, they’re exhausting — scattering" +
-            "half- finished experiments and leaving others to clean up the fallout.The Innovator doesn’t mean to create chaos; it just happens in their wake.Their mind moves faster than the system can absorb.",
+            "The Innovator is the team's storm front - thrilling, unpredictable, and alive with ideas. When they walk into a room, the atmosphere changes; suddenly anything feels " +
+            "possible. They make work feel like play, and play feel like progress. Their humor disarms hierarchy, their imagination disorients structure, and their enthusiasm pulls " +
+            "everyone forward - sometimes off a cliff. At their best, they're visionary and generous, giving others permission to think bigger. At their worst, they're exhausting - scattering " +
+            "half-finished experiments and leaving others to clean up the fallout. The Innovator doesn't mean to create chaos; it just happens in their wake. Their mind moves faster than the system can absorb.",
 
         keyBehaviors: [
             "Produces rapid-fire concepts, often mid-sentence, and forgets which ones they already said.",
             "Uses wit and humor to keep momentum going, making people laugh while subtly derailing process.",
             "Fixates intensely when inspired, loses steam once the novelty fades.",
-            "Equates motion with meaning — silence feels like failure.",
-            "Lifts the team’s energy even as they quietly wreck the schedule.",
-            "Promises to “circle back” but genuinely forgets — they’ve already mentally built a spaceship out of the next idea."
+            "Equates motion with meaning - silence feels like failure.",
+            "Lifts the team's energy even as they quietly wreck the schedule.",
+            "Promises to \"circle back\" but genuinely forgets - they've already mentally built a spaceship out of the next idea."
         ],
 
         internalRules: [
-            "Excitement Equals Worth: If I’m not passionate, it’s not worth doing.",
+            "Excitement Equals Worth: If I'm not passionate, it's not worth doing.",
             "Future Over Present: The next idea is always more interesting than the current one.",
             "Structure Is Sedation: Overplanning kills inspiration.",
-            "Charm Buys Time: If people are laughing, they won’t notice the mess yet.",
-            "Boredom Is Danger: Stillness feels like failure — something must always be moving."
+            "Charm Buys Time: If people are laughing, they won't notice the mess yet.",
+            "Boredom Is Danger: Stillness feels like failure - something must always be moving."
         ],
 
         teamImpact: [
             "Can electrify even the most jaded environment.",
-            "Colleagues feel inspired — until they realize they’re left holding the logistics.",
+            "Colleagues feel inspired - until they realize they're left holding the logistics.",
             "Their ideas often set projects in motion that never quite land.",
             "They leave trails of half-built brilliance that someone else must stabilize",
-            "Over time, the team swings between awe and fatigue: they can’t live with the Innovator’s chaos, but can’t imagine work without their spark.",
-            "They’re the person leadership adores and operations dreads.",
-            " The project succeeds because of them — and almost fails because of them too."
+            "Over time, the team swings between awe and fatigue: they can't live with the Innovator's chaos, but can't imagine work without their spark.",
+            "They're the person leadership adores and operations dreads.",
+            "The project succeeds because of them - and almost fails because of them too."
         ],
 
         motivation:
-            "The Innovator is chasing stimulation, not applause. Their brain is wired for ignition — they need novelty, urgency, and laughter like oxygen. Boredom feels like death," +
-            "but chaos feels alive.Beneath the humor is a deeper vulnerability: if they stop creating, who are they? Innovation isn’t just what they do — it’s the only state where they" +
-            "feel real."
+            "The Innovator is chasing stimulation, not applause. Their brain is wired for ignition - they need novelty, urgency, and laughter like oxygen. Boredom feels like death, " +
+            "but chaos feels alive. Beneath the humor is a deeper vulnerability: if they stop creating, who are they? Innovation isn't just what they do - it's the only state where they" +
+            " feel real."
     },
 
     Narcissist: {
@@ -685,21 +685,21 @@ const rolesData = {
         ],
 
         description:
-            "The Narcissist is magnetic — articulate, charming, and seemingly generous. They flatter effortlessly and build connection fast, creating the illusion of emotional safety. " +
-            "But the warmth conceals calibration: their praise pulls you in, their disappointment keeps you striving.The closer you get, the less grounded you feel.Working with them " +
-            "is like chasing the sun — radiant when near, but it always moves a little further away. They don’t need to say they’re better than you.You feel it in the pauses, " +
-            "the tone shifts, the way they listen just long enough to remind you they’re the real story.",
+            "The Narcissist is magnetic - articulate, charming, and seemingly generous. They flatter effortlessly and build connection fast, creating the illusion of emotional safety. " +
+            "But the warmth conceals calibration: their praise pulls you in, their disappointment keeps you striving. The closer you get, the less grounded you feel. Working with them " +
+            "is like chasing the sun - radiant when near, but it always moves a little further away. They don't need to say they're better than you. You feel it in the pauses, " +
+            "the tone shifts, the way they listen just long enough to remind you they're the real story.",
 
         keyBehaviors: [
-            "Uses warmth as leverage — kindness offered, then withheld for impact.",
+            "Uses warmth as leverage - kindness offered, then withheld for impact.",
             "Frames feedback as mentorship but plants self-doubt in the listener.",
             "Over-identifies with high performers, then subtly competes with them.",
-            "Takes others’ ideas, polishes them, and presents them as collaborative brilliance.",
+            "Takes others' ideas, polishes them, and presents them as collaborative brilliance.",
             "Interprets admiration as intimacy and disagreement as betrayal."
         ],
 
         internalRules: [
-            "Charm Is Control: If they adore me, they’ll obey me.",
+            "Charm Is Control: If they adore me, they'll obey me.",
             "Admiration = Oxygen: If attention fades, I disappear.",
             "Comparison Is Survival: To be special, someone else must be lesser.",
             "Warmth Protects Power: Niceness hides hunger.",
@@ -707,15 +707,15 @@ const rolesData = {
         ],
 
         teamImpact: [
-            "At first, morale rises around Evan — everyone feels energized by their charisma.",
+            "At first, morale rises around Evan - everyone feels energized by their charisma.",
             "The dynamic shifts: people start performing for approval, competing for proximity, avoiding honesty.",
-            "The team’s emotional climate becomes unstable — flattery, guilt, and subtle rivalry replace collaboration.",
+            "The team's emotional climate becomes unstable - flattery, guilt, and subtle rivalry replace collaboration.",
             "Productivity remains high, but trust quietly dies."
         ],
 
         motivation: 
-            "Beneath the charm lies fear - fear of insignificance. Evan’s entire persona is armor against ordinariness. Validation is how they regulate self-worth; admiration is " +
-            "proof they exist. Their charm isn’t fake — it’s survival."
+            "Beneath the charm lies fear - fear of insignificance. Evan's entire persona is armor against ordinariness. Validation is how they regulate self-worth; admiration is " +
+            "proof they exist. Their charm isn't fake - it's survival."
     },
 
     PitchArtist: {
@@ -745,9 +745,9 @@ const rolesData = {
         ],
 
         description: 
-            "The Pitch Artist is the office showman — confident, persuasive, and addicted to applause. They can make a spreadsheet sound like a revolution and a delay sound like strategy. " +
-            "People want to believe them because belief feels good.Their storytelling rallies the team, secures funding, and creates momentum — until someone checks the facts. When " +
-            "caught exaggerating, they don’t lie outright; they pivot.They reframe, rebrand, or rename the promise until the myth lives on. The danger isn’t in what they say — it’s how convincing it feels while they say it.",
+            "The Pitch Artist is the office showman - confident, persuasive, and addicted to applause. They can make a spreadsheet sound like a revolution and a delay sound like strategy. " +
+            "People want to believe them because belief feels good. Their storytelling rallies the team, secures funding, and creates momentum - until someone checks the facts. When " +
+            "caught exaggerating, they don't lie outright; they pivot. They reframe, rebrand, or rename the promise until the myth lives on. The danger isn't in what they say - it's how convincing it feels while they say it.",
 
         keyBehaviors: [
             "Exaggerates results and progress to maintain hype.",
@@ -758,23 +758,23 @@ const rolesData = {
         ],
 
         internalRules: [
-            "Perception Is Reality: If people believe it, it’s true enough.",
+            "Perception Is Reality: If people believe it, it's true enough.",
             "Momentum Equals Success: Keeping energy high matters more than accuracy.",
-            "Charm Is Survival: As long as people like me, I’m safe.",
+            "Charm Is Survival: As long as people like me, I'm safe.",
             "Doubt Is Dangerous: Admitting uncertainty kills the magic.",
             "Truth Is Malleable: Every story can be improved in post-production."
         ],
 
         teamImpact: [
             "The Pitch Artist inspires before they exhaust.",
-            "Colleagues feel caught in the gravitational pull of their charisma - until the numbers don’t match the narrative.",
+            "Colleagues feel caught in the gravitational pull of their charisma - until the numbers don't match the narrative.",
             "The team swings between excitement and disillusionment, chasing visions that dissolve under scrutiny.",
             "Over time, trust erodes: people start verifying everything, energy goes to spin management instead of substance, and genuine innovation gets buried under showmanship fatigue."
         ],
 
         motivation:
-            "The Pitch Artist runs on admiration. Deep down, they fear irrelevance — that without the story, they’re forgettable. So they keep performing. Each new exaggeration" +
-            "buys more attention, but also more distance from reality.The applause is real; the results rarely are."
+            "The Pitch Artist runs on admiration. Deep down, they fear irrelevance - that without the story, they’re forgettable. So they keep performing. Each new exaggeration" +
+            " buys more attention, but also more distance from reality. The applause is real; the results rarely are."
     },
 
     Overachiever: {
@@ -804,9 +804,9 @@ const rolesData = {
         ],
 
         description: 
-            "The Overachiever appears disciplined, reliable, and quietly impressive — the adult in every room. But behind the composure is contempt for weakness, especially their own. " +
-            "They maintain authority by never appearing needy, messy, or unsure.Others experience them as coolly superior, impossible to please, and subtly invalidating. " +
-            "They don’t shout, they withhold.Silence, delayed replies, a faint sigh — these become the currency of control.Their perfectionism creates distance; their competence becomes punishment.",
+            "The Overachiever appears disciplined, reliable, and quietly impressive - the adult in every room. But behind the composure is contempt for weakness, especially their own. " +
+            "They maintain authority by never appearing needy, messy, or unsure. Others experience them as coolly superior, impossible to please, and subtly invalidating. " +
+            "They don't shout, they withhold. Silence, delayed replies, a faint sigh - these become the currency of control. Their perfectionism creates distance; their competence becomes punishment.",
 
         keyBehaviors: [
             "Points out errors clinically, offering no reassurance.",
@@ -825,7 +825,7 @@ const rolesData = {
         ],
 
         teamImpact: [
-            "Nico’s precision raises output but lowers morale.",
+            "Nico's precision raises output but lowers morale.",
             "Teammates second-guess themselves, trying to earn a nod that never comes.",
             "Creativity dies under quiet scrutiny.",
             "Burnout hides behind professionalism - everyone looks competent, no one feels safe.",
@@ -833,8 +833,8 @@ const rolesData = {
         ],
 
         motivation:
-            "What looks like arrogance is really fear — fear of mess, dependence, and humiliation. The Overachiever’s perfectionism is a shield against intimacy and shame. " +
-            "They’d rather be admired than known."
+            "What looks like arrogance is really fear - fear of mess, dependence, and humiliation. The Overachiever's perfectionism is a shield against intimacy and shame. " +
+            "They'd rather be admired than known."
     },
 
     Pleaser: {
@@ -864,23 +864,23 @@ const rolesData = {
         ],
 
         description: 
-            "The Pleaser is the office’s emotional air freshener — constantly masking tension with smiles, reassurance, and over-accommodation. They mean well; their empathy is real. " +
-            "But their reflexive need to soothe and agree drains accountability from every situation. They promise deliverables they can’t meet, take on tasks to avoid confrontation, " +
-            "and burn out trying to keep everyone comfortable.To superiors, they seem cooperative and loyal.To peers, they seem exhausting — the colleague who can’t just let things be tense for a minute while real work gets done.",
+            "The Pleaser is the office's emotional air freshener - constantly masking tension with smiles, reassurance, and over-accommodation. They mean well; their empathy is real. " +
+            "But their reflexive need to soothe and agree drains accountability from every situation. They promise deliverables they can't meet, take on tasks to avoid confrontation, " +
+            "and burn out trying to keep everyone comfortable. To superiors, they seem cooperative and loyal. To peers, they seem exhausting - the colleague who can't just let things be tense for a minute while real work gets done.",
 
         keyBehaviors: [
             "Agrees to everything, leading to chronic overwhelm.",
             "Deflects serious discussions with positivity or deference.",
-            "Takes responsibility for others’ moods and harmony.",
+            "Takes responsibility for others' moods and harmony.",
             "Feels anxious when not actively validated.",
             "Builds unspoken frustration that leaks out in passive ways."
         ],
 
         internalRules: [
-            "Peace Equals Safety: If everyone’s happy, I’m safe.",
+            "Peace Equals Safety: If everyone's happy, I'm safe.",
             "Disagreement Equals Rejection: Conflict threatens belonging.",
-            "Compliance Is Love: Saying yes proves I’m good and worthy.",
-            "Emotions Are Contagious: If someone’s upset, it’s my job to fix it.",
+            "Compliance Is Love: Saying yes proves I'm good and worthy.",
+            "Emotions Are Contagious: If someone's upset, it's my job to fix it.",
             "Boundaries Hurt People: Limits feel cruel or selfish."
         ],
 
@@ -890,12 +890,12 @@ const rolesData = {
             "Poor performance goes unaddressed to avoid awkwardness.",
             "Emotional energy goes to maintenance, not momentum.",
             "Their inability to hold friction deprives the team of clarity, truth, and resilience.",
-            "Over time, colleagues may start to resent their constant smoothing — it feels infantilizing and fake, even though it’s well-intentioned."
+            "Over time, colleagues may start to resent their constant smoothing - it feels infantilizing and fake, even though it's well-intentioned."
         ],
 
         motivation:
-            "Driven by anxiety and a deep-seated fear of rejection, The Pleaser equates approval with safety. They seek harmony not for manipulation, but to regulate their own" +
-            "internal distress.Their kindness is real, but it’s compulsive — a survival strategy born from environments where disagreement felt dangerous."
+            "Driven by anxiety and a deep-seated fear of rejection, The Pleaser equates approval with safety. They seek harmony not for manipulation, but to regulate their own " +
+            "internal distress. Their kindness is real, but it's compulsive - a survival strategy born from environments where disagreement felt dangerous."
     },
 
     PassiveAggressive: {
@@ -926,7 +926,7 @@ const rolesData = {
 
         description:
             "The Passive Aggressive is characterized by their indirect expression of hostility or dissatisfaction through procrastination, sullen behavior, or 'forgetfulness' rather " +
-            "than direct communication.This character avoids open confrontation but expresses their discontent in ways that can disrupt team cohesion and complicate workplace " +
+            "than direct communication. This character avoids open confrontation but expresses their discontent in ways that can disrupt team cohesion and complicate workplace " +
             "relationships.",
 
         keyBehaviors: [
@@ -983,15 +983,15 @@ const rolesData = {
         ],
 
         description:
-            "The psychopathic Shirker doesn’t fear effort—they disdain it. They treat work as theatre, staging credibility while others sweat. Every spreadsheet, meeting, or " +
-            "late - night email is a prop in an illusion of diligence.Colleagues see discipline; Morgan sees puppets moving exactly as planned.Control is the only currency that " +
+            "The psychopathic Shirker doesn't fear effort - they disdain it. They treat work as theatre, staging credibility while others sweat. Every spreadsheet, meeting, or " +
+            "late - night email is a prop in an illusion of diligence. Colleagues see discipline; Morgan sees puppets moving exactly as planned. Control is the only currency that " +
             "matters, and the less they exert themselves to maintain it, the higher their sense of mastery.",
 
         keyBehaviors: [
             "Engineers \"urgent\" visibility when superiors are watching, then disappears.",
             "Speaks in metrics and buzzwords that sound precise yet reveal nothing.",
             "Volunteers for high-profile, low-labor initiatives to harvest prestige.",
-            "Turns collaboration into quiet conscription—others do the work, Morgan claims alignment.",
+            "Turns collaboration into quiet conscription - others do the work, Morgan claims alignment.",
             "Smiles through audits, knowing evidence has been carefully scattered."
         ],
 
@@ -1006,12 +1006,12 @@ const rolesData = {
         teamImpact: [
             "The office becomes a hall of mirrors.",
             "Productive staff exhaust themselves covering gaps, wondering why the most rewarded person produces the least.",
-            "Frustration mutates into quiet cynicism—why strive if deception wins?",
-            "Leadership, seduced by Morgan’s polish, promotes illusion as culture."
+            "Frustration mutates into quiet cynicism - why strive if deception wins?",
+            "Leadership, seduced by Morgan's polish, promotes illusion as culture."
         ],
 
         motivation:
-            "The Shirker’s drive is not comfort but control without friction. Work is beneath them; orchestration is art. Each avoided task reaffirms superiority, each manipulated " +
+            "The Shirker's drive is not comfort but control without friction. Work is beneath them; orchestration is art. Each avoided task reaffirms superiority, each manipulated " +
             "colleague a pawn proving that intelligence, not effort, rules the game."
     }
 };
