@@ -54,46 +54,114 @@ const LobbyEntry = () => {
 
   if (mode === 'menu') {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="w-full max-w-md space-y-8 text-center">
-          <div className="space-y-4">
-            <div className="flex justify-center">
-              <div className="p-4 rounded-full gradient-primary shadow-glow">
-                <Shield className="w-12 h-12 text-primary-foreground" />
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-48">
+
+            {/* CARD 1 */}
+            <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center">
+                <div className="space-y-2">
+                    <div className="flex justify-center">
+                        <div className="p-3 rounded-full gradient-primary shadow-glow">
+                            <Shield className="w-8 h-8 text-primary-foreground" />
+                        </div>
+                    </div>
+                    <h2 className="text-2xl font-bold">Cult Jam</h2>
+                    <p className="text-sm text-muted-foreground">
+                        Multiplayer Social Deduction Game
+                    </p>
+                </div>
+
+                <Button
+                    onClick={() => setMode('create')}
+                    variant="game"
+                    size="xl"
+                    className="w-full"
+                >
+                    <Plus className="w-5 h-5 mr-2" />
+                    Create Lobby
+                </Button>
+
+                <Button
+                    onClick={() => setMode('join')}
+                    variant="accent"
+                    size="xl"
+                    className="w-full"
+                >
+                    <LogIn className="w-5 h-5 mr-2" />
+                    Join Lobby
+                </Button>
             </div>
-            <h1 className="text-5xl font-bold gradient-text-primary">
-              Toxic Workplace Mystery Game
-            </h1>
-            <p className="text-muted-foreground text-lg">
-              Multiplayer social deduction game
-            </p>
-          </div>
 
-          <div className="gradient-card rounded-xl p-8 shadow-card space-y-4">
-            <Button
-              onClick={() => setMode('create')}
-              variant="game"
-              size="xl"
-              className="w-full"
-            >
-              <Plus className="w-5 h-5 mr-2" />
-              Create Lobby
-            </Button>
+            {/* CARD 2 */}
+            <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center">
+                <div className="space-y-2">
+                    <div className="flex justify-center">
+                        <div className="p-3 rounded-full gradient-primary shadow-glow">
+                            <Shield className="w-8 h-8 text-primary-foreground" />
+                        </div>
+                    </div>
+                    <h2 className="text-2xl font-bold">Toxic Workplace</h2>
+                    <p className="text-sm text-muted-foreground">
+                        Multiplayer Social Deduction Game
+                    </p>
+                </div>
 
-            <Button
-              onClick={() => setMode('join')}
-              variant="accent"
-              size="xl"
-              className="w-full"
-            >
-              <LogIn className="w-5 h-5 mr-2" />
-              Join Lobby
-            </Button>
+                <Button
+                    onClick={() => setMode('create')}
+                    variant="game"
+                    size="xl"
+                    className="w-full"
+                >
+                    <Plus className="w-5 h-5 mr-2" />
+                    Create Lobby
+                </Button>
 
-          </div>
+                <Button
+                    onClick={() => setMode('join')}
+                    variant="accent"
+                    size="xl"
+                    className="w-full"
+                >
+                    <LogIn className="w-5 h-5 mr-2" />
+                    Join Lobby
+                </Button>
+            </div>
+
+            {/* CARD 3 */}
+            <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center">
+                <div className="space-y-2">
+                    <div className="flex justify-center">
+                        <div className="p-3 rounded-full gradient-primary shadow-glow">
+                            <Shield className="w-8 h-8 text-primary-foreground" />
+                        </div>
+                    </div>
+                    <h2 className="text-2xl font-bold">Toxic Family</h2>
+                    <p className="text-sm text-muted-foreground">
+                        Multiplayer Social Deduction Game
+                    </p>
+                </div>
+
+                <Button
+                    onClick={() => setMode('create')}
+                    variant="game"
+                    size="xl"
+                    className="w-full"
+                >
+                    <Plus className="w-5 h-5 mr-2" />
+                    Create Lobby
+                </Button>
+
+                <Button
+                    onClick={() => setMode('join')}
+                    variant="accent"
+                    size="xl"
+                    className="w-full"
+                >
+                    <LogIn className="w-5 h-5 mr-2" />
+                    Join Lobby
+                </Button>
+            </div>
+
         </div>
-      </div>
     );
   }
 
