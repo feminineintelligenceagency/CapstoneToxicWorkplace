@@ -6,8 +6,13 @@
 All colors MUST be HSL.
 */
 
+html {
+  color-scheme: dark light;
+}
+
 @layer base {
   :root {
+    /* Dark Theme (Default) */
     --background: 240 18% 8%;
     --foreground: 210 40% 98%;
 
@@ -55,6 +60,53 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 240 12% 22%;
     --sidebar-ring: 263 70% 60%;
+  }
+
+  /* Light Theme */
+  [data-theme="light"] {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 5%;
+
+    --card: 0 0% 96%;
+    --card-foreground: 240 10% 5%;
+
+    --popover: 0 0% 96%;
+    --popover-foreground: 240 10% 5%;
+
+    --primary: 263 70% 50%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 240 12% 90%;
+    --secondary-foreground: 240 10% 20%;
+
+    --muted: 240 12% 88%;
+    --muted-foreground: 215 8% 40%;
+
+    --accent: 189 94% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 12% 88%;
+    --input: 240 12% 90%;
+    --ring: 263 70% 50%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(263 70% 55%), hsl(240 70% 50%));
+    --gradient-accent: linear-gradient(135deg, hsl(189 94% 45%), hsl(210 94% 55%));
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 98%), hsl(0 0% 96%));
+    
+    --shadow-glow: 0 0 40px hsl(263 70% 50% / 0.15);
+    --shadow-card: 0 10px 30px -10px hsl(0 0% 0% / 0.1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 10% 5%;
+    --sidebar-primary: 263 70% 50%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 240 12% 88%;
+    --sidebar-accent-foreground: 240 10% 20%;
+    --sidebar-border: 240 12% 88%;
+    --sidebar-ring: 263 70% 50%;
   }
 }
 

@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import Index from "./pages/Index";
 import LobbyEntry from "./pages/LobbyEntry";
 import AboutPage from "./pages/AboutPage";
@@ -24,7 +26,7 @@ const App = () => {
         left: 0,
         width: "100%",
         zIndex: 1000,
-        backgroundColor: "240 18% 8%",
+        backgroundColor: "hsl(240 18% 8%)",
         backdropFilter: "blur(9px)",
       }}
       className="text-muted-foreground"
@@ -34,6 +36,8 @@ const App = () => {
           display: "flex",
           justifyContent: "center",
           gap: "30px",
+          alignItems: "center",
+          position: "relative",
         }}
       >
         <Link to="/" style={{ color: "white", textDecoration: "none" }}>
@@ -45,30 +49,35 @@ const App = () => {
         <Link to="/contact" style={{ color: "white", textDecoration: "none" }}>
           Contact
         </Link>
+        <div style={{ position: "absolute", right: "20px" }}>
+          <ThemeToggle />
+        </div>
       </nav>
     </header>
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <Router>
-          <Header />
-          <Routes>
-            <Route path="/" element={<LobbyEntry />} />
-            <Route path="/solo" element={<Index />} />
-            <Route path="/lobby/:code" element={<Lobby />} />
-            <Route path="/game" element={<Game />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<Contact />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Router>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <Router>
+            <Header />
+            <Routes>
+              <Route path="/" element={<LobbyEntry />} />
+              <Route path="/solo" element={<Index />} />
+              <Route path="/lobby/:code" element={<Lobby />} />
+              <Route path="/game" element={<Game />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<Contact />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Router>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 
