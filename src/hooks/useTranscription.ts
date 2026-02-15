@@ -1,16 +1,38 @@
 import { useRef, useEffect } from 'react';
 import type { TranscriptionEntry } from '@/types/call';
 
+// Web Speech API types (not in all TS DOM libs)
+interface SpeechRecognitionEventMap {
+  resultIndex: number;
+  results: SpeechRecognitionResultList;
+}
+interface SpeechRecognitionErrorEventMap {
+  error: string;
+}
+
+interface SpeechRecognitionConstructor {
+  new (): {
+    continuous: boolean;
+    interimResults: boolean;
+    lang: string;
+    start(): void;
+    stop(): void;
+    abort(): void;
+    onresult: ((event: Event & SpeechRecognitionEventMap) => void) | null;
+    onerror: ((event: Event & SpeechRecognitionErrorEventMap) => void) | null;
+  };
+}
+
 declare global {
   interface Window {
-    SpeechRecognition: typeof SpeechRecognition;
-    webkitSpeechRecognition: typeof SpeechRecognition;
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
   }
 }
 
-const SpeechRecognitionAPI =
+const SpeechRecognitionAPI: SpeechRecognitionConstructor | null =
   typeof window !== 'undefined'
-    ? window.SpeechRecognition || window.webkitSpeechRecognition
+    ? window.SpeechRecognition || window.webkitSpeechRecognition || null
     : null;
 
 export function useTranscription(active: boolean, myPlayerId: string | null) {
@@ -25,7 +47,7 @@ export function useTranscription(active: boolean, myPlayerId: string | null) {
     recognition.interimResults = true;
     recognition.lang = 'en-US';
 
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
+    recognition.onresult = (event: Event & SpeechRecognitionEventMap) => {
       const last = event.resultIndex;
       const result = event.results[last];
       if (result.isFinal && result[0]?.transcript) {
@@ -40,7 +62,7 @@ export function useTranscription(active: boolean, myPlayerId: string | null) {
       }
     };
 
-    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+    recognition.onerror = (event: Event & SpeechRecognitionErrorEventMap) => {
       if (event.error === 'no-speech' || event.error === 'aborted') return;
       console.warn('Speech recognition error:', event.error);
     };
