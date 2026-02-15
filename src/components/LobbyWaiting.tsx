@@ -4,10 +4,12 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Copy, Users, Crown, Settings } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Copy, Users, Crown, Settings, Mic, MicOff } from 'lucide-react';
 import { Lobby, LobbyPlayer } from '@/types/lobby';
 import { toast } from 'sonner';
 import { useState } from 'react';
+import { useCallContext } from '@/contexts/CallContext';
 
 interface LobbyWaitingProps {
   lobby: Lobby;
@@ -20,7 +22,7 @@ interface LobbyWaitingProps {
 export const LobbyWaiting = ({ lobby, players, myPlayerId, onStartGame, onUpdateSettings }: LobbyWaitingProps) => {
   const [timerDuration, setTimerDuration] = useState<number>(lobby.roleplay_timer_duration || 5);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
-  // Find the host by looking for player_number: 1, not by array position
+  const call = useCallContext();
   const hostPlayer = players.find(p => p.player_number === 1);
   const isHost = hostPlayer?.id === myPlayerId;
   const canStart = players.length >= 2;
@@ -129,17 +131,38 @@ export const LobbyWaiting = ({ lobby, players, myPlayerId, onStartGame, onUpdate
           </div>
         </div>
 
-        {/* Rest of the component remains the same... */}
+        {call && (
+          <>
+            <Alert className="bg-muted/50">
+              <AlertDescription>
+                You are in a live call. Your audio may be transcribed during the roleplay phase.
+              </AlertDescription>
+            </Alert>
+            <div className="flex items-center gap-2">
+              <Button
+                variant={call.isMuted ? 'destructive' : 'secondary'}
+                size="sm"
+                onClick={() => call.setMuted(!call.isMuted)}
+              >
+                {call.isMuted ? <MicOff className="w-4 h-4 mr-2" /> : <Mic className="w-4 h-4 mr-2" />}
+                {call.isMuted ? 'Unmute' : 'Mute'}
+              </Button>
+              {call.callError && <span className="text-sm text-destructive">{call.callError}</span>}
+              {call.isConnecting && <span className="text-sm text-muted-foreground">Connecting call...</span>}
+            </div>
+          </>
+        )}
+
         <Card className="gradient-card p-6 shadow-card">
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Players</h3>
             <div className="grid gap-3">
-              {players.map((player, index) => (
+              {players.map((player) => (
                 <div
                   key={player.id}
-                  className={`flex items-center justify-between p-4 rounded-lg bg-secondary/50 ${
+                  className={`flex items-center justify-between p-4 rounded-lg bg-secondary/50 transition-all ${
                     player.id === myPlayerId ? 'ring-2 ring-accent' : ''
-                  }`}
+                  } ${call?.speakingPeers.has(player.id) ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''}`}
                 >
                   <div className="flex items-center gap-3">
                     {player.player_number === 1 && <Crown className="w-5 h-5 text-accent" />}

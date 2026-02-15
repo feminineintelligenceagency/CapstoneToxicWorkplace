@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { useLobby } from '@/hooks/useLobby';
+import { CallProvider, useCallContext } from '@/contexts/CallContext';
 import { LobbyWaiting } from '@/components/LobbyWaiting';
 import { RoleReveal } from '@/components/RoleReveal';
 import { RoleplayTimer } from '@/components/RoleplayTimer';
@@ -141,37 +142,35 @@ const Lobby = () => {
   };
 
   if (!lobby || !players.length) return <div className="min-h-screen flex items-center justify-center"><p className="text-xl">Loading...</p></div>;
-  if (lobby.status === 'waiting') return <LobbyWaiting lobby={lobby} players={players} myPlayerId={myPlayerId} onStartGame={handleStartGame} onUpdateSettings={handleUpdateSettings} />;
 
+  const inCall = lobby.status === 'waiting' || lobby.status === 'in_progress';
+  const isRoleplayPhase = lobby.current_phase === 'roleplay';
   const myPlayer = players.find(p => p.id === myPlayerId);
   const isMyTurn = myPlayer?.id === players[lobby.current_player_index]?.id;
   const hostPlayer = players.find(p => p.player_number === 1);
   const isHost = hostPlayer?.id === myPlayerId;
 
-  if (lobby.current_phase === "roleSelection")
-    return (
-      <RoleSelection
-        lobby={lobby}
-        players={players}
-        myPlayerId={myPlayerId}
-        updatePlayer={updatePlayer}
-        updateLobby={updateLobby}
-      />
-    );
-  if (lobby.current_phase === 'roleReveal') return <RoleReveal players={players} myPlayerId={myPlayerId} onNext={handleNextPhase} />;
+  const wrap = (node: ReactNode) => (
+    <CallProvider lobbyCode={lobby.code} lobbyId={lobby.id} players={players} myPlayerId={myPlayerId} inCall={inCall} isRoleplayPhase={isRoleplayPhase}>
+      {node}
+    </CallProvider>
+  );
+
+  if (lobby.status === 'waiting') return wrap(<LobbyWaiting lobby={lobby} players={players} myPlayerId={myPlayerId} onStartGame={handleStartGame} onUpdateSettings={handleUpdateSettings} />);
+  if (lobby.current_phase === 'roleSelection') return wrap(<RoleSelection lobby={lobby} players={players} myPlayerId={myPlayerId} updatePlayer={updatePlayer} updateLobby={updateLobby} />);
+  if (lobby.current_phase === 'roleReveal') return wrap(<RoleReveal players={players} myPlayerId={myPlayerId} onNext={handleNextPhase} />);
   if (lobby.current_phase === 'roleplay') {
     const scenarioIndex = lobby.scenario_index ?? 0;
     const selectedScenario = BASE_SCENARIOS[scenarioIndex];
-    return <RoleplayTimer lobby={lobby} isHost={isHost} onTimerEnd={handleNextPhase} scenarioDescription={selectedScenario?.description} />;
+    return wrap(<RoleplayTimer lobby={lobby} players={players} isHost={!!isHost} onTimerEnd={handleNextPhase} scenarioDescription={selectedScenario?.description} />);
   }
   if (lobby.current_phase === 'guessing') {
-    // Get scenario based on stored index
     const scenarioIndex = lobby.scenario_index ?? 0;
     const selectedScenario = BASE_SCENARIOS[scenarioIndex];
     const availablePersonalities = selectedScenario?.roles.map(r => r.personality) || [];
-    return <GuessingPhase lobby={lobby} players={players} myPlayerId={myPlayerId} isMyTurn={isMyTurn} onGuess={handleGuess} onNext={handleNextPhase} availablePersonalities={availablePersonalities} />;
+    return wrap(<GuessingPhase lobby={lobby} players={players} myPlayerId={myPlayerId} isMyTurn={!!isMyTurn} onGuess={handleGuess} onNext={handleNextPhase} availablePersonalities={availablePersonalities} />);
   }
-  if (lobby.current_phase === 'results') return <Results players={players} onReset={() => navigate('/')} />;
+  if (lobby.current_phase === 'results') return wrap(<Results players={players} onReset={() => navigate('/')} />);
   return null;
 };
 
