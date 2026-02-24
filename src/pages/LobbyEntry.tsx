@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Shield, LogIn, Plus } from "lucide-react";
+import { Shield, LogIn, Plus, Settings } from "lucide-react";
 import { useLobby } from "@/hooks/useLobby";
 import { useToast } from "@/hooks/use-toast";
+import { ScenarioEditor } from "@/components/ScenarioEditor";
 
 const lobbyGuessFetch = async () => {
   const url = "https://ai.capstone.ssree.dev/api/player";
@@ -20,6 +21,7 @@ const LobbyEntry = () => {
   const [playerName, setPlayerName] = useState("");
   const [numPlayers, setNumPlayers] = useState("4");
   const [error, setError] = useState("");
+  const [scenarioEditorOpen, setScenarioEditorOpen] = useState(false);
   const navigate = useNavigate();
   const { createLobby, joinLobby, loading } = useLobby();
   const { toast } = useToast();
@@ -134,8 +136,15 @@ const LobbyEntry = () => {
         </div>
 
         {/* CARD 2 */}
-        <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative">
+        <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative group">
           <Badge className="absolute top-4 right-4 opacity-1">New</Badge>
+          <button
+            onClick={() => setScenarioEditorOpen(true)}
+            className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-white/10 rounded-lg"
+            title="Edit scenarios and manage assets"
+          >
+            <Settings className="w-5 h-5 text-muted-foreground hover:text-foreground" />
+          </button>
           <div className="space-y-2">
             <div className="flex justify-center">
               <div className="p-3 rounded-full gradient-primary shadow-glow">
@@ -206,6 +215,8 @@ const LobbyEntry = () => {
             Join Lobby
           </Button>
         </div>
+
+        <ScenarioEditor isOpen={scenarioEditorOpen} onClose={() => setScenarioEditorOpen(false)} />
       </div>
     );
   }

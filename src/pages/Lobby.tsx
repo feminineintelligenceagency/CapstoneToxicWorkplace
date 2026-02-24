@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useLobby } from '@/hooks/useLobby';
+import { useTranscription } from '@/hooks/useTranscription';
 import { LobbyWaiting } from '@/components/LobbyWaiting';
 import { RoleReveal } from '@/components/RoleReveal';
 import { RoleplayTimer } from '@/components/RoleplayTimer';
@@ -13,13 +14,23 @@ const Lobby = () => {
   const { code } = useParams<{ code: string }>();
   const navigate = useNavigate();
   const { lobby, players, myPlayerId, updateLobby, updatePlayer } = useLobby(code);
+  const isRoleplayPhaseNow = lobby?.current_phase === 'roleplay';
+  const { transcriptionsRef, getTranscriptions } = useTranscription(isRoleplayPhaseNow, myPlayerId);
 
   useEffect(() => { if (!code) navigate('/'); }, [code, navigate]);
 
-  const handleStartGame = async () => {
+  useEffect(() => {
+    // Log transcriptions when roleplay phase ends (transitions to guessing)
+    if (lobby && lobby.current_phase === 'guessing') {
+      const transcriptions = getTranscriptions();
+      console.log('📝 Roleplay Phase Transcriptions:', transcriptions);
+    }
+  }, [lobby?.current_phase, getTranscriptions]);
+
+  const handleStartGame = async (selectedScenarioIndex?: number) => {
     if (!lobby || players.length < 2) return;
-    // Randomize scenario on game start if not already set
-    let scenarioIndex = lobby.scenario_index;
+    // Use provided scenario index, or randomize if not provided
+    let scenarioIndex = selectedScenarioIndex ?? lobby.scenario_index;
     if (scenarioIndex === undefined || scenarioIndex === null) {
       scenarioIndex = Math.floor(Math.random() * BASE_SCENARIOS.length);
     }
@@ -35,6 +46,11 @@ const Lobby = () => {
   const handleUpdateSettings = async (settings: {roleplay_timer_duration: number}) => {
     if (!lobby) return;
     await updateLobby({ roleplay_timer_duration: settings.roleplay_timer_duration });
+  };
+
+  const handleUpdateScenario = async (scenarioIndex: number) => {
+    if (!lobby) return;
+    await updateLobby({ scenario_index: scenarioIndex });
   };
 
   const handleNextPhase = async () => {
@@ -140,8 +156,22 @@ const Lobby = () => {
     }
   };
 
+  const handleAssetSelect = async (asset: { type: 'image' | 'video' | 'document'; name: string; url: string; presentedBy: string; presentedAt: string }) => {
+    if (!lobby) return;
+    await updateLobby({ 
+      current_displayed_asset: asset as any 
+    });
+  };
+
+  const handleAssetRemove = async () => {
+    if (!lobby) return;
+    await updateLobby({ 
+      current_displayed_asset: null as any
+    });
+  };
+
   if (!lobby || !players.length) return <div className="min-h-screen flex items-center justify-center"><p className="text-xl">Loading...</p></div>;
-  if (lobby.status === 'waiting') return <LobbyWaiting lobby={lobby} players={players} myPlayerId={myPlayerId} onStartGame={handleStartGame} onUpdateSettings={handleUpdateSettings} />;
+  if (lobby.status === 'waiting') return <LobbyWaiting lobby={lobby} players={players} myPlayerId={myPlayerId} onStartGame={handleStartGame} onUpdateSettings={handleUpdateSettings} onUpdateScenario={handleUpdateScenario} />;
 
   const myPlayer = players.find(p => p.id === myPlayerId);
   const isMyTurn = myPlayer?.id === players[lobby.current_player_index]?.id;
@@ -162,7 +192,16 @@ const Lobby = () => {
   if (lobby.current_phase === 'roleplay') {
     const scenarioIndex = lobby.scenario_index ?? 0;
     const selectedScenario = BASE_SCENARIOS[scenarioIndex];
-    return <RoleplayTimer lobby={lobby} isHost={isHost} onTimerEnd={handleNextPhase} scenarioDescription={selectedScenario?.description} />;
+    return <RoleplayTimer 
+      lobby={lobby} 
+      isHost={isHost} 
+      onTimerEnd={handleNextPhase}
+      scenarioDescription={selectedScenario?.description}
+      players={players}
+      myPlayerId={myPlayerId}
+      onAssetSelect={handleAssetSelect}
+      onAssetRemove={handleAssetRemove}
+    />;
   }
   if (lobby.current_phase === 'guessing') {
     // Get scenario based on stored index

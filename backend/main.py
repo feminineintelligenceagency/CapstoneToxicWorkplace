@@ -32,7 +32,7 @@ def post_guess(playernum):
     return Response(stdout.take('\n'), status=200)
 
 @app.route("/api/player/<playernum>/guess/<guessval>", methods=['POST'])
-def post_guess(playernum, guessval):
+def post_guess_val(playernum, guessval):
     body = request.get_json()
     global guesses
     g = guesses.get(playernum, [])
@@ -47,4 +47,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 

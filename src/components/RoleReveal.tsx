@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, AlertCircle, Users } from "lucide-react";
 import { LobbyPlayer } from "@/types/lobby";
 
 interface RoleRevealProps {
@@ -27,32 +27,32 @@ export const RoleReveal = ({
   const guidelines = myPlayer.guidelines || [];
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl space-y-8">
-        <div className="text-center space-y-2">
-          <h2 className="text-3xl font-bold">Your Toxic Personality</h2>
-          <p className="text-muted-foreground">
-            View your persona and prepare for the roleplay phase
+    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/5 flex items-center justify-center p-4">
+      <div className="w-full max-w-3xl">
+        <div className="text-center space-y-3 mb-8">
+          <h1 className="text-4xl font-bold tracking-tight">Your Secret Identity</h1>
+          <p className="text-lg text-muted-foreground">
+            Read your role carefully and prepare for the roleplay phase
           </p>
         </div>
 
-        <Card className="gradient-card p-8 shadow-card">
+        <Card className="p-8 shadow-lg border-secondary/20">
           <div className="space-y-6">
-            <div className="text-center">
+            <div className="text-center space-y-3">
               <Button
                 onClick={() => setRevealed(!revealed)}
-                variant={revealed ? "accent" : "game"}
                 size="lg"
-                className="w-full"
+                className="w-full h-12 text-base font-semibold"
+                variant={revealed ? "destructive" : "default"}
               >
                 {revealed ? (
                   <>
-                    <Eye className="mr-2" />
+                    <Eye className="mr-2 h-5 w-5" />
                     Hide Role
                   </>
                 ) : (
                   <>
-                    <EyeOff className="mr-2" />
+                    <EyeOff className="mr-2 h-5 w-5" />
                     Reveal My Role
                   </>
                 )}
@@ -60,57 +60,62 @@ export const RoleReveal = ({
             </div>
 
             {revealed && myPlayer.role && (
-              <div className="gradient-primary p-6 rounded-lg shadow-glow animate-in fade-in duration-500 space-y-4">
-                <div className="text-center">
-                  <p className="text-sm text-primary-foreground/80 mb-2">
-                    Your Personality (Do not reveal this to anyone):
+              <div className="animate-in fade-in duration-500 space-y-6">
+                {/* Role Name Section */}
+                <div className="border-2 border-primary/20 rounded-lg p-8 bg-primary/2 text-center space-y-2">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">
+                    🔒 Your Secret Personality (Keep This Hidden)
                   </p>
-                  <p className="text-4xl font-bold text-primary-foreground">
+                  <p className="text-5xl font-bold text-primary tracking-tight">
                     {personality}
                   </p>
                   {roleName && (
-                    <p className="text-lg text-primary-foreground/80 mt-2">
-                      {roleName} <label className="text-lg">(PUBLIC)</label>
+                    <p className="text-lg text-foreground pt-2">
+                      Introduces yourself as: <span className="font-bold text-primary">{roleName}</span> <span className="text-xs text-muted-foreground">(PUBLIC)</span>
                     </p>
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-primary/5 p-4 rounded-md">
-                    <p className="text-sm text-primary-foreground/80 mb-1">
-                      Your Personality Description:
-                    </p>
-                    <p className="text-sm text-primary-foreground leading-relaxed">
+                {/* Description & Objective Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <Card className="p-6 border-secondary/30 bg-secondary/5 space-y-3">
+                    <div className="flex items-center space-x-2">
+                      <AlertCircle className="h-5 w-5 text-secondary" />
+                      <p className="font-semibold text-foreground">Your Personality</p>
+                    </div>
+                    <p className="text-sm leading-relaxed text-foreground/80">
                       {roleDescriptionText}
                     </p>
-                  </div>
+                  </Card>
 
-                  <div className="bg-secondary/5 p-4 rounded-md">
-                    <p className="text-sm text-primary-foreground/80 mb-1">
-                      Guessing Objective
+                  <Card className="p-6 border-tertiary/30 bg-tertiary/5 space-y-3">
+                    <div className="flex items-center space-x-2">
+                      <Users className="h-5 w-5 text-tertiary" />
+                      <p className="font-semibold text-foreground">Your Objective</p>
+                    </div>
+                    <p className="text-sm leading-relaxed text-foreground/80">
+                      During guessing phase, identify other players' personalities. Each correct guess earns points — be strategic!
                     </p>
-                    <p className="text-sm text-primary-foreground leading-relaxed">
-                      During the guessing phase your goal is to correctly identify
-                      other players' personalities. Be strategic — each correct guess
-                      helps increase your score and brings you closer to winning.
-                    </p>
-                  </div>
+                  </Card>
                 </div>
 
+                {/* Guidelines Section */}
                 {guidelines.length > 0 && (
-                  <div className="bg-accent/5 p-4 rounded-md border border-accent/20">
-                    <p className="text-sm text-primary-foreground/80 mb-2 font-semibold">
-                      Roleplay Guidelines:
+                  <Card className="p-6 border-amber-200 bg-amber-50 dark:bg-amber-950/30 space-y-4">
+                    <p className="font-semibold text-foreground text-lg">
+                      🎭 Roleplay Guidelines
                     </p>
-                    <ul className="space-y-2">
+                    <ul className="space-y-3">
                       {guidelines.map((guideline, index) => (
-                        <li key={index} className="text-sm text-primary-foreground flex items-start">
-                          <span className="mr-2 text-accent font-bold">•</span>
+                        <li key={index} className="flex items-start text-sm text-foreground/90">
+                          <span className="mr-3 font-bold text-amber-600 dark:text-amber-400 flex-shrink-0">
+                            {index + 1}.
+                          </span>
                           <span className="leading-relaxed">{guideline}</span>
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  </Card>
                 )}
               </div>
             )}
@@ -120,11 +125,11 @@ export const RoleReveal = ({
         {revealed && (
           <Button
             onClick={onNext}
-            variant="secondary"
             size="lg"
-            className="w-full"
+            className="w-full mt-8 h-12 text-base font-semibold"
+            variant="secondary"
           >
-            Ready for Roleplay Phase
+            Ready for Roleplay Phase →
           </Button>
         )}
       </div>

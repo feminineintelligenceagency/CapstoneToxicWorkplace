@@ -1,3 +1,11 @@
+export interface DisplayedAsset {
+  url: string;
+  name: string;
+  type: 'image' | 'video' | 'document';
+  presentedBy: string; // player ID who selected it
+  presentedAt: string; // ISO timestamp
+}
+
 export interface Lobby {
   id: string;
   code: string;
@@ -10,6 +18,7 @@ export interface Lobby {
   current_player_index: number;
   current_guess_target: number;
   scenario_index?: number; // Index of selected scenario
+  current_displayed_asset?: DisplayedAsset; // Asset displayed during roleplay phase
   created_at: string;
   updated_at: string;
 }
@@ -28,3 +37,4 @@ export interface LobbyPlayer {
   score: number;
   joined_at: string;
 }
+
