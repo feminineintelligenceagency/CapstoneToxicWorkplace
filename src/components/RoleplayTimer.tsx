@@ -1,13 +1,18 @@
 import { useEffect, useState, useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Lobby, LobbyPlayer } from "@/types/lobby";
+import { Button } from "@/components/ui/button";
+import { Mic, MicOff } from "lucide-react";
+import { Lobby, LobbyPlayer, LobbyPlayer } from "@/types/lobby";
 import { AssetSelector } from "@/components/AssetSelector";
 import { useScenarioAssets } from "@/hooks/useScenarioAssets";
 import { Image as ImageIcon, X, Loader2 } from "lucide-react";
+import { useCallContext } from "@/contexts/CallContext";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface RoleplayTimerProps {
   lobby: Lobby;
+  players: LobbyPlayer[];
   isHost: boolean;
   onTimerEnd: () => void;
   scenarioDescription?: string;
@@ -19,6 +24,7 @@ interface RoleplayTimerProps {
 
 export const RoleplayTimer = ({
   lobby,
+  players,
   isHost,
   onTimerEnd,
   scenarioDescription,
@@ -27,6 +33,7 @@ export const RoleplayTimer = ({
   onAssetSelect,
   onAssetRemove,
 }: RoleplayTimerProps) => {
+  const call = useCallContext();
   const [timeRemaining, setTimeRemaining] = useState<number>(0);
   const [isExpired, setIsExpired] = useState(false);
   const [assetSelectorOpen, setAssetSelectorOpen] = useState(false);
@@ -113,16 +120,47 @@ export const RoleplayTimer = ({
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-6xl space-y-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column: Timer and Instructions */}
-          <div className="lg:col-span-1 space-y-6">
-            <div className="text-center space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold">Roleplay Phase</h2>
-              <p className="text-sm md:text-base text-muted-foreground">
-                Act out your role and interact with other players
-              </p>
+      <div className="w-full max-w-2xl space-y-8">
+        {call && (
+          <div className="flex flex-col gap-3">
+            <Alert className="bg-muted/50">
+              <AlertDescription>
+                Your audio may be transcribed during this phase for future use.
+              </AlertDescription>
+            </Alert>
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <Button
+                variant={call.isMuted ? "destructive" : "secondary"}
+                size="sm"
+                onClick={() => call.setMuted(!call.isMuted)}
+              >
+                {call.isMuted ? <MicOff className="w-4 h-4 mr-2" /> : <Mic className="w-4 h-4 mr-2" />}
+                {call.isMuted ? "Unmute" : "Mute"}
+              </Button>
+              <div className="flex gap-2 flex-wrap">
+                {players.map((p) => (
+                  <span
+                    key={p.id}
+                    className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
+                      call.speakingPeers.has(p.id)
+                        ? "ring-2 ring-primary bg-primary/20"
+                        : "bg-secondary/50"
+                    }`}
+                  >
+                    {p.player_name}
+                    {call.speakingPeers.has(p.id) && " (talking)"}
+                  </span>
+                ))}
+              </div>
             </div>
+          </div>
+        )}
+        <div className="text-center space-y-4">
+          <h2 className="text-4xl font-bold">Roleplay Phase</h2>
+          <p className="text-lg text-muted-foreground">
+            Act out your role and interact with other players
+          </p>
+        </div>
 
             <Card className="gradient-card p-8 shadow-card">
               <div className="text-center space-y-4">
