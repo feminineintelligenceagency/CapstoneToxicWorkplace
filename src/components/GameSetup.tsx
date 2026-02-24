@@ -45,11 +45,11 @@ export const GameSetup = () => {
               id="players"
               type="number"
               min="2"
-              max="50"
+              max="5"
               value={numPlayers}
               onChange={(e) => setNumPlayers(e.target.value)}
               className="text-center text-lg h-12"
-              placeholder="Enter 2-50"
+              placeholder="Enter 2-5"
             />
             {error && <p className="text-destructive text-sm">{error}</p>}
           </div>

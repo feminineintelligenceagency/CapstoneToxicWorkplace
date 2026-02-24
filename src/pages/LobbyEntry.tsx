@@ -66,8 +66,8 @@ const LobbyEntry = () => {
 
   const handleCreateLobby = async () => {
     const num = parseInt(numPlayers, 10);
-    if (isNaN(num) || num < 2 || num > 50) {
-      setError("Please enter a number between 2 and 50");
+    if (isNaN(num) || num < 2 || num > 5) {
+      setError("Please enter a number between 2 and 5");
       return;
     }
 
@@ -254,14 +254,14 @@ const LobbyEntry = () => {
                 id="numPlayers"
                 type="number"
                 min="2"
-                max="50"
+                max="5"
                 value={numPlayers}
                 onChange={(e) => {
                   setNumPlayers(e.target.value);
                   setError("");
                 }}
                 className="text-center text-lg h-12"
-                placeholder="Enter 2-50"
+                placeholder="Enter 2-5"
               />
               {error && <p className="text-destructive text-sm">{error}</p>}
             </div>

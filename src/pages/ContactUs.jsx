@@ -3,12 +3,11 @@ import "../App.css";
 
 export default function Contact() {
   return (
-    <div style={{ marginTop: "10px" }}>
+    <div style={{ marginTop: "20px" }}>
       <h2
         style={{
-          padding: "20px",
+          padding: "50px",
           textAlign: "center",
-          textDecoration: "underline",
         }}
         className="text-5xl font-bold gradient-text-primary"
       >
