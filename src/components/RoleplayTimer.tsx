@@ -1,12 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Button } from "@/components/ui/button";
-import { Mic, MicOff } from "lucide-react";
-import { Lobby, LobbyPlayer, LobbyPlayer } from "@/types/lobby";
+import { Mic, MicOff, Image as ImageIcon, X, Loader2 } from "lucide-react";
+import { Lobby, LobbyPlayer } from "@/types/lobby";
 import { AssetSelector } from "@/components/AssetSelector";
 import { useScenarioAssets } from "@/hooks/useScenarioAssets";
-import { Image as ImageIcon, X, Loader2 } from "lucide-react";
 import { useCallContext } from "@/contexts/CallContext";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -16,7 +14,6 @@ interface RoleplayTimerProps {
   isHost: boolean;
   onTimerEnd: () => void;
   scenarioDescription?: string;
-  players?: LobbyPlayer[];
   myPlayerId?: string | null;
   onAssetSelect?: (asset: { type: 'image' | 'video' | 'document'; name: string; url: string; presentedBy: string; presentedAt: string }) => void;
   onAssetRemove?: () => void;
@@ -28,7 +25,6 @@ export const RoleplayTimer = ({
   isHost,
   onTimerEnd,
   scenarioDescription,
-  players = [],
   myPlayerId,
   onAssetSelect,
   onAssetRemove,
@@ -120,7 +116,7 @@ export const RoleplayTimer = ({
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl space-y-8">
+      <div className="w-full max-w-4xl space-y-8">
         {call && (
           <div className="flex flex-col gap-3">
             <Alert className="bg-muted/50">
@@ -155,6 +151,7 @@ export const RoleplayTimer = ({
             </div>
           </div>
         )}
+
         <div className="text-center space-y-4">
           <h2 className="text-4xl font-bold">Roleplay Phase</h2>
           <p className="text-lg text-muted-foreground">
@@ -162,7 +159,10 @@ export const RoleplayTimer = ({
           </p>
         </div>
 
-            <Card className="gradient-card p-8 shadow-card">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column: Timer and Scenario */}
+          <div className="lg:col-span-1 space-y-4">
+            <Card className="p-8 shadow-md">
               <div className="text-center space-y-4">
                 <div className="space-y-2">
                   <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
@@ -192,7 +192,7 @@ export const RoleplayTimer = ({
             </Card>
 
             {scenarioDescription && (
-              <Card className="gradient-card p-4 shadow-card">
+              <Card className="p-4 shadow-md">
                 <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
                   Scenario
                 </p>
@@ -223,7 +223,7 @@ export const RoleplayTimer = ({
                 </Button>
               </div>
 
-              <Card className="gradient-card p-6 shadow-card min-h-96 flex items-center justify-center bg-muted/30">
+              <Card className="p-6 shadow-md min-h-96 flex items-center justify-center bg-muted/30">
                 {displayedAsset ? (
                   <div className="w-full h-full flex flex-col items-center justify-center gap-4">
                     {displayedAsset.type === 'image' && (

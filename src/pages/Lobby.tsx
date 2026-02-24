@@ -9,6 +9,7 @@ import { GuessingPhase } from '@/components/GuessingPhase';
 import { Results } from '@/components/Results';
 import RoleSelection from '@/components/RoleSelection';
 import { BASE_SCENARIOS } from '@/types/game';
+import { CallProvider } from '@/contexts/CallContext';
 
 const Lobby = () => {
   const { code } = useParams<{ code: string }>();
@@ -171,14 +172,9 @@ const Lobby = () => {
   };
 
   if (!lobby || !players.length) return <div className="min-h-screen flex items-center justify-center"><p className="text-xl">Loading...</p></div>;
-  if (lobby.status === 'waiting') return <LobbyWaiting lobby={lobby} players={players} myPlayerId={myPlayerId} onStartGame={handleStartGame} onUpdateSettings={handleUpdateSettings} onUpdateScenario={handleUpdateScenario} />;
 
   const inCall = lobby.status === 'waiting' || lobby.status === 'in_progress';
   const isRoleplayPhase = lobby.current_phase === 'roleplay';
-  const myPlayer = players.find(p => p.id === myPlayerId);
-  const isMyTurn = myPlayer?.id === players[lobby.current_player_index]?.id;
-  const hostPlayer = players.find(p => p.player_number === 1);
-  const isHost = hostPlayer?.id === myPlayerId;
 
   const wrap = (node: ReactNode) => (
     <CallProvider lobbyCode={lobby.code} lobbyId={lobby.id} players={players} myPlayerId={myPlayerId} inCall={inCall} isRoleplayPhase={isRoleplayPhase}>
@@ -186,13 +182,17 @@ const Lobby = () => {
     </CallProvider>
   );
 
-  if (lobby.status === 'waiting') return wrap(<LobbyWaiting lobby={lobby} players={players} myPlayerId={myPlayerId} onStartGame={handleStartGame} onUpdateSettings={handleUpdateSettings} />);
+  if (lobby.status === 'waiting') return wrap(<LobbyWaiting lobby={lobby} players={players} myPlayerId={myPlayerId} onStartGame={handleStartGame} onUpdateSettings={handleUpdateSettings} onUpdateScenario={handleUpdateScenario} />);
+  const myPlayer = players.find(p => p.id === myPlayerId);
+  const isMyTurn = myPlayer?.id === players[lobby.current_player_index]?.id;
+  const hostPlayer = players.find(p => p.player_number === 1);
+  const isHost = hostPlayer?.id === myPlayerId;
   if (lobby.current_phase === 'roleSelection') return wrap(<RoleSelection lobby={lobby} players={players} myPlayerId={myPlayerId} updatePlayer={updatePlayer} updateLobby={updateLobby} />);
   if (lobby.current_phase === 'roleReveal') return wrap(<RoleReveal players={players} myPlayerId={myPlayerId} onNext={handleNextPhase} />);
   if (lobby.current_phase === 'roleplay') {
     const scenarioIndex = lobby.scenario_index ?? 0;
     const selectedScenario = BASE_SCENARIOS[scenarioIndex];
-    return <RoleplayTimer 
+    return wrap(<RoleplayTimer 
       lobby={lobby} 
       isHost={isHost} 
       onTimerEnd={handleNextPhase}
@@ -201,7 +201,7 @@ const Lobby = () => {
       myPlayerId={myPlayerId}
       onAssetSelect={handleAssetSelect}
       onAssetRemove={handleAssetRemove}
-    />;
+    />);
   }
   if (lobby.current_phase === 'guessing') {
     const scenarioIndex = lobby.scenario_index ?? 0;
