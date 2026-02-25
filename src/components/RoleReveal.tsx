@@ -1,22 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Eye, EyeOff, AlertCircle, Users } from "lucide-react";
+import { Eye, EyeOff, AlertCircle, Users, CheckCircle2 } from "lucide-react";
 import { LobbyPlayer } from "@/types/lobby";
 
 interface RoleRevealProps {
   players: LobbyPlayer[];
   myPlayerId: string | null;
   onNext: () => void;
+  onReady: (isReady: boolean) => void;
 }
 
 export const RoleReveal = ({
   players,
   myPlayerId,
   onNext,
+  onReady,
 }: RoleRevealProps) => {
   const [revealed, setRevealed] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const myPlayer = players.find((p) => p.id === myPlayerId);
+
+  // Update ready state when myPlayer changes
+  useEffect(() => {
+    if (myPlayer) {
+      const newReadyState = myPlayer.ready_for_roleplay || false;
+      setIsReady(newReadyState);
+      console.log(
+        `[RoleReveal] Player ${myPlayer.id} ready state updated to:`,
+        newReadyState,
+      );
+    }
+  }, [myPlayer?.id, myPlayer?.ready_for_roleplay]);
 
   if (!myPlayer) return null;
 
@@ -26,11 +41,31 @@ export const RoleReveal = ({
   const personality = myPlayer.role || "";
   const guidelines = myPlayer.guidelines || [];
 
+  // Check if all players are ready
+  const allPlayersReady = players.every((p) => p.ready_for_roleplay);
+  const readyCount = players.filter((p) => p.ready_for_roleplay).length;
+  console.log(
+    `[RoleReveal] Ready status - Count: ${readyCount}/${players.length}, All ready: ${allPlayersReady}`,
+    players.map((p) => ({ id: p.id, ready: p.ready_for_roleplay })),
+  );
+
+  const handleReadyToggle = () => {
+    const newReadyState = !isReady;
+    console.log(
+      `[RoleReveal] Toggle ready button pressed, new state:`,
+      newReadyState,
+    );
+    setIsReady(newReadyState);
+    onReady(newReadyState);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary/5 flex items-center justify-center p-4">
       <div className="w-full max-w-3xl">
         <div className="text-center space-y-3 mb-8">
-          <h1 className="text-4xl font-bold tracking-tight">Your Secret Identity</h1>
+          <h1 className="text-4xl font-bold tracking-tight">
+            Your Secret Identity
+          </h1>
           <p className="text-lg text-muted-foreground">
             Read your role carefully and prepare for the roleplay phase
           </p>
@@ -71,7 +106,11 @@ export const RoleReveal = ({
                   </p>
                   {roleName && (
                     <p className="text-lg text-foreground pt-2">
-                      Introduces yourself as: <span className="font-bold text-primary">{roleName}</span> <span className="text-xs text-muted-foreground">(PUBLIC)</span>
+                      Introduces yourself as:{" "}
+                      <span className="font-bold text-primary">{roleName}</span>{" "}
+                      <span className="text-xs text-muted-foreground">
+                        (PUBLIC)
+                      </span>
                     </p>
                   )}
                 </div>
@@ -81,7 +120,9 @@ export const RoleReveal = ({
                   <Card className="p-6 border-secondary/30 bg-secondary/5 space-y-3">
                     <div className="flex items-center space-x-2">
                       <AlertCircle className="h-5 w-5 text-secondary" />
-                      <p className="font-semibold text-foreground">Your Personality</p>
+                      <p className="font-semibold text-foreground">
+                        Your Personality
+                      </p>
                     </div>
                     <p className="text-sm leading-relaxed text-foreground/80">
                       {roleDescriptionText}
@@ -91,10 +132,14 @@ export const RoleReveal = ({
                   <Card className="p-6 border-tertiary/30 bg-tertiary/5 space-y-3">
                     <div className="flex items-center space-x-2">
                       <Users className="h-5 w-5 text-tertiary" />
-                      <p className="font-semibold text-foreground">Your Objective</p>
+                      <p className="font-semibold text-foreground">
+                        Your Objective
+                      </p>
                     </div>
                     <p className="text-sm leading-relaxed text-foreground/80">
-                      During guessing phase, identify other players' personalities. Each correct guess earns points — be strategic!
+                      During guessing phase, identify other players'
+                      personalities. Each correct guess earns points — be
+                      strategic!
                     </p>
                   </Card>
                 </div>
@@ -107,7 +152,10 @@ export const RoleReveal = ({
                     </p>
                     <ul className="space-y-3">
                       {guidelines.map((guideline, index) => (
-                        <li key={index} className="flex items-start text-sm text-foreground/90">
+                        <li
+                          key={index}
+                          className="flex items-start text-sm text-foreground/90"
+                        >
                           <span className="mr-3 font-bold text-amber-600 dark:text-amber-400 flex-shrink-0">
                             {index + 1}.
                           </span>
@@ -119,19 +167,58 @@ export const RoleReveal = ({
                 )}
               </div>
             )}
+
+            {/* Ready Status Section */}
+            {revealed && (
+              <div className="border-2 border-blue-200 dark:border-blue-800 rounded-lg p-6 bg-blue-50 dark:bg-blue-950/30 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Users className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                    <p className="font-semibold text-foreground">
+                      Players Ready: {readyCount}/{players.length}
+                    </p>
+                  </div>
+                  {allPlayersReady && (
+                    <div className="flex items-center space-x-2 text-green-600 dark:text-green-400 font-semibold">
+                      <CheckCircle2 className="h-5 w-5" />
+                      <span>All Ready!</span>
+                    </div>
+                  )}
+                </div>
+
+                <Button
+                  onClick={handleReadyToggle}
+                  size="lg"
+                  className="w-full h-12 text-base font-semibold"
+                  variant={isReady ? "default" : "outline"}
+                >
+                  {isReady ? (
+                    <>
+                      <CheckCircle2 className="mr-2 h-5 w-5" />
+                      You're Ready!
+                    </>
+                  ) : (
+                    <>
+                      <AlertCircle className="mr-2 h-5 w-5" />
+                      Mark as Ready
+                    </>
+                  )}
+                </Button>
+
+                {allPlayersReady && (
+                  <Button
+                    onClick={onNext}
+                    size="lg"
+                    className="w-full h-12 text-base font-semibold"
+                    variant="secondary"
+                  >
+                    Start Roleplay Phase →
+                  </Button>
+                )}
+              </div>
+            )}
           </div>
         </Card>
-
-        {revealed && (
-          <Button
-            onClick={onNext}
-            size="lg"
-            className="w-full mt-8 h-12 text-base font-semibold"
-            variant="secondary"
-          >
-            Ready for Roleplay Phase →
-          </Button>
-        )}
       </div>
     </div>
   );
