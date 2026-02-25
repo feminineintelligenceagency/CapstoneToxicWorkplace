@@ -13,7 +13,7 @@ const rolesData = {
             "Enforces Rules",
             "Issues orders",
             "Corrects others publicly",
-            "Checks everyone’s work twice",
+            "Checks everyone's work twice",
             "Thinks efficiency equals obedience",
             " Believes their way is the right way and that structure keeps the world from falling apart"
         ],
@@ -68,14 +68,14 @@ const rolesData = {
             "Dependent Drew",
 
         objective:
-            "Wants to avoid direct responsibility while still undermining others—using sarcasm, half-hearted praise, and quiet resistance.",
+            "Wants to avoid direct responsibility while still undermining others - using sarcasm, half-hearted praise, and quiet resistance.",
 
         always: [
             "Uses personal conversation as a shortcut to intimacy.",
-            "Relays private information under the guise of caring or “keeping everyone in the loop.”",
+            "Relays private information under the guise of caring or \"keeping everyone in the loop.\"",
             "Checks in constantly to feel close and indispensable.",
             "Builds alliances through emotional sharing rather than professional contribution.",
-            "Seeks reassurance that everyone is still “okay” with them."
+            "Seeks reassurance that everyone is still \"okay\" with them."
         ],
 
         never: [
@@ -125,14 +125,14 @@ const rolesData = {
             "Charming Charlie",
 
         objective: 
-            "Wants to be everyone’s favorite—using charisma and flirtation to get ahead, then disappearing when accountability appears.",
+            "Wants to be everyone's favorite - using charisma and flirtation to get ahead, then disappearing when accountability appears.",
 
         always: [
-            "Radiates friendliness and warmth — makes eye contact, laughs easily, leans in.",
-            "Mirrors people’s moods to build instant rapport.",
+            "Radiates friendliness and warmth - makes eye contact, laughs easily, leans in.",
+            "Mirrors people's moods to build instant rapport.",
             "Uses timing and tone to make others feel seen, then redirects goodwill toward his own comfort.",
             "Turns empathy into social navigation: listens just long enough to know what will smooth things over.",
-            "Keeps charm on standby like a reflex — sincerity optional."
+            "Keeps charm on standby like a reflex - sincerity optional."
         ],
 
         never: [
@@ -140,7 +140,7 @@ const rolesData = {
             "Stays present once charm stops working.",
             "Shows genuine vulnerability when things get tense.",
             "Allows anyone to glimpse the calculation behind the smile.",
-            "Gives warmth freely; there’s always an exchange implied."
+            "Gives warmth freely; there's always an exchange implied."
         ],
 
         description:
@@ -182,11 +182,11 @@ const rolesData = {
             "Pity-party Parker",
 
         objective:
-            "Wants sympathy instead of responsibility—framing every setback as someone else’s fault so they never have to change.",
+            "Wants sympathy instead of responsibility - framing every setback as someone else's fault so they never have to change.",
 
         always: [
             "Finds a way to be wronged, no matter the circumstance.",
-            "Turns frustration into a morality play — they’re the good one who’s been mistreated.",
+            "Turns frustration into a morality play - they're the good one who's been mistreated.",
             "Uses emotion (anger, exhaustion, guilt) to pull focus back to their pain.",
             "Recites a history of slights to justify resistance or inaction.",
             "Interprets feedback as cruelty and empathy as validation of their suffering"
@@ -194,8 +194,8 @@ const rolesData = {
 
         never: [
             "Takes responsibility for their part in a conflict.",
-            "Accepts improvement without reminding everyone how hard it’s been for them.",
-            "Lets go of grievances once resolved — they’re too useful.",
+            "Accepts improvement without reminding everyone how hard it's been for them.",
+            "Lets go of grievances once resolved - they're too useful.",
             "Acknowledges privilege or advantage.",
             "Allows others to have worse problems."
         ],
@@ -241,11 +241,11 @@ const rolesData = {
             "Blunt Bailey",
 
         objective: 
-            "Wants to get the job done logically and efficiently—missing emotional cues and leaving coworkers feeling unseen or dismissed.",
+            "Wants to get the job done logically and efficiently - missing emotional cues and leaving coworkers feeling unseen or dismissed.",
 
         always: [
             "Spots logical flaws before anyone else has finished their sentence.",
-            "Responds to enthusiasm with a reminder of why it probably won’t work.",
+            "Responds to enthusiasm with a reminder of why it probably won't work.",
             "Questions slogans, metaphors, and anything that sounds like marketing fluff.",
             "Points out inconsistencies that no one asked to have explained.",
             "Believes that fixing the logic is helping, even when it kills the mood."
@@ -302,21 +302,21 @@ const rolesData = {
             "Menacing Marley",
 
         objective: 
-            "Wants everyone to stay on edge and prove their loyalty — using intimidation and sudden outbursts to keep control of the team.",
+            "Wants everyone to stay on edge and prove their loyalty - using intimidation and sudden outbursts to keep control of the team.",
 
         always: [
             "Uses tone, volume, or proximity to unsettle others.",
-            "Keeps subordinates guessing — alternating between charm and hostility.",
+            "Keeps subordinates guessing - alternating between charm and hostility.",
             "Demands visible displays of loyalty (late nights, private praise, public deference).",
             "Punishes small errors disproportionately to remind others who holds power.",
-            "Makes “respect” synonymous with obedience.",
+            "Makes \"respect\" synonymous with obedience.",
         ],
 
         never: [
             "Admits fault or apologizes sincerely.",
             "Allows others to relax or feel secure in their role.",
             "Treats dissent as legitimate feedback.",
-            "Lets the team’s success outshine their personal control.",
+            "Lets the team's success outshine their personal control.",
             "Offers praise without strings attached."
         ],
 
@@ -362,14 +362,14 @@ const rolesData = {
             "Conspiratorial Corey",
 
         objective:
-            "Wants to expose hidden plots and incompetence—seeing office politics everywhere and demanding constant allegiance.",
+            "Wants to expose hidden plots and incompetence - seeing office politics everywhere and demanding constant allegiance.",
 
         always: [
-            "Interprets neutral behaviors — a private chat, a Slack emoji, a delayed reply — as evidence of scheming.",
-            "Hoards information “for protection.”",
-            "Cross-checks colleagues’ statements for inconsistencies.",
+            "Interprets neutral behaviors - a private chat, a Slack emoji, a delayed reply - as evidence of scheming.",
+            "Hoards information \"for protection.\"",
+            "Cross-checks colleagues' statements for inconsistencies.",
             "Frames caution as wisdom and suspicion as insight.",
-            "Demands loyalty signals to test who’s “really on the team.”"
+            "Demands loyalty signals to test who's \"really on the team.\""
         ],
 
         never: [
@@ -422,11 +422,11 @@ const rolesData = {
             "Adrenaline Ainsley",
 
         objective: 
-            "Wants to keep the office exciting—thriving on chaos, last-minute crises, and high-stakes drama to feel alive.",
+            "Wants to keep the office exciting - thriving on chaos, last-minute crises, and high-stakes drama to feel alive.",
 
         always: [
-            "Cranks the energy in any room until everyone’s running hot.",
-            "Frames urgency as opportunity — “If it’s not risky, why bother?”",
+            "Cranks the energy in any room until everyone's running hot.",
+            "Frames urgency as opportunity - \"If it's not risky, why bother?\"",
             "Turns crises into competitions they expect to win.",
             "Pushes limits of time, rules, and patience for the rush of barely making it.",
             "Charms others into following their pace, then leaves them gasping."
@@ -436,8 +436,8 @@ const rolesData = {
             "Prefers stability or routine.",
             "Slows down long enough to evaluate consequences.",
             "Lets safety protocols, budgets, or burnout get in the way of a good story.",
-            "Acknowledges exhaustion — theirs or anyone else’s.",
-            "Feels alive doing something that isn’t just a little bit reckless."
+            "Acknowledges exhaustion - theirs or anyone else's.",
+            "Feels alive doing something that isn't just a little bit reckless."
         ],
 
         description:
@@ -481,22 +481,22 @@ const rolesData = {
             "Avoidant Alex",
 
         objective: 
-            "Wants to stay in control by keeping distance-charming enough to avoid confrontation but never committing to real teamwork.",
+            "Wants to stay in control by keeping distance - charming enough to avoid confrontation but never committing to real teamwork.",
 
         always: [
             "Radiates calm and cheer, even when things are falling apart.",
-            "Reframes every problem into a “learning opportunity.”",
+            "Reframes every problem into a \"learning opportunity.\"",
             "Responds to tension with forced empathy and a quick pivot to gratitude.",
             "Smiles through discomfort, using niceness as armor.",
-            "Pressures others to “focus on the positive,” no matter how valid the concern."
+            "Pressures others to \"focus on the positive,\" no matter how valid the concern."
         ],
 
         never: [
             "Allows authentic negativity in the room.",
-            "Sits with someone else’s pain without trying to fix it.",
+            "Sits with someone else's pain without trying to fix it.",
             "Acknowledges their own frustration or doubt.",
-            "Lets emotions disrupt the image of a “healthy team.”",
-            "Confronts conflict directly — positivity must prevail."
+            "Lets emotions disrupt the image of a \"healthy team.\"",
+            "Confronts conflict directly - positivity must prevail."
         ],
 
         description:
@@ -540,20 +540,20 @@ const rolesData = {
             "Arrogant Avery",
 
         objective:
-            "Wants to preserve a sense of superiority and control by establishing themselves as the unquestioned authority — using intellect, correction, and confidence to dominate others into silence.",
+            "Wants to preserve a sense of superiority and control by establishing themselves as the unquestioned authority - using intellect, correction, and confidence to dominate others into silence.",
 
         always: [
-            "Corrects others mid-sentence — even when it derails the discussion.",
+            "Corrects others mid-sentence - even when it derails the discussion.",
             "Treats meetings like debates, not collaborations.",
             "Frames opinions as facts and disagreement as incompetence.",
-            "Lectures instead of discussing, “educating” colleagues on topics they already know.",
+            "Lectures instead of discussing, \"educating\" colleagues on topics they already know.",
             "Dismisses emotional intelligence as weakness."
         ],
 
         never: [
             "Admits ignorance, uncertainty, or error.",
             "Asks genuine questions to learn from others.",
-            "Credits peers’ expertise unless it mirrors their own.",
+            "Credits peers' expertise unless it mirrors their own.",
             "Allows ideas to evolve without their input.",
             "Sees disagreement as a normal part of teamwork."
         ],
@@ -601,21 +601,21 @@ const rolesData = {
             "Tornado Toby",
 
         objective:
-            "Wants to juggle a dozen ideas at once—energizing others but leaving a trail of unfinished projects in every direction.",
+            "Wants to juggle a dozen ideas at once - energizing others but leaving a trail of unfinished projects in every direction.",
 
         always: [
             "Cracks jokes that break tension, then drops a brilliant idea mid-laughter.",
-            "Generates five new strategies before lunch — three are wild, one’s genius, one’s chaos.",
-            "Jumps straight to the exciting part and trusts the details to “sort themselves out.”",
-            "Turns brainstorming into performance art — fast, funny, impossible to ignore.",
+            "Generates five new strategies before lunch - three are wild, one's genius, one's chaos.",
+            "Jumps straight to the exciting part and trusts the details to \"sort themselves out.\"",
+            "Turns brainstorming into performance art - fast, funny, impossible to ignore.",
             "Inspires people to believe again when morale is low, often by sheer force of enthusiasm."
         ],
 
         never: [
             "Finds joy in maintenance, documentation, or tidy endings.",
-            "Hides excitement when a new idea hits — the rush is visible, contagious, and disruptive.",
+            "Hides excitement when a new idea hits - the rush is visible, contagious, and disruptive.",
             "Waits for permission to start creating.",
-            "Keeps energy consistent — they spike, vanish, and reappear with another breakthrough.",
+            "Keeps energy consistent - they spike, vanish, and reappear with another breakthrough.",
             "Resists temptation to overcommit when inspiration strikes again."
         ],
 
@@ -669,19 +669,19 @@ const rolesData = {
             "Wants to be admired as the visionary genius whose brilliance outshines everyone else, even if others have to clean up the mess.",
 
         always: [
-            "Lights up a room with confidence and warmth — everyone wants to impress them.",
+            "Lights up a room with confidence and warmth - everyone wants to impress them.",
             "Gives compliments that sound generous but contain quiet hierarchies.",
             "Makes people feel lucky to be in their circle, then slightly unworthy of staying there.",
             "Works hard to be admired, not merely respected.",
-            "Frames criticism as “concern,” maintaining moral high ground while keeping others unsure of themselves."
+            "Frames criticism as \"concern,\" maintaining moral high ground while keeping others unsure of themselves."
         ],
 
         never: [
             "Lets others outshine them for long.",
             "Shares the spotlight without subtly reclaiming it.",
-            "Tolerates indifference — attention must be constant.",
-            "Shows real vulnerability that can’t be spun into admiration.",
-            "Admits envy — it’s reframed as “constructive feedback.”"
+            "Tolerates indifference - attention must be constant.",
+            "Shows real vulnerability that can't be spun into admiration.",
+            "Admits envy - it's reframed as \"constructive feedback.\""
         ],
 
         description:
@@ -726,12 +726,12 @@ const rolesData = {
             "Storytelling Sam",
 
         objective:
-            "Wants to stay admired and indispensable by spinning grand narratives — using charisma, exaggeration, and endless “big ideas” to keep others believing even when nothing is real.",
+            "Wants to stay admired and indispensable by spinning grand narratives - using charisma, exaggeration, and endless \"big ideas\" to keep others believing even when nothing is real.",
 
         always: [
             "Turns ordinary updates into dramatic stories with perfect arcs and heroes.",
             "Embellishes results to sound more impressive, urgent, or visionary.",
-            "Talks about projects as if they’re already successes.",
+            "Talks about projects as if they're already successes.",
             "Charms leadership with grand narratives that lack factual grounding.",
             "Moves the goalposts with each retelling to preserve the illusion of progress."
         ],
@@ -785,7 +785,7 @@ const rolesData = {
             "Neglectful Nico",
 
         objective: 
-            "Wants to keep their own comfort intact—tuning out coworkers' needs and seeing empathy as a distraction from results.",
+            "Wants to keep their own comfort intact-tuning out coworkers' needs and seeing empathy as a distraction from results.",
 
         always: [
             "Keeps standards impossibly high, then withdraws when others fall short.",
@@ -797,7 +797,7 @@ const rolesData = {
 
         never: [
             "Offers encouragement without critique.",
-            "Celebrates progress unless it’s flawless.",
+            "Celebrates progress unless it's flawless.",
             "Shares workload vulnerability or asks for help.",
             "Lets others feel truly competent in their presence.",
             "Engages warmth when performance disappoints."
@@ -845,14 +845,14 @@ const rolesData = {
             "Needy Noel",
 
         objective: 
-            "Wants to maintain emotional safety and belonging by keeping everyone happy — using accommodation, flattery, and avoidance to preserve peace at all costs.",
+            "Wants to maintain emotional safety and belonging by keeping everyone happy - using accommodation, flattery, and avoidance to preserve peace at all costs.",
 
         always: [
             "Tries to keep everyone happy, even when goals conflict.",
             "Agrees immediately, then privately panics about overcommitment.",
             "Soothes tension with compliments, jokes, or emotional caretaking.",
             "Avoids taking clear stances that might upset someone.",
-            "Apologizes excessively — often for things outside their control.",
+            "Apologizes excessively - often for things outside their control.",
         ],
 
         never: [
@@ -906,22 +906,22 @@ const rolesData = {
             "Backhanded Blake",
 
         objective:
-            "Wants to avoid direct responsibility while still undermining others—using sarcasm, half-hearted praise, and quiet resistance.",
+            "Wants to avoid direct responsibility while still undermining others - using sarcasm, half-hearted praise, and quiet resistance.",
 
         always: [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
+            "lorem ipsum",
+            "lorem ipsum",
+            "lorem ipsum",
+            "lorem ipsum",
+            "lorem ipsum",
         ],
 
         never: [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
+            "lorem ipsum",
+            "lorem ipsum",
+            "lorem ipsum",
+            "lorem ipsum",
+            "lorem ipsum",
         ],
 
         description:
@@ -970,7 +970,7 @@ const rolesData = {
             "Projects effortless competence while doing almost nothing.",
             "Times visible \"work\" precisely for moments of maximum visibility.",
             "Uses jargon and charm to camouflage vacuums of substance.",
-            "Repackages other people’s output as proof of personal excellence.",
+            "Repackages other people's output as proof of personal excellence.",
             "Keeps authority focused on optics, not outcomes."
         ],
 
