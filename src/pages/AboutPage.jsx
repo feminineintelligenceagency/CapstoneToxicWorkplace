@@ -1,13 +1,21 @@
 ﻿import { useState } from "react";
 import "../App.css";
 import rolesData from "../types/RoleData";
+import rolesDataCult from "../types/RoleDataCult";
+import rolesDataFamily from "../types/RoleDataFamily";
+
 import { BASE_SCENARIOS } from "../types/game";
+import { CULT_SCENARIOS } from "../types/cultscenarios";
+import { FAM_SCENARIOS } from "../types/familyscenarios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 export default function About() {
-  const [selectedRole, setSelectedRole] = useState("Micromanager");
+      const [selectedRole, setSelectedRole] = useState({
+        group: "base",
+        key: "Micromanager"
+    });
     const roles = Object.keys(rolesData);
 
     const [selectedScenario, setSelectedScenario] = useState(BASE_SCENARIOS[0]);
@@ -19,6 +27,36 @@ export default function About() {
     const toggleSection = (section) => {
         setOpenSection((prev) => (prev === section ? null : section));
     };
+
+    const [openScenarioGroup, setOpenScenarioGroup] = useState(null);
+
+    const toggleScenarioGroup = (groupId) => {
+        setOpenScenarioGroup(prev => (prev === groupId ? null : groupId));
+    };
+
+    const [openRoleGroup, setOpenRoleGroup] = useState(null);
+    const toggleRoleGroup = (groupId) => {
+        setOpenRoleGroup(prev => (prev === groupId ? null : groupId));
+    };
+
+    const SCENARIO_GROUPS = [
+        { id: "base", label: "Workplace", data: BASE_SCENARIOS },
+        { id: "cult", label: "Cult", data: CULT_SCENARIOS },
+        { id: "family", label: "Family", data: FAM_SCENARIOS },
+    ];
+
+    const ROLE_GROUPS = [
+        { id: "base", label: "Workplace", data: rolesData },
+        { id: "cult", label: "Cult", data: rolesDataCult },
+        { id: "family", label: "Family", data: rolesDataFamily },
+    ];
+
+    const activeRoleData =
+        selectedRole.group === "base"
+            ? rolesData[selectedRole.key]
+            : selectedRole.group === "cult"
+                ? rolesDataCult[selectedRole.key]
+                : rolesDataFamily[selectedRole.key];
 
   return (
     <div
@@ -138,30 +176,66 @@ export default function About() {
                     }} />
                 </h2>
 
-                {openSection === "roles" && (
-                    <ul className="text-lg">
-                        {roles.map((role) => (
-                            <li
-                                key={role}
-                                style={{
-                                    cursor: "pointer",
-                                    fontWeight: role === selectedRole ? "bold" : "normal",
-                                }}
-                                className={
-                                    role === selectedRole
-                                        ? "gradient-text-primary"
-                                        : "text-muted-foreground"
-                                }
-                                onClick={() => {
-                                    setSelectedRole(role);
-                                    setActivePanel("role");
-                                }}
-                            >
-                                {rolesData[role].roleName}
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                      {openSection === "roles" && (
+                          <div>
+                              {ROLE_GROUPS.map((group) => (
+                                  <div key={group.id} style={{ marginBottom: "10px" }}>
+
+                                      {/* Group Header */}
+                                      <h3
+                                          style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}
+                                          className="text-md font-semibold"
+                                          onClick={() => toggleRoleGroup(group.id)}
+                                      >
+                                          {group.label}
+                                          <FontAwesomeIcon
+                                              icon={faChevronDown}
+                                              style={{
+                                                  transform:
+                                                      openRoleGroup === group.id
+                                                          ? "rotate(0deg)"
+                                                          : "rotate(90deg)",
+                                                  transition: "transform 0.2s ease",
+                                              }}
+                                          />
+                                      </h3>
+
+                                      {/* Roles inside group */}
+                                      {openRoleGroup === group.id && (
+                                          <ul className="text-lg" style={{ paddingLeft: "15px" }}>
+                                              {Object.keys(group.data).map((roleKey) => {
+                                                  const role = group.data[roleKey];
+
+                                                  return (
+                                                      <li
+                                                          key={roleKey}
+                                                          style={{
+                                                              cursor: "pointer",
+                                                              fontWeight:
+                                                                  roleKey === selectedRole.key && group.id === selectedRole.group
+                                                                      ? "bold"
+                                                                      : "normal",
+                                                          }}
+                                                          className={
+                                                              roleKey === selectedRole.key && group.id === selectedRole.group
+                                                                  ? "gradient-text-primary"
+                                                                  : "text-muted-foreground"
+                                                          }
+                                                          onClick={() => {
+                                                              setSelectedRole({ group: group.id, key: roleKey });
+                                                              setActivePanel("role");
+                                                          }}
+                                                      >
+                                                          {role.roleName}
+                                                      </li>
+                                                  );
+                                              })}
+                                          </ul>
+                                      )}
+                                  </div>
+                              ))}
+                          </div>
+                      )}
             </div>
 
 
@@ -189,29 +263,56 @@ export default function About() {
                       </h2>
 
                       {openSection === "scenarios" && (
-                          <ul className="text-lg">
-                              {BASE_SCENARIOS.map((scenario) => (
-                                  <li
-                                      key={scenario.companyName}
-                                      style={{
-                                          cursor: "pointer",
-                                          fontWeight:
-                                              scenario === selectedScenario ? "bold" : "normal",
-                                      }}
-                                      className={
-                                          scenario === selectedScenario
-                                              ? "gradient-text-primary"
-                                              : "text-muted-foreground"
-                                      }
-                                      onClick={() => {
-                                          setSelectedScenario(scenario);
-                                          setActivePanel("scenario");
-                                      }}
-                                  >
-                                      {scenario.companyName}
-                                  </li>
+                          <div>
+                              {SCENARIO_GROUPS.map((group) => (
+                                  <div key={group.id} style={{ marginBottom: "10px" }}>
+                                      {/* Group Header */}
+                                      <h3
+                                          style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}
+                                          className="text-md font-semibold"
+                                          onClick={() => toggleScenarioGroup(group.id)}
+                                      >
+                                          {group.label}
+                                          <FontAwesomeIcon
+                                              icon={faChevronDown}
+                                              style={{
+                                                  transform:
+                                                      openScenarioGroup === group.id
+                                                          ? "rotate(0deg)"
+                                                          : "rotate(90deg)",
+                                                  transition: "transform 0.2s ease",
+                                              }}
+                                          />
+                                      </h3>
+
+                                      {/* Scenarios inside group */}
+                                      {openScenarioGroup === group.id && (
+                                          <ul className="text-lg" style={{ paddingLeft: "15px" }}>
+                                              {group.data.map((scenario) => (
+                                                  <li
+                                                      key={scenario.scenarioName}   // now this works
+                                                      style={{
+                                                          cursor: "pointer",
+                                                          fontWeight: scenario === selectedScenario ? "bold" : "normal",
+                                                      }}
+                                                      className={
+                                                          scenario === selectedScenario
+                                                              ? "gradient-text-primary"
+                                                              : "text-muted-foreground"
+                                                      }
+                                                      onClick={() => {
+                                                          setSelectedScenario(scenario);
+                                                          setActivePanel("scenario");
+                                                      }}
+                                                  >
+                                                      {scenario.scenarioName}  
+                                                  </li>
+                                              ))}
+                                          </ul>
+                                      )}
+                                  </div>
                               ))}
-                          </ul>
+                          </div>
                       )}
                   </div>
         </div>
@@ -226,19 +327,19 @@ export default function About() {
           }}
           className="text-lg"
               >
-                  {activePanel == "role" && (
+                  {activePanel == "role" && activeRoleData  && (
                       <>
                           <h2 style={{ textAlign: "center" }} className="text-2xl">
-                              {rolesData[selectedRole].roleName}
+                              {activeRoleData.roleName}
                           </h2>
                           <h3 style={{ textAlign: "center" }} className="text-muted-foreground">
                               {" "}
-                              A.K.A {rolesData[selectedRole].nickname}
+                              A.K.A {activeRoleData.nickname}
                           </h3>
 
                           <h4>Description</h4>
                           <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
-                              {rolesData[selectedRole].description}
+                              {activeRoleData.description}
                           </p>
 
                           <div style={{
@@ -258,7 +359,7 @@ export default function About() {
                                       className="text-muted-foreground"
                                       style={{ listStyleType: "disc", marginBottom: "20px" }}
                                   >
-                                      {rolesData[selectedRole].always.map((item, index) => (
+                                      {activeRoleData.always.map((item, index) => (
                                           <li key={index}>{item}</li>
                                       ))}
                                   </ul>
@@ -274,7 +375,7 @@ export default function About() {
                                       className="text-muted-foreground"
                                       style={{ listStyleType: "disc", marginBottom: "20px" }}
                                   >
-                                      {rolesData[selectedRole].never.map((item, index) => (
+                                      {activeRoleData.never.map((item, index) => (
                                           <li key={index}>{item}</li>
                                       ))}
                                   </ul>
@@ -284,7 +385,7 @@ export default function About() {
 
                           <h4>Objective</h4>
                           <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
-                              {rolesData[selectedRole].objective}
+                              {activeRoleData.objective}
                           </p>
 
                           <h4>Key Behaviors</h4>
@@ -292,14 +393,14 @@ export default function About() {
                               className="text-muted-foreground"
                               style={{ listStyleType: "disc", marginBottom: "20px" }}
                           >
-                              {rolesData[selectedRole].keyBehaviors.map((item, index) => (
+                              {activeRoleData.keyBehaviors.map((item, index) => (
                                   <li key={index}>{item}</li>
                               ))}
                           </ul>
 
                           <h4>Internal Rules</h4>
                           <ol className="text-muted-foreground" style={{ listStyleType: "disc", marginBottom: "20px" }}>
-                              {rolesData[selectedRole].internalRules.map((item, index) => {
+                              {activeRoleData.internalRules.map((item, index) => {
                                   const [title, rest] = item.split(":");
                                   return (
                                       <li key={index}>
@@ -316,14 +417,14 @@ export default function About() {
 
                           <h4>Impact on Team</h4>
                           <ul className="text-muted-foreground" style={{ listStyleType: "disc", marginBottom: "20px" }}>
-                              {rolesData[selectedRole].teamImpact.map((item, index) => (
+                              {activeRoleData.teamImpact.map((item, index) => (
                                   <li key={index}>{item}</li>
                               ))}
                           </ul>
 
                           <h4>Motivation</h4>
                           <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
-                              {rolesData[selectedRole].motivation}
+                              {activeRoleData.motivation}
                           </p>
                       </>
                   )}
@@ -331,7 +432,7 @@ export default function About() {
                   {activePanel == "scenario" && (
                       <>
                           <h2 style={{ textAlign: "center" }} className="text-2xl">
-                              {selectedScenario.companyName}
+                              {selectedScenario.scenarioName}
                           </h2>
 
                           <h4>Scenario Seed</h4>

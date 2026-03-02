@@ -1,5 +1,5 @@
 const rolesData = {
-    Micromanager: {
+    DOMINEERING_DEVIN_WORK_MICROMANAGER: {
         roleName:
             "The Micromanager",
 
@@ -7,7 +7,7 @@ const rolesData = {
             "Domineering Devin",
 
         objective:
-            "Wants to control every process and person, proving their authority by enforcing order and rules so no one can act without their approval.",
+            "Control every workflow and decision so nothing moves forward without their approval or oversight.",
 
         always: [
             "Enforces Rules",
@@ -60,7 +60,7 @@ const rolesData = {
             " lacks confidence in their leadership capabilities and compensates by exerting control wherever possible."
     },
 
-    OfficeGossip: {
+    DEPENDENT_DREW_WORK_GOSSIP: {
         roleName:
             "The Office Gossip",
 
@@ -68,7 +68,7 @@ const rolesData = {
             "Dependent Drew",
 
         objective:
-            "Wants to avoid direct responsibility while still undermining others - using sarcasm, half-hearted praise, and quiet resistance.",
+            "Stay socially central by connecting coworkers through information sharing, chatter, and relationship management.",
 
         always: [
             "Uses personal conversation as a shortcut to intimacy.",
@@ -117,7 +117,7 @@ const rolesData = {
             " feeling more secure when perceived as a knowledgeable insider."
     },
 
-    Charmer: {
+    CHARMING_CHARLIE_WORK_CHARMER: {
         roleName:
             "The Charmer",
 
@@ -125,7 +125,7 @@ const rolesData = {
             "Charming Charlie",
 
         objective: 
-            "Wants to be everyone's favorite - using charisma and flirtation to get ahead, then disappearing when accountability appears.",
+            "Win favor and influence through charm and likability, then withdraw when responsibility or scrutiny appears.",
 
         always: [
             "Radiates friendliness and warmth - makes eye contact, laughs easily, leans in.",
@@ -174,7 +174,7 @@ const rolesData = {
             "mutual growth. Their actions are motivated by a deep-seated need to dominate and win, regardless of the ethical implications."
     },
 
-    Complainer: {
+    PITY_PARTY_PARKER_WORK_COMPLAINER: {
         roleName:
             "The Complainer",
 
@@ -182,7 +182,7 @@ const rolesData = {
             "Pity-party Parker",
 
         objective:
-            "Wants sympathy instead of responsibility - framing every setback as someone else's fault so they never have to change.",
+            "Avoid accountability by reframing workplace problems as situations caused by others so they never have to change.",
 
         always: [
             "Finds a way to be wronged, no matter the circumstance.",
@@ -233,7 +233,7 @@ const rolesData = {
             "Their complaints can be a defense mechanism against feeling out of control or inadequate."
     },
 
-    Buzzkill: {
+    BLUNT_BAILEY_WORK_BUZZKILL: {
         roleName:
             "The Buzzkill",
 
@@ -241,7 +241,7 @@ const rolesData = {
             "Blunt Bailey",
 
         objective: 
-            "Wants to get the job done logically and efficiently - missing emotional cues and leaving coworkers feeling unseen or dismissed.",
+            "Prioritize efficiency and logic above all else, overlooking emotional dynamics and leaving coworkers feeling dismissed.",
 
         always: [
             "Spots logical flaws before anyone else has finished their sentence.",
@@ -294,7 +294,7 @@ const rolesData = {
             " When others cheer, they scan for cracks in the foundation. It's not sabotage; it's vigilance. They can't help it - someone has to keep reality intact."
     },
 
-    Enforcer: {
+    MENACING_MARLEY_WORK_ENFORCER: {
         roleName:
             "The Enforcer",
 
@@ -302,7 +302,7 @@ const rolesData = {
             "Menacing Marley",
 
         objective: 
-            "Wants everyone to stay on edge and prove their loyalty - using intimidation and sudden outbursts to keep control of the team.",
+            "Keep staff on edge and constantly proving loyalty by using intimidation and unpredictable reactions to assert authority.",
 
         always: [
             "Uses tone, volume, or proximity to unsettle others.",
@@ -354,7 +354,7 @@ const rolesData = {
             " control. By keeping everyone afraid, they never have to face their own fear of irrelevance."
     },
 
-    Watchdog: {
+    CONSPIRATORIAL_COREY_WORK_WATCHDOG: {
         roleName:
             "The Watchdog",
 
@@ -362,7 +362,7 @@ const rolesData = {
             "Conspiratorial Corey",
 
         objective:
-            "Wants to expose hidden plots and incompetence - seeing office politics everywhere and demanding constant allegiance.",
+            "Uncover supposed incompetence and hidden agendas by treating routine workplace issues as political threats.",
 
         always: [
             "Interprets neutral behaviors - a private chat, a Slack emoji, a delayed reply - as evidence of scheming.",
@@ -414,7 +414,7 @@ const rolesData = {
             "exclusion. They'd rather alienate everyone than feel naive again."
     },
 
-    Disrupter: {
+    ADRENALINE_AINSLEY_WORK_DISRUPTER: {
         roleName: 
             "The Disrupter",
 
@@ -422,7 +422,7 @@ const rolesData = {
             "Adrenaline Ainsley",
 
         objective: 
-            "Wants to keep the office exciting - thriving on chaos, last-minute crises, and high-stakes drama to feel alive.",
+            "Create excitement at work by escalating urgency, crises, and drama to make the environment feel high stakes.",
 
         always: [
             "Cranks the energy in any room until everyone's running hot.",
@@ -473,7 +473,7 @@ const rolesData = {
             "pulse that tells them they're still alive."
     },
 
-    Optimist: {
+    AVOIDANT_ALEX_WORK_OPTIMIST: {
         roleName: 
             "The Eternal Optimist",
 
@@ -481,7 +481,7 @@ const rolesData = {
             "Avoidant Alex",
 
         objective: 
-            "Wants to stay in control by keeping distance - charming enough to avoid confrontation but never committing to real teamwork.",
+            "Maintain control by staying charming yet distant, avoiding commitments that would require real collaboration.",
 
         always: [
             "Radiates calm and cheer, even when things are falling apart.",
@@ -532,7 +532,7 @@ const rolesData = {
             "emotional chaos. Their brightness isn't hope - it's control."
     },
 
-    Expert: {
+    ARROGANT_AVERY_WORK_EXPERT: {
         roleName:
             "The Expert",
 
@@ -540,7 +540,7 @@ const rolesData = {
             "Arrogant Avery",
 
         objective:
-            "Wants to preserve a sense of superiority and control by establishing themselves as the unquestioned authority - using intellect, correction, and confidence to dominate others into silence.",
+            "Maintain intellectual dominance by positioning themself as the ultimate authority whose judgment overrides everyone else.",
 
         always: [
             "Corrects others mid-sentence - even when it derails the discussion.",
@@ -593,7 +593,7 @@ const rolesData = {
             "conflate being correct with being safe, and being challenged with being humiliated."
     },
 
-    Innovator: {
+    TORNADO_TOBY_WORK_INNOVATOR: {
         roleName:
             "The Innovator",
 
@@ -601,7 +601,7 @@ const rolesData = {
             "Tornado Toby",
 
         objective:
-            "Wants to juggle a dozen ideas at once - energizing others but leaving a trail of unfinished projects in every direction.",
+            "Generate constant new initiatives that energize teams but leave projects unfinished or scattered.",
 
         always: [
             "Cracks jokes that break tension, then drops a brilliant idea mid-laughter.",
@@ -658,7 +658,7 @@ const rolesData = {
             " feel real."
     },
 
-    Narcissist: {
+    EGOCENTRIC_EVAN_WORK_NARCISSIST: {
         roleName: 
             "The Narcissist",
 
@@ -666,7 +666,7 @@ const rolesData = {
             "Egocentric Evan",
 
         objective: 
-            "Wants to be admired as the visionary genius whose brilliance outshines everyone else, even if others have to clean up the mess.",
+            "Be seen as the office visionary whose brilliance outshines everyone else even when others must fix the consequences. to be admired as the visionary genius whose brilliance outshines everyone else, even if others have to clean up the mess.",
 
         always: [
             "Lights up a room with confidence and warmth - everyone wants to impress them.",
@@ -718,7 +718,7 @@ const rolesData = {
             "proof they exist. Their charm isn't fake - it's survival."
     },
 
-    PitchArtist: {
+    STORYTELLING_SAM_WORK_PITCH_ARTIST: {
         roleName:
             "The Pitch Artist",
 
@@ -726,7 +726,7 @@ const rolesData = {
             "Storytelling Sam",
 
         objective:
-            "Wants to stay admired and indispensable by spinning grand narratives - using charisma, exaggeration, and endless \"big ideas\" to keep others believing even when nothing is real.",
+            "Remain admired and indispensable by pitching bold visions and ideas that keep others invested without concrete results.",
 
         always: [
             "Turns ordinary updates into dramatic stories with perfect arcs and heroes.",
@@ -777,7 +777,7 @@ const rolesData = {
             " buys more attention, but also more distance from reality. The applause is real; the results rarely are."
     },
 
-    Overachiever: {
+    NEGLECTFUL_NICO_WORK_OVERACHIEVER: {
         roleName:
             "The Overachiever",
 
@@ -785,7 +785,7 @@ const rolesData = {
             "Neglectful Nico",
 
         objective: 
-            "Wants to keep their own comfort intact-tuning out coworkers' needs and seeing empathy as a distraction from results.",
+            "Protect personal comfort by disengaging from others needs and treating collaboration as unnecessary effort.",
 
         always: [
             "Keeps standards impossibly high, then withdraws when others fall short.",
@@ -837,7 +837,7 @@ const rolesData = {
             "They'd rather be admired than known."
     },
 
-    Pleaser: {
+    NEEDY_NOEL_WORK_PLEASER: {
         roleName: 
             "The Pleaser",
 
@@ -845,7 +845,7 @@ const rolesData = {
             "Needy Noel",
 
         objective: 
-            "Wants to maintain emotional safety and belonging by keeping everyone happy - using accommodation, flattery, and avoidance to preserve peace at all costs.",
+            "Wants to maintain emotional safety and belonging by keeping everyone happy - using accommodation, flattery, and avoidance to preserve peace at Preserve a sense of belonging by keeping everyone satisfied and conflict-free even if productivity suffers. costs.",
 
         always: [
             "Tries to keep everyone happy, even when goals conflict.",
@@ -898,7 +898,7 @@ const rolesData = {
             "internal distress. Their kindness is real, but it's compulsive - a survival strategy born from environments where disagreement felt dangerous."
     },
 
-    PassiveAggressive: {
+    BACKHANDED_BLAKE_WORK_PASSIVE_AGGRESSIVE: {
         roleName:
             "The Passive Aggressive",
 
@@ -906,7 +906,7 @@ const rolesData = {
             "Backhanded Blake",
 
         objective:
-            "Wants to avoid direct responsibility while still undermining others - using sarcasm, half-hearted praise, and quiet resistance.",
+            "Avoid accountability while quietly undermining colleagues through sarcasm, delay, and subtle obstruction.",
 
         always: [
             "lorem ipsum",
@@ -956,7 +956,7 @@ const rolesData = {
             "believing it protects them from potential repercussions or rejection."
     },
 
-    Shirker: {
+    MANIPULATIVE_MORGAN_WORK_SHIRKER: {
         roleName: 
             "The Shirker",
 
@@ -964,7 +964,7 @@ const rolesData = {
             "Manipulative Morgan",
 
         objective: 
-            "Wants to keep everyone anxious and eager to please while doing as little as possible themself.",
+            "Keep coworkers anxious and eager to please so they can offload tasks while appearing productive.",
 
         always: [
             "Projects effortless competence while doing almost nothing.",

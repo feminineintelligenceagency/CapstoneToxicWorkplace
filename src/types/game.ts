@@ -1,6 +1,6 @@
 export const BASE_SCENARIOS = [
   {
-    companyName: "HaloSight",
+    scenarioName: "HaloSight",
     scenarioSeed: "Sells inferred emotional states from webcam and mic signals under a \"personalization\" contract.",
     description: "The meeting takes place on a Wednesday morning inside HaloSight's glass- walled conference room, nicknamed The Observatory - an irony not lost on the engineers. Overnight, " +
             "a small internal report leaked onto Slack showing that the company's flagship product, EmotionSense, records webcam and microphone data even when users\" applications are " +
@@ -64,7 +64,7 @@ export const BASE_SCENARIOS = [
     ]
   },
   {
-    companyName: "Verdant & Co.",
+    scenarioName: "Verdant & Co.",
     scenarioSeed: "Runs major \"sustainability\" campaigns for oil & gas clients while burying emissions data.",
     description: "Verdant's creative team is told to \"focus on hope, not heat\" when creating an ad campaign for a petroleum conglomerate. Designers privately worry about ethics but " +
             "are reminded that \"the client's sustainability division funds our diversity program.\" Staff who question the narrative are moved to lower-visibility accounts.",
@@ -127,7 +127,7 @@ export const BASE_SCENARIOS = [
     ]
   },
   {
-    companyName: "NexaMind Labs",
+    scenarioName: "NexaMind Labs",
     scenarioSeed: "A/B tests manipulative nudges on vulnerable user groups and launders findings through \"academic partnerships.\"",
     description: "NexaMind quietly sells its bias-laden language model to a government defense contractor, rebranding it as \"ethical AI infrastructure.\" The internal ethics board " +
             "exists only to rubber-stamp marketing copy. Junior researchers debate leaking documentation.",
@@ -190,7 +190,7 @@ export const BASE_SCENARIOS = [
     ]
   },
   {
-    companyName: "BrightBridge Strategies",
+    scenarioName: "BrightBridge Strategies",
     scenarioSeed: "Ghostwrites policy pieces for ôindependentö think tanks and coordinates astroturf campaigns.",
     description: "BrightBridge manages crisis comms for a pesticide manufacturer. Staff ghostwrite op-eds under farmers' names to oppose regulation. Account directors justify the deception " +
             "as \"advocacy literacy.\" A young copywriter's pushback gets labeled \"ideological immaturity.\"",
@@ -253,7 +253,7 @@ export const BASE_SCENARIOS = [
     ]
   },
   {
-    companyName: "CareMint Health",
+    scenarioName: "CareMint Health",
     scenarioSeed: "Aggregates employee mood and biometric data, shares derived risk scores with insurers.",
     description: "The team gathers in the glass-walled \"Calm Pod\" to review feedback on PulsePath, their biometric app that tracks employees' moods and heart rates. Officially, the meeting is about " +
             "\"enhancing user trust.\" Unofficially, it's crisis control: a staffer just leaked that CareMint shares anonymized \"resilience scores\" with insurers - and that low-mood data " +
@@ -318,7 +318,7 @@ export const BASE_SCENARIOS = [
     ]
   },
   {
-    companyName: "Alloy Analytics",
+    scenarioName: "Alloy Analytics",
     scenarioSeed: "Combines purchase, location, and credit data to produce ôpredictive vulnerabilityö scores for advertisers.",
     description: "Alloy's analysts create \"financial fragility\" indices using purchase and geolocation data, then sell them to payday lenders. Marketing insists it's \"inclusive credit.\" An " +
             "intern notices users who bought baby products are tagged as \"short-term cash vulnerable.\"",
@@ -381,7 +381,7 @@ export const BASE_SCENARIOS = [
     ]
   },
   {
-    companyName: "TrueNorth Bioventures",
+    scenarioName: "TrueNorth Bioventures",
     scenarioSeed: "Runs patient-facing \"community\" programs while lobbying to weaken drug-safety oversight.",
     description: "It's a tense Monday morning at TrueNorth Bioventures, a biotech start-up that once promised to revolutionize treatment for autoimmune disorders. After their flagship drug failed " +
             "in Phase III trials, investors panicked. Now, the leadership team has regrouped - not to fix the science, but to fix the optics. They've just launched \"Patients First,\" a supposedly " +
@@ -446,7 +446,7 @@ export const BASE_SCENARIOS = [
     ]
   },
   {
-    companyName: "EmberWave Creative",
+    scenarioName: "EmberWave Creative",
     scenarioSeed: "Crafts feel-good ads about labor while actively advising clients on union-avoidance messaging.",
     description: "It's 10:00 a.m. at EmberWave Creative, the sleek downtown ad agency famous for its \"purpose-driven storytelling.\" The agency just won a national award for its \"Fair Work\" campaign - a " +
             "sunlit montage of factory workers smiling under the tagline \"Hands That Build Our Future.\" The problem: the same account team spent the week drafting internal talking points for a " +
@@ -510,7 +510,7 @@ export const BASE_SCENARIOS = [
     ]
   },
   {
-    companyName: "UnionCross Consulting",
+    scenarioName: "UnionCross Consulting",
     scenarioSeed: "Places ex-officials to \"educate\" regulators and quietly secures carveouts for clients.",
     description: "It's a Friday afternoon at UnionCross Consulting, where politics, lobbying, and PR blur into one well-catered ecosystem. The firm's newest \"government education initiative\" is " +
             "supposed to \"foster constructive dialogue between industry and regulators.\" In reality, it's a quiet influence campaign. A recently retired senator has just joined as \"Senior Policy " +
@@ -575,7 +575,7 @@ export const BASE_SCENARIOS = [
     ]
   },
   {
-    companyName: "SocialPulse",
+    scenarioName: "SocialPulse",
     scenarioSeed: "Optimizes engagement loops using teen mental-health vulnerabilities; ethics team is performative.",
     description: "SocialPulse is the social media platform \"building meaningful connections at scale.\" The engagement team has been quietly running experiments showing that outrage and anxiety " +
             "increase retention among teen users.The algorithm's success is undeniable - engagement is up 22%.So is self-reported stress. Now, the leadership team meets to \"finalize messaging\" " +
@@ -641,7 +641,7 @@ export const BASE_SCENARIOS = [
     ]
   },
   {
-    companyName: "VelvetEdge Retail",
+    scenarioName: "VelvetEdge Retail",
     scenarioSeed: "Launches \"empowerment\" influencer campaigns while sourcing from underpaid factories and suppressing stories.",
     description: "VelvetEdge Retail is a fast-fashion e-commerce brand famous for slogans like \"Confidence is Sustainable.\" The company has just launched its glossy \"Women Rising\" campaign - " +
             "a pastel-saturated influencer rollout celebrating empowerment, diversity, and recycled fabrics. What's not in the press release: factory workers in Bangladesh are earning below " +
@@ -707,7 +707,7 @@ export const BASE_SCENARIOS = [
     ]
   },
   {
-    companyName: "Stonehaven Security",
+    scenarioName: "Stonehaven Security",
     scenarioSeed: "Runs aggressive brand-protection programs that surveil journalists, activists, and whistleblowers.",
     description: "Stonehaven Security is a multinational firm specializing in \"brand protection\" and \"reputation risk.\" In reality, the team runs a covert surveillance operation that tracks " +
             "journalists, union organizers, and whistleblowers under the banner of corporate safety. Overnight, an internal Slack message leaked - a junior analyst noticed that a journalist " +
@@ -794,7 +794,7 @@ export type RoleDetails = {
 }
 
 export type Scenario = {
-  companyName: string;
+  scenarioName: string;
   scenarioSeed: string;
   description: string;
   roles: RoleDetails[];

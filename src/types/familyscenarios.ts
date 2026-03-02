@@ -1,6 +1,6 @@
-export const BASE_SCENARIOS = [
+export const FAM_SCENARIOS = [
   {
-        familyName: "The Pembrooke Household",
+        scenarioName: "The Pembrooke Household",
         scenarioSeed: "A household decision must be made about conflicting plans scheduled for the same time.",
         description: "During a family planning discussion, members compare two scheduled commitments that occur at the same time and must decide which one they will attend.",
         roles: [
@@ -62,7 +62,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "The Petrovs",
+        scenarioName: "The Petrovs",
         scenarioSeed: "A decision must be made about how to allocate shared resources for upcoming plans.",
         description: "During a household meeting, family members review several requests that all require the same limited resource and must choose which one will receive it.",
         roles: [
@@ -124,7 +124,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "O'Connor",
+        scenarioName: "O'Connor",
         scenarioSeed: "A decision must be made about conflicting commitments scheduled for the same day.",
         description: "During a household discussion, members review two obligations that occur at the same time and must decide which one they will fulfill.",
         roles: [
@@ -186,7 +186,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "The Yamamotos",
+        scenarioName: "The Yamamotos",
         scenarioSeed: "A decision must be made about which upcoming obligation will take priority.",
         description: "During a scheduled conversation, family members review two commitments that overlap and must decide which one will be honored before preparations continue.",
         roles: [
@@ -248,7 +248,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "The Chaudhry Family",
+        scenarioName: "The Chaudhry Family",
         scenarioSeed: "A decision must be made about how to use shared funds for upcoming needs.",
         description: "During a family budget discussion, members review several requests that exceed available funds and must decide how the money will be allocated.",
         roles: [
@@ -310,7 +310,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "The Wangs",
+        scenarioName: "The Wangs",
         scenarioSeed: "A decision must be made about which commitment will be prioritized when schedules conflict.",
         description: "During a planning conversation, members compare two obligations scheduled for the same time and must choose one.",
         roles: [
@@ -372,7 +372,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "The Almeidas",
+        scenarioName: "The Almeidas",
         scenarioSeed: "A decision must be made about how to divide responsibilities for an upcoming obligation.",
         description: "During a preparation meeting, members review a list of required tasks that must be assigned before work can begin.",
         roles: [
@@ -434,7 +434,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "The Salazars",
+        scenarioName: "The Salazars",
         scenarioSeed: "A decision must be made about which plan to follow for an upcoming family event.",
         description: "During a household meeting, members compare two proposed plans that cannot both be implemented and must choose one.",
         roles: [
@@ -496,7 +496,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "The Delacroix",
+        scenarioName: "The Delacroix",
         scenarioSeed: "A decision must be made about how to use limited time for upcoming commitments.",
         description: "During a planning session, family members examine overlapping obligations and must decide which take priority.",
         roles: [
@@ -558,7 +558,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "The Sharmas",
+        scenarioName: "The Sharmas",
         scenarioSeed: "A decision must be made about which upcoming commitment will be prioritized.",
         description: "During a scheduled meeting, members review two obligations that conflict and must decide which one will be completed.",
         roles: [
@@ -620,7 +620,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "The Callahans",
+        scenarioName: "The Callahans",
         scenarioSeed: "A decision must be made about how to allocate shared resources for upcoming plans.",
         description: "During a discussion, family members consider several requests requiring the same limited resource and must choose one.",
         roles: [
@@ -682,7 +682,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "The Ivanovs",
+        scenarioName: "The Ivanovs",
         scenarioSeed: "A decision must be made about which commitment will be prioritized when plans conflict.",
         description: "During a household conversation, members compare two overlapping obligations and must select which proceeds.",
         roles: [
@@ -744,7 +744,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "The Mossgrove Family",
+        scenarioName: "The Mossgrove Family",
         scenarioSeed: "A decision must be made about how to distribute responsibilities for an upcoming obligation.",
         description: "During a preparation discussion, family members review required tasks that must be assigned before work can begin.",
         roles: [
@@ -806,7 +806,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "The Willowmere Clan",
+        scenarioName: "The Willowmere Clan",
         scenarioSeed: "A decision must be made about which shared plan will move forward.",
         description: "During a formal group discussion, members review multiple proposed plans that cannot all be carried out and must agree on which single plan to adopt.",
         roles: [
@@ -868,7 +868,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        familyName: "The Moonwell Family",
+        scenarioName: "The Moonwell Family",
         scenarioSeed: "A decision must be made about which upcoming commitment will take priority.",
         description: "During a scheduled conversation, family members review two conflicting obligations and must decide which will move forward.",
         roles: [
@@ -931,7 +931,7 @@ export const BASE_SCENARIOS = [
     }
 ] as const;
 
-export type BASE_SCENARIO = (typeof BASE_SCENARIOS)[number];
+export type BASE_SCENARIO = (typeof FAM_SCENARIOS)[number];
 
 export interface Player {
   id: number;
@@ -951,7 +951,7 @@ export type RoleDetails = {
 }
 
 export type Scenario = {
-  familyName: string;
+  scenarioName: string;
   scenarioSeed: string;
   description: string;
   roles: RoleDetails[];

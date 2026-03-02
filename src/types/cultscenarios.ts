@@ -1,6 +1,6 @@
-export const BASE_SCENARIOS = [
+export const CULT_SCENARIOS = [
   {
-        cultName: "Covenant Patriots Fellowship",
+        scenarioName: "Covenant Patriots Fellowship",
         scenarioSeed: "A member is asked to affirm a public loyalty statement during a gathering review.",
         description: "During a formal assembly, leadership announces that each attendee will be called forward individually to confirm their commitment statement in front of the group.",
         roles: [
@@ -62,7 +62,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        cultName: "Eternal Ascension Society",
+        scenarioName: "Eternal Ascension Society",
         scenarioSeed: "A member is asked to publicly confirm their commitment level during a formal gathering.",
         description: "During a structured gathering, leadership informs attendees that each person must state their level of dedication aloud before the session continues.",
         roles: [
@@ -124,7 +124,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        cultName: "Holistic Truth Seekers",
+        scenarioName: "Holistic Truth Seekers",
         scenarioSeed: "A participant is asked to verify their alignment with the group’s teachings during a session.",
         description: "During a facilitated meeting, organizers announce that each participant must verbally confirm their understanding of the group’s principles before activities proceed.",
         roles: [
@@ -186,7 +186,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        cultName: "National Renewal Front",
+        scenarioName: "National Renewal Front",
         scenarioSeed: "A member is asked to affirm support for a directive during a formal assembly.",
         description: "During a formal gathering, leadership states that participants will be called individually to confirm their support before the session continues.",
         roles: [
@@ -248,7 +248,7 @@ export const BASE_SCENARIOS = [
         ]
     },
     {
-        cultName: "The Alpha Syndicate",
+        scenarioName: "The Alpha Syndicate",
         scenarioSeed: "A member is asked to confirm their standing during a formal review session.",
         description: "During a structured session, leadership instructs each participant to verify their status before activities begin.",
         roles: [
@@ -311,7 +311,7 @@ export const BASE_SCENARIOS = [
     }
 ] as const;
 
-export type BASE_SCENARIO = (typeof BASE_SCENARIOS)[number];
+export type BASE_SCENARIO = (typeof CULT_SCENARIOS)[number];
 
 export interface Player {
   id: number;
@@ -331,7 +331,7 @@ export type RoleDetails = {
 }
 
 export type Scenario = {
-  cultName: string;
+  scenarioName: string;
   scenarioSeed: string;
   description: string;
   roles: RoleDetails[];
