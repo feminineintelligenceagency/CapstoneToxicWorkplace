@@ -956,6 +956,7 @@ const rolesDataFamily = {
             "believing it protects them from potential repercussions or rejection."
     },
 
+
     MANIPULATIVE_MORGAN_FAMILY_PUPPET_MASTER: {
         roleName: 
             "The Puppet Master",
