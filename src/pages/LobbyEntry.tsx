@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Shield, LogIn, Plus, Settings } from "lucide-react";
+import { Shield, LogIn, Plus, Settings, BookOpen } from "lucide-react";
 import { useLobby } from "@/hooks/useLobby";
 import { useToast } from "@/hooks/use-toast";
 import { ScenarioEditor } from "@/components/ScenarioEditor";
@@ -96,7 +96,7 @@ const LobbyEntry = () => {
 
   if (mode === "menu") {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-48">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-48">
         {/* CARD 1 */}
         <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative">
           <Badge className="absolute top-4 right-4 bg-red-600 hover:bg-red-700">
@@ -216,7 +216,38 @@ const LobbyEntry = () => {
           </Button>
         </div>
 
-        <ScenarioEditor isOpen={scenarioEditorOpen} onClose={() => setScenarioEditorOpen(false)} />
+        {/* CARD 4 - TUTORIAL */}
+        <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative">
+          <Badge className="absolute top-4 right-4 bg-blue-600 hover:bg-blue-700">
+            Learn
+          </Badge>
+          <div className="space-y-2">
+            <div className="flex justify-center">
+              <div className="p-3 rounded-full gradient-primary shadow-glow">
+                <BookOpen className="w-8 h-8 text-primary-foreground" />
+              </div>
+            </div>
+            <h2 className="text-2xl font-bold">Improvisation Tutorial</h2>
+            <p className="text-sm text-muted-foreground">
+              Learn how to roleplay and improvise effectively
+            </p>
+          </div>
+
+          <Button
+            onClick={() => navigate("/tutorial")}
+            variant="game"
+            size="xl"
+            className="w-full"
+          >
+            <BookOpen className="w-5 h-5 mr-2" />
+            Learn Now
+          </Button>
+        </div>
+
+        <ScenarioEditor
+          isOpen={scenarioEditorOpen}
+          onClose={() => setScenarioEditorOpen(false)}
+        />
       </div>
     );
   }
