@@ -28,7 +28,7 @@ const rolesDataFamily = {
         ],
 
         description:
-            "The Micromanager is characterized by a deep-seated need to control every aspect of work within their team. Often lacking trust in their" +
+            "The Control Freak is characterized by a deep-seated need to control every aspect of work within their team. Often lacking trust in their" +
             " employees' abilities to perform tasks without oversight, they feel compelled to oversee all details, no matter how minor, believing that without" + 
             " their involvement, nothing will be done correctly.",
 
@@ -87,7 +87,7 @@ const rolesDataFamily = {
         ],
 
         description:
-            "The Office Gossip is notorious for their knack for knowing everything about everyone in the office. From pending promotions to secret" +
+            "The Spoiled One is notorious for their knack for knowing everything about everyone in the office. From pending promotions to secret" +
             " relationships or personal struggles, no piece of information is too private or insignificant. While they can be engaging and sociable," + 
             " their tendency to share confidential or speculative information complicates their relationships with colleagues.",
 
@@ -201,7 +201,7 @@ const rolesDataFamily = {
         ],
 
         description:
-            "The Complainer is the person everyone knows will have something negative to say about any situation. They frequently voice dissatisfaction" +
+            "The Martyr is the person everyone knows will have something negative to say about any situation. They frequently voice dissatisfaction" +
             " about various aspects of the workplace-from the mundane, like office supplies, to the more critical, such as management decisions. While they" +
             " are quick to highlight problems, they rarely offer solutions or take initiative to resolve the issues they complain about. This behavior can be" +
             " demoralizing for teams and disruptive to workplace harmony",
@@ -260,7 +260,7 @@ const rolesDataFamily = {
         ],
 
         description: 
-            "The Buzzkill prides themselves on cutting through the noise. To them, clarity is kindness, and enthusiasm without rigor is dangerous. They don't mean to deflate the" +
+            "The Scapegoat prides themselves on cutting through the noise. To them, clarity is kindness, and enthusiasm without rigor is dangerous. They don't mean to deflate the" +
             " team - they're just constitutionally allergic to hype. Their sharp intelligence and moral precision make them a truth-teller in theory and a nightmare in practice. Every" +
             " brainstorm feels like a debate, every pep talk becomes a logic exam.The intent is integrity; the effect is exhaustion.",
 
@@ -321,7 +321,7 @@ const rolesDataFamily = {
         ],
 
         description:
-            "The Enforcer rules by tension. They maintain control through calculated volatility - everyone knows they could explode, even if they don't today. Their presence changes " +
+            "The Punisher rules by tension. They maintain control through calculated volatility - everyone knows they could explode, even if they don't today. Their presence changes " +
             "how people speak, breathe, and even think. Meetings become performance zones where everyone manages optics, not ideas. To leadership, they can look like \"high performers\"" +
             " who \"get results.\" Behind the scenes, morale collapses under the constant threat of humiliation or reprisal. Their power doesn't come from competence - it comes from fear of the alternative.",
 
@@ -381,7 +381,7 @@ const rolesDataFamily = {
         ],
 
         description:
-            "The Watchdog lives on high alert. Every workplace, to them, is a nest of competing agendas. They see patterns everywhere - favoritism, sabotage, \"hidden directives.\" Their " +
+            "The Suspicious One lives on high alert. Every workplace, to them, is a nest of competing agendas. They see patterns everywhere - favoritism, sabotage, \"hidden directives.\" Their " +
             "hyper-vigilance masquerades as diligence, and at first they seem invaluable: detail - oriented, careful, politically aware. But their constant suspicion corrodes " +
             "collaboration. They read normal human behavior through a lens of threat, transforming the workplace into a battlefield of invisible enemies. They don't mean to be toxic; they think they're protecting the group. The cost is trust itself.",
 
@@ -441,7 +441,7 @@ const rolesDataFamily = {
         ],
 
         description:
-            "The Disruptor is the team's shot of espresso - thrilling in small doses, toxic in excess. Ainsley lives for the surge: the big pitch, the all-nighter, the impossible" +
+            "The Addict is the team's shot of espresso - thrilling in small doses, toxic in excess. Ainsley lives for the surge: the big pitch, the all-nighter, the impossible" +
             "deadline pulled off at the last second. They thrive on chaos because it keeps them from feeling ordinary. Under pressure, they're magnetic; in calm, they're bored and" +
             "dangerous. The line between \"heroic effort\" and \"avoidable disaster\" is the only one they ever walk.",
 
@@ -500,7 +500,7 @@ const rolesDataFamily = {
         ],
 
         description:
-            "The Eternal Optimist means well, but their relentless positivity turns human experience into a performance. They call it morale; others call it denial. Underneath the pep " +
+            "The Avoider means well, but their relentless positivity turns human experience into a performance. They call it morale; others call it denial. Underneath the pep " +
             "talks is anxiety - a deep fear that if things feel bad, they are bad. By insisting that everything's fine, they erase the complexity that makes teams resilient. It's not" +
             " cruelty - it's avoidance dressed as inspiration.",
 
@@ -559,7 +559,7 @@ const rolesDataFamily = {
         ],
 
         description: 
-            "The Expert is a walking TED Talk that never ends. Every conversation becomes a podium. They dominate discussions with certainty and disdain for ambiguity, forcing others " +
+            "The Know-It-All is a walking TED Talk that never ends. Every conversation becomes a podium. They dominate discussions with certainty and disdain for ambiguity, forcing others " +
             "into passive roles. Their confidence can initially look like competence, but it quickly curdles into intellectual bullying. To The Expert, being right isn't about truth - it's" +
             " about control. The goal isn't progress, but dominance. Their presence drains psychological safety, because every idea must first survive their approval.",
 
@@ -620,7 +620,7 @@ const rolesDataFamily = {
         ],
 
         description:
-            "The Innovator is the team's storm front - thrilling, unpredictable, and alive with ideas. When they walk into a room, the atmosphere changes; suddenly anything feels " +
+            "The Jokester is the team's storm front - thrilling, unpredictable, and alive with ideas. When they walk into a room, the atmosphere changes; suddenly anything feels " +
             "possible. They make work feel like play, and play feel like progress. Their humor disarms hierarchy, their imagination disorients structure, and their enthusiasm pulls " +
             "everyone forward - sometimes off a cliff. At their best, they're visionary and generous, giving others permission to think bigger. At their worst, they're exhausting - scattering " +
             "half-finished experiments and leaving others to clean up the fallout. The Innovator doesn't mean to create chaos; it just happens in their wake. Their mind moves faster than the system can absorb.",
@@ -685,7 +685,7 @@ const rolesDataFamily = {
         ],
 
         description:
-            "The Narcissist is magnetic - articulate, charming, and seemingly generous. They flatter effortlessly and build connection fast, creating the illusion of emotional safety. " +
+            "The Entitled One is magnetic - articulate, charming, and seemingly generous. They flatter effortlessly and build connection fast, creating the illusion of emotional safety. " +
             "But the warmth conceals calibration: their praise pulls you in, their disappointment keeps you striving. The closer you get, the less grounded you feel. Working with them " +
             "is like chasing the sun - radiant when near, but it always moves a little further away. They don't need to say they're better than you. You feel it in the pauses, " +
             "the tone shifts, the way they listen just long enough to remind you they're the real story.",
@@ -745,7 +745,7 @@ const rolesDataFamily = {
         ],
 
         description: 
-            "The Pitch Artist is the office showman - confident, persuasive, and addicted to applause. They can make a spreadsheet sound like a revolution and a delay sound like strategy. " +
+            "The Schemer is the office showman - confident, persuasive, and addicted to applause. They can make a spreadsheet sound like a revolution and a delay sound like strategy. " +
             "People want to believe them because belief feels good. Their storytelling rallies the team, secures funding, and creates momentum - until someone checks the facts. When " +
             "caught exaggerating, they don't lie outright; they pivot. They reframe, rebrand, or rename the promise until the myth lives on. The danger isn't in what they say - it's how convincing it feels while they say it.",
 
@@ -804,7 +804,7 @@ const rolesDataFamily = {
         ],
 
         description: 
-            "The Overachiever appears disciplined, reliable, and quietly impressive - the adult in every room. But behind the composure is contempt for weakness, especially their own. " +
+            "The Cold One appears disciplined, reliable, and quietly impressive - the adult in every room. But behind the composure is contempt for weakness, especially their own. " +
             "They maintain authority by never appearing needy, messy, or unsure. Others experience them as coolly superior, impossible to please, and subtly invalidating. " +
             "They don't shout, they withhold. Silence, delayed replies, a faint sigh - these become the currency of control. Their perfectionism creates distance; their competence becomes punishment.",
 
@@ -864,7 +864,7 @@ const rolesDataFamily = {
         ],
 
         description: 
-            "The Pleaser is the office's emotional air freshener - constantly masking tension with smiles, reassurance, and over-accommodation. They mean well; their empathy is real. " +
+            "The Enabler is the office's emotional air freshener - constantly masking tension with smiles, reassurance, and over-accommodation. They mean well; their empathy is real. " +
             "But their reflexive need to soothe and agree drains accountability from every situation. They promise deliverables they can't meet, take on tasks to avoid confrontation, " +
             "and burn out trying to keep everyone comfortable. To superiors, they seem cooperative and loyal. To peers, they seem exhausting - the colleague who can't just let things be tense for a minute while real work gets done.",
 
@@ -925,7 +925,7 @@ const rolesDataFamily = {
         ],
 
         description:
-            "The Passive Aggressive is characterized by their indirect expression of hostility or dissatisfaction through procrastination, sullen behavior, or 'forgetfulness' rather " +
+            "The Sulker is characterized by their indirect expression of hostility or dissatisfaction through procrastination, sullen behavior, or 'forgetfulness' rather " +
             "than direct communication. This character avoids open confrontation but expresses their discontent in ways that can disrupt team cohesion and complicate workplace " +
             "relationships.",
 
@@ -964,7 +964,7 @@ const rolesDataFamily = {
             "Manipulative Morgan",
 
         objective: 
-            "Shape family dynamics through calculated deception so they can gain advantage from others’ trust, dependence, or vulnerability without being detected.",
+            "Shape family dynamics through calculated deception so they can gain advantage from others' trust, dependence, or vulnerability without being detected.",
 
         always: [
             "Projects effortless competence while doing almost nothing.",
@@ -983,7 +983,7 @@ const rolesDataFamily = {
         ],
 
         description:
-            "The psychopathic Shirker doesn't fear effort - they disdain it. They treat work as theatre, staging credibility while others sweat. Every spreadsheet, meeting, or " +
+            "The Puppet Master doesn't fear effort - they disdain it. They treat work as theatre, staging credibility while others sweat. Every spreadsheet, meeting, or " +
             "late - night email is a prop in an illusion of diligence. Colleagues see discipline; Morgan sees puppets moving exactly as planned. Control is the only currency that " +
             "matters, and the less they exert themselves to maintain it, the higher their sense of mastery.",
 
