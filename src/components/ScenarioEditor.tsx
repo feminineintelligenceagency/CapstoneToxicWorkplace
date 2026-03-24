@@ -15,6 +15,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { useScenarios } from '@/hooks/useScenarios';
 import { ScenarioUpdateInput } from '@/types/scenario';
 
+const UUID_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 interface ScenarioEditorProps {
   isOpen: boolean;
   onClose: () => void;
@@ -336,9 +339,15 @@ export const ScenarioEditor = ({ isOpen, onClose }: ScenarioEditorProps) => {
           continue;
         }
 
+        const importId =
+          incoming.export_id && UUID_REGEX.test(incoming.export_id)
+            ? incoming.export_id
+            : undefined;
+
         const { data: created, error: createError } = await supabase
           .from('scenarios')
           .insert({
+            id: importId,
             scenario_name: name,
             scenario_seed: incoming.scenario_seed || '',
             description: incoming.description || '',
