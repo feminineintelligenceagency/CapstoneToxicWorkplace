@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mic, MicOff, Image as ImageIcon, X, Loader2 } from "lucide-react";
+import { Mic, MicOff, Image as ImageIcon, X, Loader2, Link2, FileText, AudioLines } from "lucide-react";
 import { Lobby, LobbyPlayer } from "@/types/lobby";
 import { AssetSelector } from "@/components/AssetSelector";
 import { useScenarioAssets } from "@/hooks/useScenarioAssets";
@@ -15,7 +15,7 @@ interface RoleplayTimerProps {
   onTimerEnd: () => void;
   scenarioDescription?: string;
   myPlayerId?: string | null;
-  onAssetSelect?: (asset: { type: 'image' | 'video' | 'document'; name: string; url: string; presentedBy: string; presentedAt: string }) => void;
+  onAssetSelect?: (asset: { type: 'image' | 'video' | 'audio' | 'document' | 'link'; name: string; url: string; presentedBy: string; presentedAt: string }) => void;
   onAssetRemove?: () => void;
 }
 
@@ -37,8 +37,8 @@ export const RoleplayTimer = ({
   const hasTriggeredRef = useRef(false);
 
   // Get available assets for the scenario from Supabase Storage
-  const scenarioIndex = lobby.scenario_index ?? 0;
-  const { assets: uploadedAssets, loading: assetsLoading } = useScenarioAssets(scenarioIndex);
+  const scenarioId = lobby.scenario_id;
+  const { assets: uploadedAssets, loading: assetsLoading } = useScenarioAssets(scenarioId);
 
   // Sync displayed asset from lobby when it updates
   useEffect(() => {
@@ -81,7 +81,7 @@ export const RoleplayTimer = ({
     return () => clearInterval(interval);
   }, [lobby.roleplay_timer_end, isHost, onTimerEnd]);
 
-  const handleAssetSelect = (asset: { type: 'image' | 'video' | 'document'; name: string; url: string }) => {
+  const handleAssetSelect = (asset: { type: 'image' | 'video' | 'audio' | 'document' | 'link'; name: string; url: string }) => {
     const displayedAssetData = {
       ...asset,
       presentedBy: myPlayerId || 'unknown',
@@ -240,6 +240,43 @@ export const RoleplayTimer = ({
                         className="max-w-full max-h-80 object-contain rounded-lg shadow-md"
                       />
                     )}
+                    {displayedAsset.type === 'audio' && (
+                      <div className="w-full max-w-xl border rounded-lg bg-background p-4">
+                        <div className="flex items-center justify-center gap-2 mb-2 text-sm text-muted-foreground">
+                          <AudioLines className="w-4 h-4" />
+                          Audio asset
+                        </div>
+                        <audio src={displayedAsset.url} controls className="w-full" />
+                      </div>
+                    )}
+                    {displayedAsset.type === 'document' && (
+                      <div className="w-full max-w-xl border rounded-lg bg-background p-6 text-center space-y-3">
+                        <FileText className="w-10 h-10 mx-auto text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground">Document preview is opened in a new tab.</p>
+                        <a
+                          href={displayedAsset.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-primary hover:underline break-all"
+                        >
+                          Open document
+                        </a>
+                      </div>
+                    )}
+                    {displayedAsset.type === 'link' && (
+                      <div className="w-full max-w-xl border rounded-lg bg-background p-6 text-center space-y-3">
+                        <Link2 className="w-10 h-10 mx-auto text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground">External link shared for roleplay.</p>
+                        <a
+                          href={displayedAsset.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-primary hover:underline break-all"
+                        >
+                          Open link
+                        </a>
+                      </div>
+                    )}
 
                     <div className="text-center space-y-2 mt-4 w-full">
                       <p className="text-sm font-medium">{displayedAsset.name}</p>
@@ -264,7 +301,7 @@ export const RoleplayTimer = ({
                       <p className="text-sm text-muted-foreground mt-1">
                         {uploadedAssets.length === 0
                           ? 'No assets uploaded for this scenario yet. Upload images or videos using the Scenario Manager.'
-                          : 'Click "Select Asset" to display an image or document for the group.'}
+                          : 'Click "Select Asset" to display media, docs, or links for the group.'}
                       </p>
                     </div>
                   </div>

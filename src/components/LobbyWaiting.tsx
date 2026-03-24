@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Copy, Users, Crown, Settings, Dices, Mic, MicOff } from 'lucide-react';
 import { Lobby, LobbyPlayer } from '@/types/lobby';
-import { BASE_SCENARIOS } from '@/types/game';
+import { Scenario } from '@/types/scenario';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { useCallContext } from '@/contexts/CallContext';
@@ -17,21 +17,22 @@ interface LobbyWaitingProps {
   lobby: Lobby;
   players: LobbyPlayer[];
   myPlayerId: string | null;
-  onStartGame: (scenarioIndex?: number) => void;
+  scenarios: Scenario[];
+  onStartGame: (scenarioId?: string) => void;
   onUpdateSettings?: (settings: {roleplay_timer_duration: number}) => void;
-  onUpdateScenario?: (scenarioIndex: number) => void;
+  onUpdateScenario?: (scenarioId: string) => void;
 }
 
-export const LobbyWaiting = ({ lobby, players, myPlayerId, onStartGame, onUpdateSettings, onUpdateScenario }: LobbyWaitingProps) => {
+export const LobbyWaiting = ({ lobby, players, myPlayerId, scenarios, onStartGame, onUpdateSettings, onUpdateScenario }: LobbyWaitingProps) => {
   const [timerDuration, setTimerDuration] = useState<number>(lobby.roleplay_timer_duration || 5);
-  const [selectedScenarioIndex, setSelectedScenarioIndex] = useState<string>(
-    lobby.scenario_index != null ? lobby.scenario_index.toString() : 'random'
+  const [selectedScenarioId, setSelectedScenarioId] = useState<string>(
+    lobby.scenario_id ?? 'random'
   );
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const call = useCallContext();
   const hostPlayer = players.find(p => p.player_number === 1);
   const isHost = hostPlayer?.id === myPlayerId;
-  const canStart = players.length >= 2;
+  const canStart = players.length >= 2 && scenarios.length > 0;
 
   const copyCode = () => {
     navigator.clipboard.writeText(lobby.code);
@@ -52,20 +53,18 @@ export const LobbyWaiting = ({ lobby, players, myPlayerId, onStartGame, onUpdate
   };
 
   const handleScenarioChange = (value: string) => {
-    setSelectedScenarioIndex(value);
+    setSelectedScenarioId(value);
     if (value !== 'random') {
-      const scenarioIndex = parseInt(value);
-      onUpdateScenario?.(scenarioIndex);
+      onUpdateScenario?.(value);
     }
   };
 
   const handleStartGame = () => {
-    if (selectedScenarioIndex === 'random') {
+    if (selectedScenarioId === 'random') {
       // Let the parent component randomize
       onStartGame();
     } else {
-      // Pass selected scenario index
-      onStartGame(parseInt(selectedScenarioIndex));
+      onStartGame(selectedScenarioId);
     }
   };
 
@@ -219,7 +218,7 @@ export const LobbyWaiting = ({ lobby, players, myPlayerId, onStartGame, onUpdate
                 <Label htmlFor="scenario-select" className="text-base font-semibold">
                   Select Scenario
                 </Label>
-                <Select value={selectedScenarioIndex} onValueChange={handleScenarioChange}>
+                <Select value={selectedScenarioId} onValueChange={handleScenarioChange}>
                   <SelectTrigger id="scenario-select">
                     <SelectValue />
                   </SelectTrigger>
@@ -230,17 +229,21 @@ export const LobbyWaiting = ({ lobby, players, myPlayerId, onStartGame, onUpdate
                         Random Scenario
                       </div>
                     </SelectItem>
-                    {BASE_SCENARIOS.map((scenario, index) => (
-                      <SelectItem key={index} value={index.toString()}>
-                        {scenario.companyName}
+                    {scenarios.map((scenario) => (
+                      <SelectItem key={scenario.id} value={scenario.id}>
+                        {scenario.scenario_name}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                {selectedScenarioIndex !== 'random' && (
+                {selectedScenarioId !== 'random' && (
                   <div className="text-sm p-3 bg-secondary/50 rounded-lg">
-                    <p className="font-medium mb-1">{BASE_SCENARIOS[parseInt(selectedScenarioIndex)].companyName}</p>
-                    <p className="text-muted-foreground text-xs">{BASE_SCENARIOS[parseInt(selectedScenarioIndex)].scenarioSeed}</p>
+                    <p className="font-medium mb-1">
+                      {scenarios.find((s) => s.id === selectedScenarioId)?.scenario_name}
+                    </p>
+                    <p className="text-muted-foreground text-xs">
+                      {scenarios.find((s) => s.id === selectedScenarioId)?.scenario_seed}
+                    </p>
                   </div>
                 )}
               </div>
@@ -254,7 +257,7 @@ export const LobbyWaiting = ({ lobby, players, myPlayerId, onStartGame, onUpdate
                 className="w-full"
                 disabled={!canStart}
               >
-                {canStart ? 'Start Game' : `Need at least 2 players`}
+                {canStart ? 'Start Game' : scenarios.length === 0 ? 'No scenarios configured yet' : 'Need at least 2 players'}
               </Button>
               {!canStart && (
                 <p className="text-center text-sm text-muted-foreground">

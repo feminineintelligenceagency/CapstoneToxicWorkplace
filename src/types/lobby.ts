@@ -1,7 +1,7 @@
 export interface DisplayedAsset {
   url: string;
   name: string;
-  type: "image" | "video" | "document";
+  type: "image" | "video" | "audio" | "document" | "link";
   presentedBy: string; // player ID who selected it
   presentedAt: string; // ISO timestamp
 }
@@ -23,7 +23,8 @@ export interface Lobby {
   roleplay_timer_duration?: number; // in minutes
   current_player_index: number;
   current_guess_target: number;
-  scenario_index?: number; // Index of selected scenario
+  scenario_index?: number; // Legacy field, retained for backward compatibility
+  scenario_id?: string; // Supabase scenario ID
   current_displayed_asset?: DisplayedAsset; // Asset displayed during roleplay phase
   created_at: string;
   updated_at: string;

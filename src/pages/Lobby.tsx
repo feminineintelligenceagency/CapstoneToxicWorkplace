@@ -8,14 +8,15 @@ import { RoleplayTimer } from "@/components/RoleplayTimer";
 import { GuessingPhase } from "@/components/GuessingPhase";
 import { Results } from "@/components/Results";
 import RoleSelection from "@/components/RoleSelection";
-import { BASE_SCENARIOS } from "@/types/game";
 import { CallProvider } from "@/contexts/CallContext";
+import { useScenarios } from "@/hooks/useScenarios";
 
 const Lobby = () => {
   const { code } = useParams<{ code: string }>();
   const navigate = useNavigate();
   const { lobby, players, myPlayerId, updateLobby, updatePlayer } =
     useLobby(code);
+  const { scenarios, loading: scenariosLoading } = useScenarios();
   const isRoleplayPhaseNow = lobby?.current_phase === "roleplay";
   const { transcriptionsRef, getTranscriptions } = useTranscription(
     isRoleplayPhaseNow,
@@ -34,19 +35,20 @@ const Lobby = () => {
     }
   }, [lobby?.current_phase, getTranscriptions]);
 
-  const handleStartGame = async (selectedScenarioIndex?: number) => {
+  const handleStartGame = async (selectedScenarioId?: string) => {
     if (!lobby || players.length < 2) return;
-    // Use provided scenario index, or randomize if not provided
-    let scenarioIndex = selectedScenarioIndex ?? lobby.scenario_index;
-    if (scenarioIndex === undefined || scenarioIndex === null) {
-      scenarioIndex = Math.floor(Math.random() * BASE_SCENARIOS.length);
+    let scenarioId = selectedScenarioId ?? lobby.scenario_id;
+    if (!scenarioId) {
+      const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+      scenarioId = randomScenario?.id;
     }
+    if (!scenarioId) return;
     // Move game into the role selection phase where players submit ranked ballots.
     await updateLobby({
       status: "in_progress",
       current_phase: "roleSelection",
       current_player_index: 0,
-      scenario_index: scenarioIndex,
+      scenario_id: scenarioId,
     });
   };
 
@@ -59,9 +61,9 @@ const Lobby = () => {
     });
   };
 
-  const handleUpdateScenario = async (scenarioIndex: number) => {
+  const handleUpdateScenario = async (scenarioId: string) => {
     if (!lobby) return;
-    await updateLobby({ scenario_index: scenarioIndex });
+    await updateLobby({ scenario_id: scenarioId });
   };
 
   const handleNextPhase = async () => {
@@ -188,7 +190,7 @@ const Lobby = () => {
   };
 
   const handleAssetSelect = async (asset: {
-    type: "image" | "video" | "document";
+    type: "image" | "video" | "audio" | "document" | "link";
     name: string;
     url: string;
     presentedBy: string;
@@ -223,6 +225,14 @@ const Lobby = () => {
       </div>
     );
 
+  if (scenariosLoading && scenarios.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-xl">Loading scenarios...</p>
+      </div>
+    );
+  }
+
   const inCall = lobby.status === "waiting" || lobby.status === "in_progress";
   const isRoleplayPhase = lobby.current_phase === "roleplay";
 
@@ -245,6 +255,7 @@ const Lobby = () => {
         lobby={lobby}
         players={players}
         myPlayerId={myPlayerId}
+        scenarios={scenarios}
         onStartGame={handleStartGame}
         onUpdateSettings={handleUpdateSettings}
         onUpdateScenario={handleUpdateScenario}
@@ -260,6 +271,7 @@ const Lobby = () => {
         lobby={lobby}
         players={players}
         myPlayerId={myPlayerId}
+        scenarios={scenarios}
         updatePlayer={updatePlayer}
         updateLobby={updateLobby}
       />,
@@ -274,14 +286,13 @@ const Lobby = () => {
       />,
     );
   if (lobby.current_phase === "roleplay") {
-    const scenarioIndex = lobby.scenario_index ?? 0;
-    const selectedScenario = BASE_SCENARIOS[scenarioIndex];
+    const selectedScenario = scenarios.find((scenario) => scenario.id === lobby.scenario_id);
     return wrap(
       <RoleplayTimer
         lobby={lobby}
         isHost={isHost}
         onTimerEnd={handleNextPhase}
-        scenarioDescription={selectedScenario?.description}
+        scenarioDescription={selectedScenario?.description || ""}
         players={players}
         myPlayerId={myPlayerId}
         onAssetSelect={handleAssetSelect}
@@ -290,8 +301,7 @@ const Lobby = () => {
     );
   }
   if (lobby.current_phase === "guessing") {
-    const scenarioIndex = lobby.scenario_index ?? 0;
-    const selectedScenario = BASE_SCENARIOS[scenarioIndex];
+    const selectedScenario = scenarios.find((scenario) => scenario.id === lobby.scenario_id);
     const availablePersonalities =
       selectedScenario?.roles.map((r) => r.personality) || [];
     return wrap(

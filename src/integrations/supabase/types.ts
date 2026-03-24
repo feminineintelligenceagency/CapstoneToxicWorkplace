@@ -18,36 +18,51 @@ export type Database = {
         Row: {
           code: string
           created_at: string
+          current_displayed_asset: Json | null
           current_guess_target: number | null
           current_phase: string
           current_player_index: number | null
           host_id: string
           id: string
           num_players: number
+          roleplay_timer_duration: number | null
+          roleplay_timer_end: string | null
+          scenario_id: string | null
+          scenario_index: number | null
           status: string
           updated_at: string
         }
         Insert: {
           code: string
           created_at?: string
+          current_displayed_asset?: Json | null
           current_guess_target?: number | null
           current_phase?: string
           current_player_index?: number | null
           host_id: string
           id?: string
           num_players: number
+          roleplay_timer_duration?: number | null
+          roleplay_timer_end?: string | null
+          scenario_id?: string | null
+          scenario_index?: number | null
           status?: string
           updated_at?: string
         }
         Update: {
           code?: string
           created_at?: string
+          current_displayed_asset?: Json | null
           current_guess_target?: number | null
           current_phase?: string
           current_player_index?: number | null
           host_id?: string
           id?: string
           num_players?: number
+          roleplay_timer_duration?: number | null
+          roleplay_timer_end?: string | null
+          scenario_id?: string | null
+          scenario_index?: number | null
           status?: string
           updated_at?: string
         }
@@ -56,32 +71,47 @@ export type Database = {
       lobby_players: {
         Row: {
           guesses: Json | null
+          guidelines: Json | null
           id: string
           joined_at: string
           lobby_id: string
           player_name: string
           player_number: number
+          ranked_choices: Json | null
+          ready_for_roleplay: boolean | null
           role: string | null
+          role_description: string | null
+          nicknames: string | null
           score: number | null
         }
         Insert: {
           guesses?: Json | null
+          guidelines?: Json | null
           id?: string
           joined_at?: string
           lobby_id: string
           player_name?: string
           player_number: number
+          ranked_choices?: Json | null
+          ready_for_roleplay?: boolean | null
           role?: string | null
+          role_description?: string | null
+          nicknames?: string | null
           score?: number | null
         }
         Update: {
           guesses?: Json | null
+          guidelines?: Json | null
           id?: string
           joined_at?: string
           lobby_id?: string
           player_name?: string
           player_number?: number
+          ranked_choices?: Json | null
+          ready_for_roleplay?: boolean | null
           role?: string | null
+          role_description?: string | null
+          nicknames?: string | null
           score?: number | null
         }
         Relationships: [
@@ -93,6 +123,80 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      scenario_roles: {
+        Row: {
+          created_at: string
+          guidelines: Json
+          id: string
+          order_index: number
+          personality: string
+          role_description: string
+          role_name: string
+          scenario_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          guidelines?: Json
+          id?: string
+          order_index?: number
+          personality: string
+          role_description: string
+          role_name: string
+          scenario_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          guidelines?: Json
+          id?: string
+          order_index?: number
+          personality?: string
+          role_description?: string
+          role_name?: string
+          scenario_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scenario_roles_scenario_id_fkey"
+            columns: ["scenario_id"]
+            isOneToOne: false
+            referencedRelation: "scenarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scenarios: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          is_active: boolean
+          scenario_name: string
+          scenario_seed: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          is_active?: boolean
+          scenario_name: string
+          scenario_seed: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          is_active?: boolean
+          scenario_name?: string
+          scenario_seed?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
     }
     Views: {

@@ -1,12 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Lobby, LobbyPlayer } from "@/types/lobby";
-import { BASE_SCENARIOS, RoleDetails } from "@/types/game";
+import { RoleDetails } from "@/types/game";
+import { Scenario } from "@/types/scenario";
 import { Button } from "@/components/ui/button";
 
 interface RoleSelectionProps {
   lobby: Lobby;
   players: LobbyPlayer[];
   myPlayerId: string | null;
+  scenarios: Scenario[];
   // These are the hooks provided by useLobby — pass them in so this component can update DB rows
   updatePlayer: (
     playerId: string,
@@ -32,6 +34,7 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
   lobby,
   players,
   myPlayerId,
+  scenarios,
   updatePlayer,
   updateLobby,
 }) => {
@@ -41,18 +44,15 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
   const [submitted, setSubmitted] = useState(false);
   const numSlots = players.length;
 
-  // Randomize scenario selection if not already set (explicitly check for null/undefined)
+  // Randomize scenario selection if not already set.
   useEffect(() => {
-    if (lobby.scenario_index === undefined || lobby.scenario_index === null) {
-      const randomIndex = Math.floor(Math.random() * BASE_SCENARIOS.length);
-      updateLobby({ scenario_index: randomIndex });
+    if ((!lobby.scenario_id || !scenarios.find((s) => s.id === lobby.scenario_id)) && scenarios.length > 0) {
+      const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+      updateLobby({ scenario_id: randomScenario.id });
     }
-  }, [lobby.scenario_index, updateLobby]);
+  }, [lobby.scenario_id, scenarios, updateLobby]);
 
-  // Select scenario based on stored index
-  const selectedScenario = lobby.scenario_index !== undefined 
-    ? BASE_SCENARIOS[lobby.scenario_index] 
-    : BASE_SCENARIOS[0];
+  const selectedScenario = scenarios.find((scenario) => scenario.id === lobby.scenario_id) ?? scenarios[0];
     
   if (!selectedScenario) {
     return (
@@ -64,7 +64,12 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
 
   // Build expanded pool (may contain duplicates) so there are exactly `numSlots` entries
   const rolePool = useMemo(() => {
-    const availableRoles = [...selectedScenario.roles];
+    const availableRoles = selectedScenario.roles.map((role) => ({
+      personality: role.personality,
+      roleName: role.role_name,
+      roleDescription: role.role_description,
+      guidelines: role.guidelines,
+    }));
     const pool: RoleDetails[] = [];
     while (pool.length < numSlots) pool.push(...availableRoles);
     return pool.slice(0, numSlots);
