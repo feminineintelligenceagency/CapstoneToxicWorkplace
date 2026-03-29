@@ -11,6 +11,9 @@ import { FAM_SCENARIOS } from "../types/familyscenarios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
+import homepageImage from "../images/homepage.png";
+import createlobbyImage from "../images/createlobby.png";
+
 export default function About() {
       const [selectedRole, setSelectedRole] = useState({
         group: "base",
@@ -50,6 +53,15 @@ export default function About() {
         { id: "cult", label: "Cult", data: rolesDataCult },
         { id: "family", label: "Family", data: rolesDataFamily },
     ];
+
+    const HOW_STEPS = [
+        "Entering a Lobby",
+        "Distribution of Roles",
+        "Roleplay Phase",
+        "Scoring Phase"
+    ];
+
+    const [selectedHowStep, setSelectedHowStep] = useState(0);
 
     const activeRoleData =
         selectedRole.group === "base"
@@ -142,15 +154,30 @@ export default function About() {
                     }} />
                 </h2>
 
-                {openSection === "how" && (
-                    <p className="text-muted-foreground text-lg">
-                        Each player is assigned one of the 15 roles. This role is visible
-                        only to you and no other players. Based on the given description,
-                        the players must act out their roles and roleplay a given workplace
-                        scenario. At the end of the game, each player will be prompted to
-                        guess the role of each player in the lobby besides themselves.
-                    </p>
-                )}
+                      {openSection === "how" && (
+                          <ul className="text-lg" style={{ paddingLeft: "15px" }}>
+                              {HOW_STEPS.map((step, index) => (
+                                  <li
+                                      key={index}
+                                      style={{
+                                          cursor: "pointer",
+                                          fontWeight: index === selectedHowStep ? "bold" : "normal",
+                                      }}
+                                      className={
+                                          index === selectedHowStep
+                                              ? "gradient-text-primary"
+                                              : "text-muted-foreground"
+                                      }
+                                      onClick={() => {
+                                          setSelectedHowStep(index);
+                                          setActivePanel("how");
+                                      }}
+                                  >
+                                      {step}
+                                  </li>
+                              ))}
+                          </ul>
+                      )}
             </div>
 
                 <div
@@ -470,6 +497,84 @@ export default function About() {
                                   </li>
                               ))}
                           </ul>
+                      </>
+                  )}
+
+                  {activePanel === "how" && selectedHowStep === 0 && (
+                      <>
+                          <h2 style={{ textAlign: "center", marginBottom: "20px" }} className="text-2xl">
+                              {HOW_STEPS[selectedHowStep]}
+                          </h2>
+
+                          <h3 style={{ textAlign: "center" }}> Home Page </h3>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              This is the homepage for the web app. Here you are able to easily navigate to all important features and information. At the top of the page, there is a banner
+                              that can be used to see supplementaty information and return to this home page if needed:
+                          </p>
+
+                          <ul className="text-muted-foreground" style={{ listStyleType: "disc", marginBottom: "20px" }}>
+                              <li>Play: Access the three main game modes as well as the roleplaying tutorial</li>
+                              <li>About: View key background information about the webb</li>
+                              <li>Tutorial: Learn how to more effectively roleplay to get the most out of your experience using the app</li>
+                              <li>Contact: View the contact information for the Feminine Intelligence Agency</li>
+                          </ul>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              Below the banner, you can see the three main gamemodes for the application (Toxic Workplace, Dysfunctional Family, and Cult Jam), as well as another way to access the roleplaying
+                              tutorial menu. The general mechanics and gameplay flow will remain the same between modes, but the roles you act out and the scenarios you act in will change. 
+                          </p>
+
+                          <img
+                              src={homepageImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
+
+                          <h3 style={{ textAlign: "center" }}> Lobby </h3>
+
+                          <img
+                              src={createlobbyImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
+                      </>
+                  )}
+
+                  {activePanel === "how" && selectedHowStep === 1 && (
+                      <>
+                          <h2 style={{ textAlign: "center" }} className="text-2xl">
+                              {HOW_STEPS[selectedHowStep]}
+                          </h2>
+
+                          <p className="text-muted-foreground" style={{ marginTop: "20px" }}>
+                              This is where you explain {HOW_STEPS[selectedHowStep]} in more detail.
+                          </p>
+                      </>
+                  )}
+
+                  {activePanel === "how" && selectedHowStep === 2 && (
+                      <>
+                          <h2 style={{ textAlign: "center" }} className="text-2xl">
+                              {HOW_STEPS[selectedHowStep]}
+                          </h2>
+
+                          <p className="text-muted-foreground" style={{ marginTop: "20px" }}>
+                              This is where you explain {HOW_STEPS[selectedHowStep]} in more detail.
+                          </p>
+                      </>
+                  )}
+
+                  {activePanel === "how" && selectedHowStep === 3 && (
+                      <>
+                          <h2 style={{ textAlign: "center" }} className="text-2xl">
+                              {HOW_STEPS[selectedHowStep]}
+                          </h2>
+
+                          <p className="text-muted-foreground" style={{ marginTop: "20px" }}>
+                              This is where you explain {HOW_STEPS[selectedHowStep]} in more detail.
+                          </p>
+
                       </>
                   )}
         </div>

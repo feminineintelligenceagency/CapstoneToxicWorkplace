@@ -97,7 +97,7 @@ const LobbyEntry = () => {
   if (mode === "menu") {
     return (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-48">
-        {/* CARD 1 */}
+  
         <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative">
           <Badge className="absolute top-4 right-4 bg-red-600 hover:bg-red-700">
             Coming Soon
@@ -135,7 +135,6 @@ const LobbyEntry = () => {
           </Button>
         </div>
 
-        {/* CARD 2 */}
         <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative group">
           <Badge className="absolute top-4 right-4 opacity-1">New</Badge>
           <button
@@ -178,7 +177,6 @@ const LobbyEntry = () => {
           </Button>
         </div>
 
-        {/* CARD 3 */}
         <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative">
           <Badge className="absolute top-4 right-4 bg-red-600 hover:bg-red-700">
             Coming Soon
@@ -216,7 +214,6 @@ const LobbyEntry = () => {
           </Button>
         </div>
 
-        {/* CARD 4 - TUTORIAL */}
         <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative">
           <Badge className="absolute top-4 right-4 bg-blue-600 hover:bg-blue-700">
             Learn

@@ -75,7 +75,8 @@ const App = () => {
             color: "black",
             textDecoration: "none",
             padding: "0 30px",
-            textAlign: "center",
+              textAlign: "center",
+              borderRight: "4px solid black",
             height: "100%",
             width: "15rem",
           }}
