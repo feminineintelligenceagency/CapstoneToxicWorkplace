@@ -62,7 +62,9 @@ const App = () => {
             borderRight: "4px solid black",
             textAlign: "center",
             height: "100%",
-            width: "15rem",
+              width: "15rem",
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: "500"
           }}
           onMouseEnter={(e) => (e.currentTarget.style.fontWeight = "700")}
           onMouseLeave={(e) => (e.currentTarget.style.fontWeight = "500")}
@@ -78,7 +80,9 @@ const App = () => {
               textAlign: "center",
               borderRight: "4px solid black",
             height: "100%",
-            width: "15rem",
+              width: "15rem",
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: "500"
           }}
           onMouseEnter={(e) => (e.currentTarget.style.fontWeight = "700")}
           onMouseLeave={(e) => (e.currentTarget.style.fontWeight = "500")}
@@ -93,7 +97,9 @@ const App = () => {
             padding: "0 30px",
             textAlign: "center",
             height: "100%",
-            width: "15rem",
+              width: "15rem",
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: "500"
           }}
           onMouseEnter={(e) => (e.currentTarget.style.fontWeight = "700")}
           onMouseLeave={(e) => (e.currentTarget.style.fontWeight = "500")}
@@ -109,7 +115,9 @@ const App = () => {
             padding: "0 30px",
             textAlign: "center",
             height: "100%",
-            width: "15rem",
+              width: "15rem",
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: "500"
           }}
           onMouseEnter={(e) => (e.currentTarget.style.fontWeight = "700")}
           onMouseLeave={(e) => (e.currentTarget.style.fontWeight = "500")}

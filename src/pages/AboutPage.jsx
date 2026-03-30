@@ -108,7 +108,7 @@ export default function About() {
                     }}
                 >
                 <h2
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer",  fontFamily: "Poppins, sans-serif", fontWeight: "500"}}
                     className="text-lg"
                     onClick={() => toggleSection("purpose")}
                       >
@@ -141,7 +141,7 @@ export default function About() {
                     }}
                 >
                 <h2
-                    style={{ cursor: "pointer" }}
+                          style={{ cursor: "pointer", fontFamily: "Poppins, sans-serif", fontWeight: "500" }}
                     className="text-lg"
                     onClick={() => toggleSection("how")}
                 >
@@ -160,7 +160,7 @@ export default function About() {
                                   <li
                                       key={index}
                                       style={{
-                                          cursor: "pointer",
+                                          cursor: "pointer", fontFamily: "Poppins, sans-serif", 
                                           fontWeight: index === selectedHowStep ? "bold" : "normal",
                                       }}
                                       className={
@@ -186,11 +186,11 @@ export default function About() {
                         borderRadius: "8px",
                         padding: "15px",
                         backgroundColor: "#f9f9f9",
-                        boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+                          boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
                     }}
                 >
                 <h2
-                    style={{ cursor: "pointer" }}
+                          style={{ cursor: "pointer", fontFamily: "Poppins, sans-serif", fontWeight: "500" }}
                     className="text-lg"
                     onClick={() => toggleSection("roles")}
                 >
@@ -206,7 +206,7 @@ export default function About() {
                       {openSection === "roles" && (
                           <div>
                               {ROLE_GROUPS.map((group) => (
-                                  <div key={group.id} style={{ marginBottom: "10px" }}>
+                                  <div key={group.id} style={{ marginBottom: "10px"}}>
 
                                       {/* Group Header */}
                                       <h3
@@ -237,7 +237,7 @@ export default function About() {
                                                       <li
                                                           key={roleKey}
                                                           style={{
-                                                              cursor: "pointer",
+                                                              cursor: "pointer", fontFamily: "Poppins, sans-serif",
                                                               fontWeight:
                                                                   roleKey === selectedRole.key && group.id === selectedRole.group
                                                                       ? "bold"
@@ -276,7 +276,7 @@ export default function About() {
                       }}
                   >
                       <h2
-                          style={{ cursor: "pointer" }}
+                          style={{ cursor: "pointer", fontFamily: "Poppins, sans-serif", fontWeight: "500" }}
                           className="text-lg"
                           onClick={() => toggleSection("scenarios")}
                       >
@@ -319,7 +319,7 @@ export default function About() {
                                                   <li
                                                       key={scenario.scenarioName}   // now this works
                                                       style={{
-                                                          cursor: "pointer",
+                                                          cursor: "pointer", fontFamily: "Poppins, sans-serif", 
                                                           fontWeight: scenario === selectedScenario ? "bold" : "normal",
                                                       }}
                                                       className={
@@ -356,16 +356,16 @@ export default function About() {
               >
                   {activePanel == "role" && activeRoleData  && (
                       <>
-                          <h2 style={{ textAlign: "center" }} className="text-2xl">
+                          <h2 style={{ textAlign: "center", fontFamily: "Poppins, sans-serif", fontWeight: "500" }} className="text-2xl">
                               {activeRoleData.roleName}
                           </h2>
-                          <h3 style={{ textAlign: "center" }} className="text-muted-foreground">
+                          <h3 style={{ textAlign: "center", fontFamily: "Lato, sans-serif", fontWeight: "400" }} className="text-muted-foreground">
                               {" "}
                               A.K.A {activeRoleData.nickname}
                           </h3>
 
-                          <h4>Description</h4>
-                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                          <h4 style={{ fontFamily: "Poppins, sans-serif", fontWeight: "500" }}>Description</h4>
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px", fontFamily: "Lato, sans-serif", fontWeight: "300" }}>
                               {activeRoleData.description}
                           </p>
 
@@ -381,10 +381,10 @@ export default function About() {
                                   gap: "30px"
 
                               }}>
-                                  <h4>Always</h4>
+                                  <h4 style={{ fontFamily: "Poppins, sans-serif", fontWeight: "500" }}>Always</h4>
                                   <ul
                                       className="text-muted-foreground"
-                                      style={{ listStyleType: "disc", marginBottom: "20px" }}
+                                      style={{ listStyleType: "disc", marginBottom: "20px", fontFamily: "Lato, sans-serif", fontWeight: "300" }}
                                   >
                                       {activeRoleData.always.map((item, index) => (
                                           <li key={index}>{item}</li>
@@ -397,10 +397,10 @@ export default function About() {
                                   textAlign: "left",
                                   paddingLeft: "20px",
                               }}>
-                                  <h4>Never</h4>
+                                  <h4 style={{ fontFamily: "Poppins, sans-serif", fontWeight: "500" }}>Never</h4>
                                   <ul
                                       className="text-muted-foreground"
-                                      style={{ listStyleType: "disc", marginBottom: "20px" }}
+                                      style={{ listStyleType: "disc", marginBottom: "20px", fontFamily: "Lato, sans-serif", fontWeight: "300" }}
                                   >
                                       {activeRoleData.never.map((item, index) => (
                                           <li key={index}>{item}</li>
@@ -410,23 +410,23 @@ export default function About() {
                           </div>
 
 
-                          <h4>Objective</h4>
-                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                          <h4 style={{ fontFamily: "Poppins, sans-serif", fontWeight: "500" }}>Objective</h4>
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px", fontFamily: "Lato, sans-serif", fontWeight: "300" }}>
                               {activeRoleData.objective}
                           </p>
 
-                          <h4>Key Behaviors</h4>
+                          <h4 style={{ fontFamily: "Poppins, sans-serif", fontWeight: "500" }}>Key Behaviors</h4>
                           <ul
                               className="text-muted-foreground"
-                              style={{ listStyleType: "disc", marginBottom: "20px" }}
+                              style={{ listStyleType: "disc", marginBottom: "20px", fontFamily: "Lato, sans-serif", fontWeight: "300" }}
                           >
                               {activeRoleData.keyBehaviors.map((item, index) => (
                                   <li key={index}>{item}</li>
                               ))}
                           </ul>
 
-                          <h4>Internal Rules</h4>
-                          <ol className="text-muted-foreground" style={{ listStyleType: "disc", marginBottom: "20px" }}>
+                          <h4 style={{ fontFamily: "Poppins, sans-serif", fontWeight: "500" }}>Internal Rules</h4>
+                          <ol className="text-muted-foreground" style={{ listStyleType: "disc", marginBottom: "20px", fontFamily: "Lato, sans-serif", fontWeight: "300" }}>
                               {activeRoleData.internalRules.map((item, index) => {
                                   const [title, rest] = item.split(":");
                                   return (
@@ -442,15 +442,15 @@ export default function About() {
                               })}
                           </ol>
 
-                          <h4>Impact on Team</h4>
-                          <ul className="text-muted-foreground" style={{ listStyleType: "disc", marginBottom: "20px" }}>
+                          <h4 style={{ fontFamily: "Poppins, sans-serif", fontWeight: "500" }}>Impact on Team</h4>
+                          <ul className="text-muted-foreground" style={{ listStyleType: "disc", marginBottom: "20px", fontFamily: "Lato, sans-serif", fontWeight: "300" }}>
                               {activeRoleData.teamImpact.map((item, index) => (
                                   <li key={index}>{item}</li>
                               ))}
                           </ul>
 
-                          <h4>Motivation</h4>
-                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                          <h4 style={{ fontFamily: "Poppins, sans-serif", fontWeight: "500" }}>Motivation</h4>
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px", fontFamily: "Lato, sans-serif", fontWeight: "300" }}>
                               {activeRoleData.motivation}
                           </p>
                       </>
@@ -458,21 +458,21 @@ export default function About() {
 
                   {activePanel == "scenario" && (
                       <>
-                          <h2 style={{ textAlign: "center" }} className="text-2xl">
+                          <h2 style={{ textAlign: "center", fontFamily: "Poppins, sans-serif", fontWeight: "500" }} className="text-2xl">
                               {selectedScenario.scenarioName}
                           </h2>
 
-                          <h4>Scenario Seed</h4>
-                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                          <h4 style={{ fontFamily: "Poppins, sans-serif", fontWeight: "500" }}>Scenario Seed</h4>
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px", fontFamily: "Lato, sans-serif", fontWeight: "300" }}>
                               {selectedScenario.scenarioSeed}
                           </p>
 
-                          <h4>Description</h4>
-                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                          <h4 style={{ fontFamily: "Poppins, sans-serif", fontWeight: "500" }}>Description</h4>
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px", fontFamily: "Lato, sans-serif", fontWeight: "300" }}>
                               {selectedScenario.description}
                           </p>
 
-                          <h4 className="text-xl font-semibold">Available Roles</h4>
+                          <h4 style={{ fontFamily: "Poppins, sans-serif", fontWeight: "500" }} className="text-xl font-semibold">Available Roles</h4>
 
                           <ul>
                               {selectedScenario.roles.map((role, index) => (
@@ -481,15 +481,16 @@ export default function About() {
                                       style={{
                                           padding: "12px 0",
                                           borderBottom: "1px solid #e0e0e0",
+                                          fontFamily: "Lato, sans-serif", fontWeight: "400" 
                                       }}
                                   >
                                       <strong>{role.personality}</strong> — {role.roleName}
-                                      <p className="text-muted-foreground text-sm">
+                                      <p style={{ fontFamily: "Lato, sans-serif", fontWeight: "300" }} className="text-muted-foreground text-sm">
                                           {role.roleDescription}
                                       </p>
 
-                                      <p className="text-muted-foreground">Guidelines:</p>
-                                      <ul className="text-muted-foreground" style={{marginBottom: "20px" }}>
+                                      <p style={{ fontFamily: "Lato, sans-serif", fontWeight: "400" }} className="text-muted-foreground">Guidelines:</p>
+                                      <ul className="text-muted-foreground" style={{ marginBottom: "20px", fontFamily: "Lato, sans-serif", fontWeight: "300" }}>
                                           {role.guidelines.map((item, index) => (
                                               <li key={index}>{item}</li>
                                           ))}
