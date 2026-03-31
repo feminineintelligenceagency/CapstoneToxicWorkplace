@@ -31,7 +31,7 @@ export const RoleReveal = ({
         newReadyState,
       );
     }
-  }, [myPlayer?.id, myPlayer?.ready_for_roleplay]);
+  }, [myPlayer]);
 
   if (!myPlayer) return null;
 

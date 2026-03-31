@@ -801,7 +801,7 @@ export type Scenario = {
 
 }
 
-export type GamePhase = "setup" | "roleSelection" | "roleReveal" | "roleplay" | "guessing" | "results";
+export type GamePhase = "setup" | "roleSelection" | "roleReveal" | "roleplay" | "guessing" | "grading" | "results";
 
 export interface GameState {
   phase: GamePhase;

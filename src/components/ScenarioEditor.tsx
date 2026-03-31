@@ -414,7 +414,11 @@ export const ScenarioEditor = ({ isOpen, onClose }: ScenarioEditorProps) => {
           </DialogTitle>
         </DialogHeader>
 
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
+        <Tabs
+          value={activeTab}
+          onValueChange={(v) => setActiveTab(v as "scenarios" | "assets")}
+          className="w-full"
+        >
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="scenarios">Scenarios</TabsTrigger>
             <TabsTrigger value="assets">Assets & Media</TabsTrigger>

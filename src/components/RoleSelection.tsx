@@ -8,7 +8,7 @@ interface RoleSelectionProps {
   lobby: Lobby;
   players: LobbyPlayer[];
   myPlayerId: string | null;
-  scenarios: Scenario[];
+  scenarios?: Scenario[];
   // These are the hooks provided by useLobby — pass them in so this component can update DB rows
   updatePlayer: (
     playerId: string,
@@ -34,7 +34,7 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
   lobby,
   players,
   myPlayerId,
-  scenarios,
+  scenarios = [],
   updatePlayer,
   updateLobby,
 }) => {
@@ -46,24 +46,18 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
 
   // Randomize scenario selection if not already set.
   useEffect(() => {
-    if ((!lobby.scenario_id || !scenarios.find((s) => s.id === lobby.scenario_id)) && scenarios.length > 0) {
-      const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+    const availableScenarios = scenarios || [];
+    if ((!lobby.scenario_id || !availableScenarios.find((s) => s.id === lobby.scenario_id)) && availableScenarios.length > 0) {
+      const randomScenario = availableScenarios[Math.floor(Math.random() * availableScenarios.length)];
       updateLobby({ scenario_id: randomScenario.id });
     }
   }, [lobby.scenario_id, scenarios, updateLobby]);
 
-  const selectedScenario = scenarios.find((scenario) => scenario.id === lobby.scenario_id) ?? scenarios[0];
-    
-  if (!selectedScenario) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl text-destructive">No scenarios available</p>
-      </div>
-    );
-  }
+  const selectedScenario = (scenarios || []).find((scenario) => scenario.id === lobby.scenario_id) ?? (scenarios || [])[0];
 
   // Build expanded pool (may contain duplicates) so there are exactly `numSlots` entries
   const rolePool = useMemo(() => {
+    if (!selectedScenario) return [];
     const availableRoles = selectedScenario.roles.map((role) => ({
       personality: role.personality,
       roleName: role.role_name,
@@ -111,10 +105,13 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
     const assigned = Object.values(localRanks).filter(
       (v) => v !== null,
     ) as number[];
-    if (assigned.length !== roleInstances.length) return false;
+    // Allow partial ballots: require at least one rank, and all assigned
+    // ranks must be unique positive integers.
+    if (assigned.length === 0) return false;
     const sorted = [...assigned].sort((a, b) => (a as number) - (b as number));
-    for (let i = 0; i < numSlots; i++) {
-      if (sorted[i] !== i + 1) return false;
+    for (let i = 0; i < sorted.length; i++) {
+      if (!Number.isInteger(sorted[i]) || sorted[i] <= 0) return false;
+      if (i > 0 && sorted[i] === sorted[i - 1]) return false;
     }
     return true;
   };
@@ -136,11 +133,11 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
   const myPlayer = players.find((p) => p.id === myPlayerId) as
     | LobbyPlayer
     | undefined;
-    const alreadySubmitted = Boolean(
-        myPlayer &&
-        Array.isArray(myPlayer.ranked_choices) &&
-        myPlayer.ranked_choices.length === roleInstances.length
-    );
+  const alreadySubmitted = Boolean(
+    myPlayer &&
+      Array.isArray(myPlayer.ranked_choices) &&
+      (myPlayer.ranked_choices as string[]).length > 0
+  );
       
 
   // When all players have submitted ballots, run STV-like selection and finalize assignment
@@ -150,7 +147,7 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
       players.every(
         (p) =>
           Array.isArray((p as LobbyPlayer).ranked_choices) &&
-          (p as LobbyPlayer).ranked_choices!.length === roleInstances.length,
+          ((p as LobbyPlayer).ranked_choices as string[]).length > 0,
       );
 
     if (allSubmitted) {
@@ -234,7 +231,8 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
           ballot: ((p as LobbyPlayer).ranked_choices || []).slice(),
         }));
 
-        for (let rank = 0; assignedPlayers.size < players.length; rank++) {
+        // Cap rank iterations to avoid infinite loops with partial ballots.
+        for (let rank = 0; rank < numSlots && assignedPlayers.size < players.length; rank++) {
           const requests: Record<string, LobbyPlayer[]> = {};
 
           for (const { player, ballot } of playerBallots) {
@@ -329,6 +327,14 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
     }
   }, [players, roleInstances, updatePlayer, updateLobby, numSlots]);
 
+  if (!selectedScenario) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-xl text-destructive">No scenarios available</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-2xl space-y-6">
@@ -373,7 +379,7 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
               disabled={submitted || !isLocalValid()}
               className="flex-1"
             >
-              Submit Rankings
+              Submit Rankings (you may leave some roles unranked)
             </Button>
           )}
           {alreadySubmitted && (
@@ -388,8 +394,7 @@ export const RoleSelection: React.FC<RoleSelectionProps> = ({
             players.filter(
               (p) =>
                 Array.isArray((p as LobbyPlayer).ranked_choices) &&
-                (p as LobbyPlayer).ranked_choices!.length ===
-                  roleInstances.length,
+                ((p as LobbyPlayer).ranked_choices as string[]).length > 0,
             ).length
           }
           /{players.length}

@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 import { Scenario, ScenarioRole, ScenarioUpdateInput } from "@/types/scenario";
 
 const mapScenarioRows = (
-  scenarios: Array<any>,
-  roles: Array<any>,
+  scenarios: Database["public"]["Tables"]["scenarios"]["Row"][],
+  roles: Database["public"]["Tables"]["scenario_roles"]["Row"][],
 ): Scenario[] => {
   return scenarios.map((scenario) => {
     const scenarioRoles: ScenarioRole[] = roles

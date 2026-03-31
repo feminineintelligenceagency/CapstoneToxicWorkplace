@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { getIceServers, WEBRTC_BROADCAST_EVENT } from '@/lib/webrtc-config';
 import type { SignalingMessage } from '@/types/call';
@@ -38,7 +38,8 @@ export function useCall({
   const currentStreamRef = useRef<MediaStream | null>(null);
   const remoteAudioRefs = useRef<Record<string, HTMLAudioElement>>({});
 
-  const otherPlayers = players.filter((p) => p.id !== myPlayerId);
+  const otherPlayers = useMemo(() => players.filter((p) => p.id !== myPlayerId), [players, myPlayerId]);
+  const otherPlayerIds = useMemo(() => otherPlayers.map((p) => p.id).join(','), [otherPlayers]);
 
   // Play remote streams so user hears other participants
   useEffect(() => {
@@ -108,6 +109,10 @@ export function useCall({
       if (myPlayerId) {
         if (isSpeaking) next.add(myPlayerId);
         else next.delete(myPlayerId);
+      }
+
+      if (prev.size === next.size && [...prev].every((id) => next.has(id))) {
+        return prev;
       }
       return next;
     });
@@ -321,7 +326,7 @@ export function useCall({
       signalingChannelRef.current?.unsubscribe();
       signalingChannelRef.current = null;
     };
-  }, [enabled, lobbyCode, lobbyId, myPlayerId, otherPlayers.length, otherPlayers.map((p) => p.id).join(',')]);
+  }, [enabled, lobbyCode, lobbyId, myPlayerId, players.length, otherPlayers, otherPlayerIds, sendSignaling, updateLocalSpeaking]);
 
   const setMuted = useCallback((muted: boolean) => {
     setIsMuted(muted);

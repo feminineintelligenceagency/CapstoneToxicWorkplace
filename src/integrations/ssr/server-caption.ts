@@ -1,7 +1,8 @@
-const express = require("express");
-const { RTCPeerConnection, RTCSessionDescription } = require("wrtc");
-const { SpeechClient } = require("@google-cloud/speech");
-const { Writable } = require("stream");
+import express from "express";
+import { RTCPeerConnection, RTCSessionDescription } from "wrtc";
+import { SpeechClient } from "@google-cloud/speech";
+import { Writable } from "stream";
+
 const app = express();
 const port = 3000;
 

@@ -27,7 +27,7 @@ export const LobbyWaiting = ({
     lobby,
     players,
     myPlayerId,
-    scenarios,
+    scenarios = [],
     onStartGame,
     onUpdateSettings,
     onUpdateScenario
@@ -44,7 +44,7 @@ export const LobbyWaiting = ({
 
     const hostPlayer = players.find(p => p.player_number === 1);
     const isHost = hostPlayer?.id === myPlayerId;
-    const canStart = players.length >= 2 && scenarios.length > 0;
+    const canStart = players.length >= 2;
 
     const copyCode = () => {
         navigator.clipboard.writeText(lobby.code);
@@ -52,8 +52,8 @@ export const LobbyWaiting = ({
     };
 
     const handleSaveSettings = () => {
-        if (timerDuration < 1 || timerDuration > 60) {
-            toast.error('Timer duration must be between 1 and 60 minutes');
+        if (timerDuration <= 0) {
+            toast.error('Timer duration must be greater than 0');
             return;
         }
 
@@ -105,16 +105,17 @@ export const LobbyWaiting = ({
                                                 <Input
                                                     id="timerDuration"
                                                     type="number"
-                                                    min="1"
-                                                    max="60"
+                                                    min="0.01"
                                                     value={timerDuration}
                                                     onChange={(e) =>
-                                                        setTimerDuration(parseInt(e.target.value) || 5)
+                                                        setTimerDuration(
+                                                            parseFloat(e.target.value) || 0.5
+                                                        )
                                                     }
                                                     className="h-12"
                                                 />
                                                 <p className="text-sm text-muted-foreground">
-                                                    Set how long players have to roleplay (1–60 minutes)
+                                                    Set how long players have to roleplay (minutes, decimals allowed)
                                                 </p>
                                             </div>
 
@@ -229,7 +230,7 @@ export const LobbyWaiting = ({
                                             </div>
                                         </SelectItem>
 
-                                        {scenarios.map((scenario) => (
+                                        {(scenarios || []).map((scenario) => (
                                             <SelectItem key={scenario.id} value={scenario.id}>
                                                 {scenario.scenario_name}
                                             </SelectItem>

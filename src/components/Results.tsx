@@ -10,8 +10,10 @@ interface ResultsProps {
 }
 
 export const Results = ({ players, onReset }: ResultsProps) => {
-  const maxScore = Math.max(...players.map((p) => p.score));
-  const winners = players.filter((p) => p.score === maxScore);
+  const getOverallScore = (p: LobbyPlayer) => p.overall_score ?? p.score;
+
+  const maxScore = Math.max(...players.map((p) => getOverallScore(p)));
+  const winners = players.filter((p) => getOverallScore(p) === maxScore);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -25,16 +27,15 @@ export const Results = ({ players, onReset }: ResultsProps) => {
           <h2 className="text-4xl font-bold">Game Results</h2>
           {maxScore === 0 ? (
             <p className="text-xl text-muted-foreground">
-              No correct guesses. Better luck next time!
+              No points earned. Better luck next time!
             </p>
           ) : winners.length === 1 ? (
             <p className="text-xl gradient-text-accent font-bold">
-              🎉 Winner: {winners[0].player_name} with {maxScore} correct{' '}
-              {maxScore === 1 ? 'guess' : 'guesses'}!
+              🎉 Winner: {winners[0].player_name} with {maxScore} points!
             </p>
           ) : (
             <p className="text-xl gradient-text-accent font-bold">
-              🎉 Tie between: {winners.map((w) => w.player_name).join(', ')} (each {maxScore} correct)
+              🎉 Tie between: {winners.map((w) => w.player_name).join(', ')} (each {maxScore} points)
             </p>
           )}
         </div>
@@ -42,7 +43,7 @@ export const Results = ({ players, onReset }: ResultsProps) => {
         <ScrollArea className="h-[500px]">
           <div className="space-y-4 pr-4">
             {players
-              .sort((a, b) => b.score - a.score)
+              .sort((a, b) => getOverallScore(b) - getOverallScore(a))
               .map((player) => (
                 <Card key={player.id} className="gradient-card p-6 shadow-card">
                   <div className="space-y-4">
@@ -55,12 +56,22 @@ export const Results = ({ players, onReset }: ResultsProps) => {
                       </div>
                       <div className="text-right">
                         <div className="text-3xl font-bold gradient-text-accent">
-                          {player.score}
+                          {getOverallScore(player)}
                         </div>
                         <div className="text-sm text-muted-foreground">
-                          {player.score === 1 ? 'point' : 'points'}
+                          {getOverallScore(player) === 1 ? 'point' : 'points'}
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-2 space-y-1">
+                          <div>Guess: {player.guess_score} • Role: {player.role_score}</div>
                         </div>
                       </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <p className="text-sm font-semibold text-muted-foreground">LLM roleplay summary:</p>
+                      <p className="text-sm text-primary">
+                        {player.roleplaySummary?.trim() || 'No LLM summary generated yet. This player will get a concise summary after grading.'}
+                      </p>
                     </div>
 
                     <div className="space-y-2">

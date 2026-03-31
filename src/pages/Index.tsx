@@ -40,6 +40,10 @@ const SoloGame = () => {
         ]),
       ),
       score: player.score,
+        guess_score: player.score,
+        role_score: 0,
+        overall_score: player.score,
+        transcripts: [],
       joined_at: new Date().toISOString(),
     }));
   };
@@ -68,9 +72,9 @@ const SoloGame = () => {
       return <GameSetup />;
     case "roleReveal":
       return (
-        <RoleReveal players={lobbyPlayers} myPlayerId="1" onNext={handleNext} />
+        <RoleReveal players={lobbyPlayers} myPlayerId="1" onNext={handleNext} onReady={() => {}} />
       );
-    case "roleplay":
+    case "roleplay": {
       // For solo play, create a mock lobby with timer
       if (!roleplayTimerEnd) {
         // Timer not set yet, wait for useEffect to set it
@@ -92,21 +96,32 @@ const SoloGame = () => {
       return (
         <RoleplayTimer
           lobby={soloLobby}
+          players={lobbyPlayers}
           isHost={true}
           onTimerEnd={handleTimerEnd}
         />
       );
-    case "guessing":
+    }
+    case "guessing": {
       // Get available personalities from the selected scenario
-      const availablePersonalities = gameState.selectedScenario?.roles.map(r => r.personality) || [];
+      const availablePersonalities = gameState.selectedScenario?.roles.map((r) => r.personality) || [];
+      const guessingLobby: Lobby = {
+        id: "guessing",
+        code: gameState.lobbyCode ?? "",
+        host_id: "1",
+        status: "in_progress",
+        num_players: lobbyPlayers.length,
+        current_phase: "guessing",
+        current_player_index: gameState.currentPlayerIndex,
+        current_guess_target: gameState.currentGuessTarget,
+        roleplay_timer_end: gameState.roleplayTimerEnd || null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+
       return (
         <GuessingPhase
-          lobby={
-            {
-              current_player_index: gameState.currentPlayerIndex,
-              current_guess_target: gameState.currentGuessTarget,
-            } as any
-          }
+          lobby={guessingLobby}
           players={lobbyPlayers}
           myPlayerId="1"
           isMyTurn={gameState.currentPlayerIndex === 0}
@@ -115,6 +130,7 @@ const SoloGame = () => {
           availablePersonalities={availablePersonalities}
         />
       );
+    }
     case "results":
       return <Results players={lobbyPlayers} onReset={handleReset} />;
     default:

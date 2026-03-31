@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Lobby, LobbyPlayer } from "@/types/lobby";
 import { toast } from "sonner";
+import type { Database } from "@/integrations/supabase/types";
 
 export const useLobby = (lobbyCode?: string) => {
   const [lobby, setLobby] = useState<Lobby | null>(null);
@@ -29,7 +30,7 @@ export const useLobby = (lobbyCode?: string) => {
 
       if (lobbyData) {
         currentLobbyId = lobbyData.id;
-        setLobby(lobbyData as Lobby);
+        setLobby(lobbyData as unknown as Lobby);
 
         const { data: playersData } = await supabase
           .from("lobby_players")
@@ -41,16 +42,31 @@ export const useLobby = (lobbyCode?: string) => {
           console.log("Fetched players:", playersData); // Debug log
           console.log("Current myPlayerId:", myPlayerId); // Debug log
           // Map players data - role_description, nicknames, guidelines, and ranked_choices should now be in database
-          const mappedPlayers: LobbyPlayer[] = playersData.map((p: any) => ({
-            ...p,
-            role_description: p.role_description ?? "",
-            nicknames: p.nicknames ?? "",
-            guidelines: (p.guidelines as readonly string[]) || [],
-            ranked_choices: (p.ranked_choices as string[]) || undefined,
-            guesses: (p.guesses as Record<string, string>) || {},
-            score: p.score ?? 0,
-            ready_for_roleplay: p.ready_for_roleplay ?? false,
-          }));
+          const mappedPlayers: LobbyPlayer[] = playersData.map((p) => {
+            const row = p as Database["public"]["Tables"]["lobby_players"]["Row"] & {
+              transcripts?: unknown;
+              roleplay_summary?: string | null;
+            };
+            const transcripts = Array.isArray((row as unknown as { transcripts?: unknown }).transcripts)
+              ? ((row as unknown as { transcripts?: unknown[] }).transcripts as unknown[])
+              : [];
+
+            return {
+              ...row,
+              role_description: row.role_description ?? "",
+              nicknames: row.nicknames ?? "",
+              guidelines: (row.guidelines as string[]) || [],
+              ranked_choices: (row.ranked_choices as string[]) || undefined,
+              guesses: (row.guesses as Record<string, string>) || {},
+              score: row.score ?? 0,
+              guess_score: row.guess_score ?? row.score ?? 0,
+              role_score: row.role_score ?? 0,
+              overall_score: row.overall_score ?? row.score ?? 0,
+              roleplaySummary: row.roleplay_summary ?? "",
+              transcripts,
+              ready_for_roleplay: row.ready_for_roleplay ?? false,
+            };
+          });
           setPlayers(mappedPlayers);
         }
       }
@@ -70,7 +86,7 @@ export const useLobby = (lobbyCode?: string) => {
         },
         (payload) => {
           if (payload.eventType === "UPDATE") {
-            const updatedLobby = payload.new as Lobby;
+            const updatedLobby = payload.new as unknown as Lobby;
             currentLobbyId = updatedLobby.id;
             setLobby(updatedLobby);
           }
@@ -93,16 +109,31 @@ export const useLobby = (lobbyCode?: string) => {
               .order("player_number", { ascending: true });
             if (data) {
               // Map players data - role_description, nicknames, guidelines, and ranked_choices should now be in database
-              const mappedPlayers: LobbyPlayer[] = data.map((p: any) => ({
-                ...p,
-                role_description: p.role_description ?? "",
-                nicknames: p.nicknames ?? "",
-                guidelines: (p.guidelines as readonly string[]) || [],
-                ranked_choices: (p.ranked_choices as string[]) || undefined,
-                guesses: (p.guesses as Record<string, string>) || {},
-                score: p.score ?? 0,
-                ready_for_roleplay: p.ready_for_roleplay ?? false,
-              }));
+              const mappedPlayers: LobbyPlayer[] = data.map((p) => {
+                const row = p as Database["public"]["Tables"]["lobby_players"]["Row"] & {
+                  transcripts?: unknown;
+                  roleplay_summary?: string | null;
+                };
+                const transcripts = Array.isArray((row as unknown as { transcripts?: unknown }).transcripts)
+                  ? ((row as unknown as { transcripts?: unknown[] }).transcripts as unknown[])
+                  : [];
+
+                return {
+                  ...row,
+                  role_description: row.role_description ?? "",
+                  nicknames: row.nicknames ?? "",
+                  guidelines: (row.guidelines as string[]) || [],
+                  ranked_choices: (row.ranked_choices as string[]) || undefined,
+                  guesses: (row.guesses as Record<string, string>) || {},
+                  score: row.score ?? 0,
+                  guess_score: row.guess_score ?? row.score ?? 0,
+                  role_score: row.role_score ?? 0,
+                  overall_score: row.overall_score ?? row.score ?? 0,
+                  roleplaySummary: row.roleplay_summary ?? "",
+                  transcripts,
+                  ready_for_roleplay: row.ready_for_roleplay ?? false,
+                };
+              });
               setPlayers(mappedPlayers);
             }
           }
@@ -113,7 +144,7 @@ export const useLobby = (lobbyCode?: string) => {
     return () => {
       supabase.removeChannel(lobbyChannel);
     };
-  }, [lobbyCode]);
+  }, [lobbyCode, myPlayerId]);
 
   const createLobby = async (
     numPlayers: number,
@@ -225,14 +256,30 @@ export const useLobby = (lobbyCode?: string) => {
 
   const updateLobby = async (updates: Partial<Lobby>) => {
     if (!lobby) return;
-    await supabase.from("lobbies").update(updates).eq("id", lobby.id);
+    const { error } = await supabase
+      .from("lobbies")
+      .update(
+        updates as unknown as Partial<
+          Database["public"]["Tables"]["lobbies"]["Update"]
+        >,
+      )
+      .eq("id", lobby.id);
+    if (error) throw error;
   };
 
   const updatePlayer = async (
     playerId: string,
     updates: Partial<LobbyPlayer>,
   ) => {
-    await supabase.from("lobby_players").update(updates).eq("id", playerId);
+    const { error } = await supabase
+      .from("lobby_players")
+      .update(
+        updates as unknown as Partial<
+          Database["public"]["Tables"]["lobby_players"]["Update"]
+        >,
+      )
+      .eq("id", playerId);
+    if (error) throw error;
   };
 
   const clearMyPlayerId = () => {
