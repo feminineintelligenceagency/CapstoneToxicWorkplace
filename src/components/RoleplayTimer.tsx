@@ -112,116 +112,159 @@ export const RoleplayTimer = ({
 
   const presenterName = displayedAsset && players.length > 0
     ? players.find(p => p.id === displayedAsset.presentedBy)?.player_name || 'Unknown'
-    : null;
+        : null;
+
+    const [roleInfoOpen, setRoleInfoOpen] = useState(false);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl space-y-8">
+      <div className="w-full max-w-8xl space-y-8">
         {call && (
           <div className="flex flex-col gap-3">
-            <Alert className="bg-muted/50">
-              <AlertDescription>
-                Your audio may be transcribed during this phase for future use.
-              </AlertDescription>
+            <Alert className="bg-muted/50 mt-8">
+                <AlertDescription>
+                    Your audio may be transcribed during this phase for future use.
+                </AlertDescription>
             </Alert>
-            <div className="flex items-center justify-between gap-4 flex-wrap">
-              <Button
-                variant={call.isMuted ? "destructive" : "secondary"}
-                size="sm"
-                onClick={() => call.setMuted(!call.isMuted)}
-              >
-                {call.isMuted ? <MicOff className="w-4 h-4 mr-2" /> : <Mic className="w-4 h-4 mr-2" />}
-                {call.isMuted ? "Unmute" : "Mute"}
-              </Button>
-              <div className="flex gap-2 flex-wrap">
-                {players.map((p) => (
-                  <span
-                    key={p.id}
-                    className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
-                      call.speakingPeers.has(p.id)
-                        ? "ring-2 ring-primary bg-primary/20"
-                        : "bg-secondary/50"
-                    }`}
-                  >
-                    {p.player_name}
-                    {call.speakingPeers.has(p.id) && " (talking)"}
-                  </span>
-                ))}
-              </div>
-            </div>
           </div>
         )}
 
-        <div className="text-center space-y-4">
-          <h2 className="text-4xl font-bold">Roleplay Phase</h2>
-          <p className="text-lg text-muted-foreground">
-            Act out your role and interact with other players
-          </p>
+        <div className="flex items-center justify-center gap-6 mb-6">
+            {/* Header */}
+            <div className="text-center space-y-1">
+                <h2 className="text-3xl font-bold">Roleplay Phase</h2>
+                <p className="text-lg text-muted-foreground">
+                    Act out your role and interact with other players
+                </p>
+            </div>
+
+            {/* Timer */}
+            <Card className="p-4 shadow-md min-w-[150px] text-center">
+                <div className="space-y-2">
+                    <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                        Time Remaining
+                    </p>
+                    <div
+                        className={`text-4xl md:text-6xl font-bold font-mono transition-colors duration-300 ${getTimeColor(
+                            timeRemaining,
+                        )}`}
+                    >
+                        {formatTime(timeRemaining)}
+                    </div>
+
+                    {timeRemaining <= 30 && timeRemaining > 0 && (
+                        <p className="text-sm text-destructive animate-pulse">
+                            Time is running out!
+                        </p>
+                    )}
+
+                    {isExpired && (
+                        <p className="text-sm text-muted-foreground">
+                            Timer expired. Transitioning...
+                        </p>
+                    )}
+                </div>
+            </Card>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column: Timer and Scenario */}
           <div className="lg:col-span-1 space-y-4">
-            <Card className="p-8 shadow-md">
-              <div className="text-center space-y-4">
-                <div className="space-y-2">
-                  <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-                    Time Remaining
-                  </p>
-                  <div
-                    className={`text-6xl md:text-7xl font-bold font-mono transition-colors duration-300 ${getTimeColor(
-                      timeRemaining,
-                    )}`}
-                  >
-                    {formatTime(timeRemaining)}
-                  </div>
-                </div>
-
-                {timeRemaining <= 30 && timeRemaining > 0 && (
-                  <p className="text-sm text-destructive animate-pulse">
-                    Time is running out!
-                  </p>
-                )}
-
-                {isExpired && (
-                  <p className="text-sm text-muted-foreground">
-                    Timer expired. Transitioning...
-                  </p>
-                )}
-              </div>
-            </Card>
-
             {scenarioDescription && (
-              <Card className="p-4 shadow-md">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
-                  Scenario
-                </p>
-                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-6">
-                  {scenarioDescription}
-                </p>
-              </Card>
+                <Card
+                    className="p-4 shadow-md lg:col-span-2 flex flex-col"
+                    style={{ minHeight: '27rem' }} 
+                >
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+                        Scenario
+                    </p>
+                    <p className="text-sm text-muted-foreground leading-relaxed overflow-y-auto">
+                        {scenarioDescription}
+                    </p>
+                </Card>
             )}
           </div>
 
           {/* Right Column: Asset Display and Selection */}
           <div className="lg:col-span-2 space-y-4">
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold">Displayed Asset</h3>
-                <Button
-                  onClick={() => setAssetSelectorOpen(true)}
-                  size="sm"
-                  variant="outline"
-                  disabled={assetsLoading}
-                >
-                  {assetsLoading ? (
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  ) : (
-                    <ImageIcon className="w-4 h-4 mr-2" />
-                  )}
-                  {assetsLoading ? 'Loading Assets...' : 'Select Asset'}
-                </Button>
-              </div>
+                <div className="flex items-start gap-4 flex-wrap">
+                    {/* Select Asset Button */}
+                    <Button
+                        onClick={() => setAssetSelectorOpen(true)}
+                        size="sm"
+                        variant="outline"
+                        disabled={assetsLoading}
+                    >
+                        {assetsLoading ? (
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        ) : (
+                            <ImageIcon className="w-4 h-4 mr-2" />
+                        )}
+                        {assetsLoading ? 'Loading Assets...' : 'Select Asset'}
+                    </Button>
+
+                    <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => setRoleInfoOpen(true)}
+                    >
+                        Role Info
+                    </Button>
+
+                    {/* Role Info Modal */}
+                    {roleInfoOpen && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+                            <div className="bg-background dark:bg-background-dark p-8 rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative">
+                                {/* Close Button */}
+                                <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className="absolute top-4 right-4"
+                                    onClick={() => setRoleInfoOpen(false)}
+                                >
+                                    <X className="w-5 h-5" />
+                                </Button>
+
+                                <p className="font-semibold text-sm text-muted-foreground uppercase tracking-wide mb-6">
+                                    Your Role Info
+                                </p>
+
+                                {myPlayerId ? (
+                                    <>
+                                        <p className="text-lg mb-2">
+                                            <span className="font-bold">Personality:</span>{" "}
+                                            {players.find(p => p.id === myPlayerId)?.role || "Unknown"}
+                                        </p>
+                                        <p className="text-lg mb-2">
+                                            <span className="font-bold">Role Name:</span>{" "}
+                                            {players.find(p => p.id === myPlayerId)?.nicknames || "Unknown"}
+                                        </p>
+                                        <p className="text-lg mt-4 mb-4">
+                                            <span className="font-bold">Objective:</span>{" "}
+                                            During guessing phase, identify other players' personalities.
+                                        </p>
+
+                                        {players.find(p => p.id === myPlayerId)?.guidelines?.length > 0 && (
+                                            <ul className="mt-2 text-base list-disc list-inside space-y-2">
+                                                {players
+                                                    .find(p => p.id === myPlayerId)!
+                                                    .guidelines!.map((g, i) => (
+                                                        <li key={i}>{g}</li>
+                                                    ))}
+                                            </ul>
+                                        )}
+                                    </>
+                                ) : (
+                                    <p className="text-lg text-muted-foreground">Role info unavailable</p>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    <p className="text-xs text-muted-foreground">
+                        💡 Any player can select and change what's displayed. Use assets to support your roleplay!
+                    </p>
+                </div>
 
               <Card className="p-6 shadow-md min-h-96 flex items-center justify-center bg-muted/30">
                 {displayedAsset ? (
@@ -306,11 +349,36 @@ export const RoleplayTimer = ({
                     </div>
                   </div>
                 )}
-              </Card>
+            </Card>
 
-              <p className="text-xs text-muted-foreground">
-                💡 Any player can select and change what's displayed. Use assets to support your roleplay!
-              </p>
+            {call && (
+                <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between gap-4 flex-wrap">
+                        <Button
+                            variant={call.isMuted ? "destructive" : "secondary"}
+                            size="sm"
+                            onClick={() => call.setMuted(!call.isMuted)}
+                        >
+                            {call.isMuted ? <MicOff className="w-4 h-4 mr-2" /> : <Mic className="w-4 h-4 mr-2" />}
+                            {call.isMuted ? "Unmute" : "Mute"}
+                        </Button>
+                        <div className="flex gap-2 flex-wrap">
+                            {players.map((p) => (
+                                <span
+                                    key={p.id}
+                                    className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${call.speakingPeers.has(p.id)
+                                            ? "ring-2 ring-primary bg-primary/20"
+                                            : "bg-secondary/50"
+                                        }`}
+                                >
+                                    {p.player_name}
+                                    {call.speakingPeers.has(p.id) && " (talking)"}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
             </div>
           </div>
         </div>
