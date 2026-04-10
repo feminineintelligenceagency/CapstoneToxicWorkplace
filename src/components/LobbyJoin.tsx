@@ -40,11 +40,11 @@ export const LobbyJoin = () => {
         <div className="w-full max-w-md space-y-8 text-center">
           <div className="space-y-4">
             <div className="flex justify-center">
-              <div className="p-4 rounded-full gradient-primary shadow-glow">
+              <div className="rounded-full bg-primary p-4 text-primary-foreground shadow-sm">
                 <Shield className="w-12 h-12 text-primary-foreground" />
               </div>
             </div>
-            <h1 className="text-5xl font-bold gradient-text-primary">
+            <h1 className="text-5xl font-bold text-primary">
               Toxic Workplace Mystery Game
             </h1>
             <p className="text-muted-foreground text-lg">
@@ -52,7 +52,7 @@ export const LobbyJoin = () => {
             </p>
           </div>
 
-          <div className="gradient-card rounded-xl p-8 shadow-card space-y-4">
+          <div className="surface-raised space-y-4 p-8">
             <Button
               onClick={() => setMode("create")}
               variant="game"
@@ -87,7 +87,7 @@ export const LobbyJoin = () => {
             <p className="text-muted-foreground">Set up a new game</p>
           </div>
 
-          <Card className="gradient-card p-8 shadow-card space-y-6">
+          <Card className="surface-raised space-y-6 p-8">
             <div className="space-y-2">
               <label htmlFor="players" className="text-sm font-medium">
                 Number of Players (2-50)
@@ -137,7 +137,7 @@ export const LobbyJoin = () => {
           <p className="text-muted-foreground">Enter a lobby code</p>
         </div>
 
-        <Card className="gradient-card p-8 shadow-card space-y-6">
+        <Card className="surface-raised space-y-6 p-8">
           <div className="space-y-2">
             <label htmlFor="code" className="text-sm font-medium">
               Lobby Code

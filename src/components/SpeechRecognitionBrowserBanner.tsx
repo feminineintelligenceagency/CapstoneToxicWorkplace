@@ -15,17 +15,21 @@ export function SpeechRecognitionBrowserBanner({ className }: SpeechRecognitionB
   return (
     <div
       className={cn(
-        "w-full border-b border-amber-500/40 bg-amber-500/10 px-4 py-3 text-amber-950 dark:bg-amber-950/30 dark:text-amber-100 dark:border-amber-500/30",
+        "w-full border-b border-palette-orange/35 bg-palette-orange/10 px-4 py-3 text-foreground",
         className,
       )}
       role="status"
     >
       <div className="mx-auto flex max-w-4xl gap-3 sm:gap-4">
+        <AlertTriangle
+          className="mt-0.5 h-5 w-5 shrink-0 text-palette-orange-deep"
+          aria-hidden
+        />
         <div className="min-w-0 flex-1 space-y-1.5">
-          <p className="font-medium leading-snug text-amber-950 dark:text-amber-50">
+          <p className="font-medium leading-snug text-foreground">
             Speech recognition is not available in this browser
           </p>
-          <p className="text-sm leading-relaxed text-amber-900/90 dark:text-amber-100/90">
+          <p className="text-sm leading-relaxed text-muted-foreground">
             For live transcription during the game, use a desktop browser with the Web Speech API, such as{" "}
             <strong>Google Chrome</strong> or <strong>Microsoft Edge</strong>. Safari has limited support;
             Firefox does not support speech recognition for this feature.

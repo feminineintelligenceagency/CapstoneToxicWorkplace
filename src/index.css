@@ -2,67 +2,103 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
-All colors MUST be HSL.
+/*
+  FIA brand: logo blue #3b95c4 + pink #f381b9; chrome uses a cool blue-gray in the same hue family.
+  Other palette entries are accents only. Semantic tokens only; no gradient backgrounds.
 */
 
 @layer base {
     :root {
-        --background: 0 0% 100%;
-        --foreground: 220 20% 20%;
+        --palette-black: 0 0% 0%;
+        --palette-white: 0 0% 100%;
+        --palette-gray: 0 0% 27%;
+        --palette-gray-light: 0 0% 88%;
+        --palette-red: 7 98% 49%;
+        --palette-orange: 24 97% 54%;
+        --palette-lime: 68 49% 50%;
+        --palette-teal: 162 51% 54%;
+        /* Logo: #3b95c4 / #f381b9 */
+        --palette-blue: 201 54% 50%;
+        --palette-pink: 331 83% 73%;
+        /* Header/footer — same hue as logo blue, darker (replaces flat neutral gray) */
+        --palette-chrome: 204 42% 21%;
+        --palette-purple: 286 56% 60%;
+        --palette-orange-deep: 17 97% 55%;
 
-        --card: 0 0% 98%;
-        --card-foreground: 220 20% 20%;
+        --background: var(--palette-white);
+        --foreground: var(--palette-black);
 
-        --popover: 0 0% 98%;
-        --popover-foreground: 220 20% 20%;
+        --card: var(--palette-white);
+        --card-foreground: var(--palette-black);
 
-        --primary: 330 100% 70%;
-        --primary-foreground: 220 20% 20%;
+        --popover: var(--palette-white);
+        --popover-foreground: var(--palette-black);
 
-        --secondary: 210 100% 85%;
-        --secondary-foreground: 220 20% 20%;
+        --primary: var(--palette-blue);
+        --primary-foreground: var(--palette-white);
 
-        --muted: 210 20% 95%;
-        --muted-foreground: 220 20% 40%;
+        --secondary: var(--palette-gray);
+        --secondary-foreground: var(--palette-white);
 
-        --accent: 210 100% 60%;
-        --accent-foreground: 0 0% 100%;
+        --muted: var(--palette-gray-light);
+        --muted-foreground: var(--palette-gray);
 
-        --destructive: 0 72% 51%;
-        --destructive-foreground: 0 0% 100%;
+        --accent: var(--palette-pink);
+        --accent-foreground: var(--palette-black);
 
-        --border: 210 20% 90%;
-        --input: 210 20% 90%;
-        --ring: 330 100% 70%;
+        --destructive: var(--palette-red);
+        --destructive-foreground: var(--palette-white);
+
+        --border: var(--palette-gray-light);
+        --input: var(--palette-gray-light);
+        --ring: var(--palette-blue);
 
         --radius: 0.75rem;
 
-        --gradient-primary: linear-gradient(
-            135deg,
-            hsl(330 100% 70%),
-            hsl(210 100% 60%)
-        );
-        --gradient-accent: linear-gradient(
-            135deg,
-            hsl(210 100% 60%),
-            hsl(330 100% 70%)
-        );
-        --gradient-card: linear-gradient(180deg, hsl(0 0% 98%), hsl(0 0% 100%));
-
-        --shadow-glow: 0 0 40px hsl(263 70% 50% / 0.3);
-        --shadow-card: 0 10px 30px -10px hsl(0 0% 0% / 0.5);
+        --shadow-card: 0 8px 24px -8px hsl(var(--palette-black) / 0.12);
 
         --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-        --sidebar-background: 240 18% 10%;
-        --sidebar-foreground: 210 40% 98%;
-        --sidebar-primary: 263 70% 60%;
-        --sidebar-primary-foreground: 210 40% 98%;
-        --sidebar-accent: 240 12% 18%;
-        --sidebar-accent-foreground: 210 40% 98%;
-        --sidebar-border: 240 12% 22%;
-        --sidebar-ring: 263 70% 60%;
+        --sidebar-background: var(--palette-black);
+        --sidebar-foreground: var(--palette-white);
+        --sidebar-primary: var(--palette-pink);
+        --sidebar-primary-foreground: var(--palette-black);
+        --sidebar-accent: var(--palette-gray);
+        --sidebar-accent-foreground: var(--palette-white);
+        --sidebar-border: var(--palette-gray);
+        --sidebar-ring: var(--palette-blue);
+    }
+
+    .dark {
+        --background: var(--palette-black);
+        --foreground: var(--palette-white);
+
+        --card: var(--palette-gray);
+        --card-foreground: var(--palette-white);
+
+        --popover: var(--palette-gray);
+        --popover-foreground: var(--palette-white);
+
+        --primary: var(--palette-blue);
+        --primary-foreground: var(--palette-white);
+
+        --secondary: var(--palette-gray-light);
+        --secondary-foreground: var(--palette-black);
+
+        --muted: 0 0% 18%;
+        --muted-foreground: var(--palette-gray-light);
+
+        --accent: var(--palette-pink);
+        --accent-foreground: var(--palette-black);
+
+        --destructive: var(--palette-red);
+        --destructive-foreground: var(--palette-white);
+
+        --border: 0 0% 22%;
+        --input: 0 0% 22%;
+        --ring: var(--palette-blue);
+
+        --shadow-card: 0 10px 28px -10px hsl(0 0% 0% / 0.45);
     }
 }
 
@@ -71,11 +107,19 @@ All colors MUST be HSL.
         @apply border-border;
     }
 
+    html {
+        @apply m-0 max-w-full overflow-x-hidden;
+    }
+
     body {
-        @apply bg-background text-foreground;
+        @apply m-0 max-w-full bg-background text-foreground;
         font-feature-settings:
             "liga" 1,
             "calt" 1;
+    }
+
+    #root {
+        @apply m-0 min-h-dvh w-full max-w-none p-0;
     }
 
     h1,
@@ -89,36 +133,8 @@ All colors MUST be HSL.
 }
 
 @layer utilities {
-    .gradient-primary {
-        background: var(--gradient-primary);
-    }
-
-    .gradient-accent {
-        background: var(--gradient-accent);
-    }
-
-    .gradient-card {
-        background: var(--gradient-card);
-    }
-
-    .gradient-text-primary {
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-    }
-
-    .gradient-text-accent {
-        background: var(--gradient-accent);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-    }
-
-    .shadow-glow {
-        box-shadow: var(--shadow-glow);
+    .surface-raised {
+        @apply rounded-xl border border-border bg-card text-card-foreground shadow-card;
     }
 
     .shadow-card {
@@ -127,5 +143,9 @@ All colors MUST be HSL.
 
     .transition-smooth {
         transition: var(--transition-smooth);
+    }
+
+    .app-header-nav {
+        background: hsl(var(--palette-chrome));
     }
 }

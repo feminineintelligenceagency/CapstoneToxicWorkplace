@@ -63,7 +63,7 @@ export const GuessingPhase = ({ lobby, players, myPlayerId, isMyTurn, onGuess, o
           <h2 className="text-3xl font-bold">Guess {targetPlayer.player_name}'s Role</h2>
         </div>
 
-        <Card className="gradient-card p-8 shadow-card">
+        <Card className="surface-raised p-8">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {personalities.map((personality) => (
               <Button
@@ -71,7 +71,7 @@ export const GuessingPhase = ({ lobby, players, myPlayerId, isMyTurn, onGuess, o
                 onClick={() => handleGuess(personality)}
                 variant="secondary"
                 size="lg"
-                className="h-20 text-base font-semibold hover:gradient-accent hover:text-accent-foreground transition-smooth"
+                className="h-20 text-base font-semibold transition-smooth hover:bg-accent hover:text-accent-foreground"
               >
                 {personality}
               </Button>

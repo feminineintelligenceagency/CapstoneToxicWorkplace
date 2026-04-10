@@ -33,7 +33,7 @@ export default function TutorialPage() {
   }) => (
     <button
       onClick={() => toggleSection(section)}
-      className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-blue-500/10 to-pink-500/10 hover:from-blue-500/20 hover:to-pink-500/20 rounded-lg transition-all"
+      className="flex w-full items-center justify-between rounded-lg border border-border bg-muted/60 p-4 transition-colors hover:bg-muted"
     >
       <h3 className="text-xl font-semibold text-left">{title}</h3>
       <ChevronDown
@@ -68,7 +68,7 @@ export default function TutorialPage() {
           padding: "50px 50px 30px 50px",
           textAlign: "center",
         }}
-        className="text-5xl font-bold gradient-text-primary"
+        className="text-5xl font-bold text-primary"
       >
         Improvisation & Roleplay Tutorial
       </h1>
@@ -552,7 +552,7 @@ export default function TutorialPage() {
         </div>
 
         {/* CLOSING */}
-        <div className="gradient-card rounded-lg p-6 shadow-card text-center space-y-4">
+        <div className="surface-raised space-y-4 p-6 text-center">
           <h3 className="text-2xl font-semibold">Ready to Play?</h3>
           <p className="text-muted-foreground">
             Remember: The best roleplay comes from having fun and engaging

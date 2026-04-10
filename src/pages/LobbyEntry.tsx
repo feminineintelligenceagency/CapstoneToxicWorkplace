@@ -96,20 +96,20 @@ const LobbyEntry = () => {
 
   if (mode === "menu") {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-48">
-  
-        <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative">
-          <Badge className="absolute top-4 right-4 bg-red-600 hover:bg-red-700">
+      <div className="flex h-full min-h-0 flex-col overflow-hidden px-3 pb-2 pt-1 sm:px-5">
+        <div className="grid h-full min-h-0 grid-cols-2 content-center gap-2 sm:gap-3 lg:grid-cols-4 lg:gap-4 auto-rows-min">
+        <div className="surface-raised relative space-y-3 p-4 text-center sm:space-y-4 sm:p-5">
+          <Badge className="absolute right-2 top-2 bg-palette-red text-white hover:opacity-90 sm:right-3 sm:top-3">
             Coming Soon
           </Badge>
-          <div className="space-y-2">
+          <div className="space-y-1.5 sm:space-y-2">
             <div className="flex justify-center">
-              <div className="p-3 rounded-full gradient-primary shadow-glow">
-                <Shield className="w-8 h-8 text-primary-foreground" />
+              <div className="rounded-full bg-primary p-2 text-primary-foreground shadow-sm sm:p-2.5">
+                <Shield className="h-6 w-6 text-primary-foreground sm:h-7 sm:w-7" />
               </div>
             </div>
-            <h2 className="text-2xl font-bold">Cult Jam</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="text-lg font-bold sm:text-xl">Cult Jam</h2>
+            <p className="text-xs text-muted-foreground sm:text-sm">
               Cult Identification Game
             </p>
           </div>
@@ -117,41 +117,43 @@ const LobbyEntry = () => {
           <Button
             onClick={() => handleCultJamClick(true)}
             variant="game"
-            size="xl"
+            size="lg"
             className="w-full"
           >
-            <Plus className="w-5 h-5 mr-2" />
+            <Plus className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Create Lobby
           </Button>
 
           <Button
             onClick={() => handleCultJamClick(false)}
             variant="accent"
-            size="xl"
+            size="lg"
             className="w-full"
           >
-            <LogIn className="w-5 h-5 mr-2" />
+            <LogIn className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Join Lobby
           </Button>
         </div>
 
-        <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative group">
-          <Badge className="absolute top-4 right-4 opacity-1">New</Badge>
+        <div className="surface-raised group relative space-y-3 p-4 text-center sm:space-y-4 sm:p-5">
+          <Badge className="absolute right-2 top-2 bg-palette-lime text-palette-black hover:opacity-90 sm:right-3 sm:top-3">
+            New
+          </Badge>
           <button
             onClick={() => setScenarioEditorOpen(true)}
-            className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-white/10 rounded-lg"
+            className="absolute left-2 top-2 rounded-lg p-2 opacity-0 transition-opacity hover:bg-white/10 group-hover:opacity-100 sm:left-3 sm:top-3"
             title="Edit scenarios and manage assets"
           >
-            <Settings className="w-5 h-5 text-muted-foreground hover:text-foreground" />
+            <Settings className="h-4 w-4 text-muted-foreground hover:text-foreground sm:h-5 sm:w-5" />
           </button>
-          <div className="space-y-2">
+          <div className="space-y-1.5 sm:space-y-2">
             <div className="flex justify-center">
-              <div className="p-3 rounded-full gradient-primary shadow-glow">
-                <Shield className="w-8 h-8 text-primary-foreground" />
+              <div className="rounded-full bg-primary p-2 text-primary-foreground shadow-sm sm:p-2.5">
+                <Shield className="h-6 w-6 text-primary-foreground sm:h-7 sm:w-7" />
               </div>
             </div>
-            <h2 className="text-2xl font-bold">Toxic Workplace</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="text-lg font-bold sm:text-xl">Toxic Workplace</h2>
+            <p className="text-xs text-muted-foreground sm:text-sm">
               Toxic Workplace Social Deduction Game
             </p>
           </div>
@@ -159,36 +161,36 @@ const LobbyEntry = () => {
           <Button
             onClick={() => handleToxicWorkplaceCreate()}
             variant="game"
-            size="xl"
+            size="lg"
             className="w-full"
           >
-            <Plus className="w-5 h-5 mr-2" />
+            <Plus className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Create Lobby
           </Button>
 
           <Button
             onClick={() => handleToxicWorkplaceJoin()}
             variant="accent"
-            size="xl"
+            size="lg"
             className="w-full"
           >
-            <LogIn className="w-5 h-5 mr-2" />
+            <LogIn className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Join Lobby
           </Button>
         </div>
 
-        <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative">
-          <Badge className="absolute top-4 right-4 bg-red-600 hover:bg-red-700">
+        <div className="surface-raised relative space-y-3 p-4 text-center sm:space-y-4 sm:p-5">
+          <Badge className="absolute right-2 top-2 bg-palette-red text-white hover:opacity-90 sm:right-3 sm:top-3">
             Coming Soon
           </Badge>
-          <div className="space-y-2">
+          <div className="space-y-1.5 sm:space-y-2">
             <div className="flex justify-center">
-              <div className="p-3 rounded-full gradient-primary shadow-glow">
-                <Shield className="w-8 h-8 text-primary-foreground" />
+              <div className="rounded-full bg-primary p-2 text-primary-foreground shadow-sm sm:p-2.5">
+                <Shield className="h-6 w-6 text-primary-foreground sm:h-7 sm:w-7" />
               </div>
             </div>
-            <h2 className="text-2xl font-bold">Toxic Family</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="text-lg font-bold sm:text-xl">Toxic Family</h2>
+            <p className="text-xs text-muted-foreground sm:text-sm">
               Toxic Family Identification Game
             </p>
           </div>
@@ -196,36 +198,36 @@ const LobbyEntry = () => {
           <Button
             onClick={() => handleToxicFamilyClick(true)}
             variant="game"
-            size="xl"
+            size="lg"
             className="w-full"
           >
-            <Plus className="w-5 h-5 mr-2" />
+            <Plus className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Create Lobby
           </Button>
 
           <Button
             onClick={() => handleToxicFamilyClick(false)}
             variant="accent"
-            size="xl"
+            size="lg"
             className="w-full"
           >
-            <LogIn className="w-5 h-5 mr-2" />
+            <LogIn className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Join Lobby
           </Button>
         </div>
 
-        <div className="gradient-card rounded-xl p-8 shadow-card space-y-6 text-center relative">
-          <Badge className="absolute top-4 right-4 bg-blue-600 hover:bg-blue-700">
+        <div className="surface-raised relative space-y-3 p-4 text-center sm:space-y-4 sm:p-5">
+          <Badge className="absolute right-2 top-2 bg-palette-blue text-white hover:opacity-90 sm:right-3 sm:top-3">
             Learn
           </Badge>
-          <div className="space-y-2">
+          <div className="space-y-1.5 sm:space-y-2">
             <div className="flex justify-center">
-              <div className="p-3 rounded-full gradient-primary shadow-glow">
-                <BookOpen className="w-8 h-8 text-primary-foreground" />
+              <div className="rounded-full bg-primary p-2 text-primary-foreground shadow-sm sm:p-2.5">
+                <BookOpen className="h-6 w-6 text-primary-foreground sm:h-7 sm:w-7" />
               </div>
             </div>
-            <h2 className="text-2xl font-bold">Improvisation Tutorial</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="text-lg font-bold sm:text-xl">Improvisation Tutorial</h2>
+            <p className="text-xs text-muted-foreground sm:text-sm">
               Learn how to roleplay and improvise effectively
             </p>
           </div>
@@ -233,12 +235,13 @@ const LobbyEntry = () => {
           <Button
             onClick={() => navigate("/tutorial")}
             variant="game"
-            size="xl"
+            size="lg"
             className="w-full"
           >
-            <BookOpen className="w-5 h-5 mr-2" />
+            <BookOpen className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Learn Now
           </Button>
+        </div>
         </div>
 
         <ScenarioEditor
@@ -251,7 +254,8 @@ const LobbyEntry = () => {
 
   if (mode === "create") {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="flex h-full min-h-0 flex-col overflow-y-auto">
+      <div className="flex min-h-0 flex-1 flex-col items-center justify-center p-4 py-8">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center space-y-2">
             <h2 className="text-3xl font-bold">Create Lobby</h2>
@@ -260,7 +264,7 @@ const LobbyEntry = () => {
             </p>
           </div>
 
-          <Card className="gradient-card p-8 shadow-card space-y-6">
+          <Card className="surface-raised space-y-6 p-8">
             <div className="space-y-2">
               <label htmlFor="playerName" className="text-sm font-medium">
                 Your Name (Optional)
@@ -316,18 +320,20 @@ const LobbyEntry = () => {
           </Card>
         </div>
       </div>
+      </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="flex h-full min-h-0 flex-col overflow-y-auto">
+    <div className="flex min-h-0 flex-1 flex-col items-center justify-center p-4 py-8">
       <div className="w-full max-w-md space-y-8">
         <div className="text-center space-y-2">
           <h2 className="text-3xl font-bold">Join Lobby</h2>
           <p className="text-muted-foreground">Enter the lobby code to join</p>
         </div>
 
-        <Card className="gradient-card p-8 shadow-card space-y-6">
+        <Card className="surface-raised space-y-6 p-8">
           <div className="space-y-2">
             <label htmlFor="playerName" className="text-sm font-medium">
               Your Name (Optional)
@@ -380,6 +386,7 @@ const LobbyEntry = () => {
           </div>
         </Card>
       </div>
+    </div>
     </div>
   );
 };

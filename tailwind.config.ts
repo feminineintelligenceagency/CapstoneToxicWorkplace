@@ -15,6 +15,20 @@ export default {
     },
     extend: {
       colors: {
+        palette: {
+          black: "hsl(var(--palette-black))",
+          white: "hsl(var(--palette-white))",
+          gray: "hsl(var(--palette-gray))",
+          "gray-light": "hsl(var(--palette-gray-light))",
+          red: "hsl(var(--palette-red))",
+          orange: "hsl(var(--palette-orange))",
+          lime: "hsl(var(--palette-lime))",
+          teal: "hsl(var(--palette-teal))",
+          blue: "hsl(var(--palette-blue))",
+          pink: "hsl(var(--palette-pink))",
+          purple: "hsl(var(--palette-purple))",
+          "orange-deep": "hsl(var(--palette-orange-deep))",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

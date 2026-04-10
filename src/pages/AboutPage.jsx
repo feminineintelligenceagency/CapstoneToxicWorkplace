@@ -84,7 +84,7 @@ export default function About() {
           padding: "50px",
           textAlign: "center",
         }}
-        className="text-5xl font-bold gradient-text-primary"
+        className="text-5xl font-bold text-primary"
       >
         About This Game
       </h2>
@@ -165,7 +165,7 @@ export default function About() {
                                       }}
                                       className={
                                           index === selectedHowStep
-                                              ? "gradient-text-primary"
+                                              ? "text-primary"
                                               : "text-muted-foreground"
                                       }
                                       onClick={() => {
@@ -245,7 +245,7 @@ export default function About() {
                                                           }}
                                                           className={
                                                               roleKey === selectedRole.key && group.id === selectedRole.group
-                                                                  ? "gradient-text-primary"
+                                                                  ? "text-primary"
                                                                   : "text-muted-foreground"
                                                           }
                                                           onClick={() => {
@@ -324,7 +324,7 @@ export default function About() {
                                                       }}
                                                       className={
                                                           scenario === selectedScenario
-                                                              ? "gradient-text-primary"
+                                                              ? "text-primary"
                                                               : "text-muted-foreground"
                                                       }
                                                       onClick={() => {

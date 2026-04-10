@@ -148,7 +148,7 @@ export const LobbyWaiting = ({
                         </div>
                                               
                         <div className="flex items-center justify-center gap-4">
-                            <div className="gradient-card px-6 py-3 rounded-lg shadow-card">
+                            <div className="surface-raised px-6 py-3">
                                 <p className="text-sm text-muted-foreground mb-1">
                                     Lobby Code
                                 </p>
@@ -301,7 +301,7 @@ export const LobbyWaiting = ({
                     )}
 
                     {isHost && (
-                        <Card className="gradient-card p-6 shadow-card w-full max-w-md">
+                        <Card className="surface-raised w-full max-w-md p-6">
                             <div className="space-y-3">
                                 <Label className="text-base font-semibold">
                                     Select Scenario
@@ -355,7 +355,7 @@ export const LobbyWaiting = ({
                 </div>
                                 
                 <div className="space-y-6 max-h-[80vh] overflow-y-auto">                                  
-                    <Card className="gradient-card p-6 shadow-card">
+                    <Card className="surface-raised p-6">
                         <div className="space-y-4">
                             <h3 className="text-lg font-semibold">Players</h3>
                             <div className="grid gap-3">

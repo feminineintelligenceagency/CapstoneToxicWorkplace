@@ -39,7 +39,7 @@ export const Results = ({ players, onReset }: ResultsProps) => {
       <div className="w-full max-w-4xl space-y-8">
         <div className="text-center space-y-4">
           <div className="flex justify-center">
-            <div className="p-4 rounded-full gradient-accent shadow-glow">
+            <div className="rounded-full bg-accent p-4 text-accent-foreground shadow-sm">
               <Trophy className="w-12 h-12 text-accent-foreground" />
             </div>
           </div>
@@ -49,11 +49,11 @@ export const Results = ({ players, onReset }: ResultsProps) => {
               No points earned. Better luck next time!
             </p>
           ) : winners.length === 1 ? (
-            <p className="text-xl gradient-text-accent font-bold">
+            <p className="text-xl font-bold text-primary">
               🎉 Winner: {winners[0].player_name} with {maxScore} points!
             </p>
           ) : (
-            <p className="text-xl gradient-text-accent font-bold">
+            <p className="text-xl font-bold text-primary">
               🎉 Tie between: {winners.map((w) => w.player_name).join(', ')} (each {maxScore} points)
             </p>
           )}
@@ -64,7 +64,7 @@ export const Results = ({ players, onReset }: ResultsProps) => {
             {players
               .sort((a, b) => getOverallScore(b) - getOverallScore(a))
               .map((player) => (
-                <Card key={player.id} className="gradient-card p-6 shadow-card">
+                <Card key={player.id} className="surface-raised p-6">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div>
@@ -74,7 +74,7 @@ export const Results = ({ players, onReset }: ResultsProps) => {
                         </p>
                       </div>
                       <div className="text-right">
-                        <div className="text-3xl font-bold gradient-text-accent">
+                        <div className="text-3xl font-bold text-primary">
                           {getOverallScore(player)}
                         </div>
                         <div className="text-sm text-muted-foreground">

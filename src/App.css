@@ -1,9 +1,4 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+/* #root layout lives in index.css — full-bleed app shell */
 
 .logo {
   height: 6em;

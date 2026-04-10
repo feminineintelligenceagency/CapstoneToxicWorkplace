@@ -77,7 +77,7 @@ const Game = () => {
   if (lobby.status !== 'in_progress') {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
-        <Card className="gradient-card p-8 max-w-md w-full text-center space-y-4">
+        <Card className="surface-raised max-w-md w-full space-y-4 p-8 text-center">
           <p className="text-muted-foreground">Game not started yet</p>
           <Button onClick={() => navigate(`/lobby/${lobbyCode}`)}>
             Return to Lobby
@@ -97,7 +97,7 @@ const Game = () => {
   if (gradingError) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
-        <Card className="gradient-card p-8 max-w-md w-full text-center space-y-4">
+        <Card className="surface-raised max-w-md w-full space-y-4 p-8 text-center">
           <h2 className="text-xl font-bold">Grading error</h2>
           <p className="text-sm text-destructive">{gradingError}</p>
           <Button onClick={() => setGradingError(null)}>Retry</Button>

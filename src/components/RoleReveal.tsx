@@ -60,7 +60,7 @@ export const RoleReveal = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/5 flex items-center justify-center p-4">
+    <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
       <div className="w-full max-w-7xl">
         <div className="text-center space-y-3 pt-8 mb-8">
             <h1 className="text-4xl font-bold tracking-tight">

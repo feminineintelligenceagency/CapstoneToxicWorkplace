@@ -9,7 +9,7 @@ export default function Contact() {
           padding: "50px",
           textAlign: "center",
         }}
-        className="text-5xl font-bold gradient-text-primary"
+        className="text-5xl font-bold text-primary"
       >
         How to Contact Us
       </h2>
