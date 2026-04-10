@@ -33,6 +33,7 @@ export function useCall({
   const dataChannelsRef = useRef<Record<string, RTCDataChannel>>({});
   const signalingChannelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   const analyserRef = useRef<{ analyser: AnalyserNode; ctx: AudioContext } | null>(null);
+  const localAudioCtxRef = useRef<AudioContext | null>(null);
   const speakingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSpeakingSentRef = useRef<boolean>(false);
   const currentStreamRef = useRef<MediaStream | null>(null);
@@ -40,6 +41,26 @@ export function useCall({
 
   const otherPlayers = useMemo(() => players.filter((p) => p.id !== myPlayerId), [players, myPlayerId]);
   const otherPlayerIds = useMemo(() => otherPlayers.map((p) => p.id).join(','), [otherPlayers]);
+
+  const tryPlayRemoteAudio = useCallback(() => {
+    void localAudioCtxRef.current?.resume();
+    Object.values(remoteAudioRefs.current).forEach((el) => {
+      el.muted = false;
+      el.volume = 1;
+      void el.play().catch(() => {});
+    });
+  }, []);
+
+  // Browsers block remote audio until a user gesture; retry after any interaction.
+  useEffect(() => {
+    const onInteract = () => tryPlayRemoteAudio();
+    document.addEventListener("pointerdown", onInteract, { capture: true });
+    document.addEventListener("keydown", onInteract, { capture: true });
+    return () => {
+      document.removeEventListener("pointerdown", onInteract, { capture: true });
+      document.removeEventListener("keydown", onInteract, { capture: true });
+    };
+  }, [tryPlayRemoteAudio]);
 
   // Play remote streams so user hears other participants
   useEffect(() => {
@@ -49,12 +70,17 @@ export function useCall({
       if (!el) {
         el = new Audio();
         el.autoplay = true;
+        el.muted = false;
+        el.volume = 1;
+        el.setAttribute("playsinline", "");
+        el.playsInline = true;
+        el.preload = "auto";
         remoteAudioRefs.current[peerId] = el;
       }
       if (el.srcObject !== stream) {
         el.srcObject = stream;
-        el.play().catch(() => {});
       }
+      void el.play().catch(() => {});
     });
     const currentIds = new Set(entries.map(([id]) => id));
     Object.keys(remoteAudioRefs.current).forEach((peerId) => {
@@ -150,6 +176,8 @@ export function useCall({
     const setupAnalyser = (stream: MediaStream) => {
       try {
         const ctx = new AudioContext();
+        localAudioCtxRef.current = ctx;
+        void ctx.resume();
         const src = ctx.createMediaStreamSource(stream);
         const analyser = ctx.createAnalyser();
         analyser.fftSize = 256;
@@ -205,8 +233,24 @@ export function useCall({
       }
       pc.ontrack = (ev) => {
         if (cancelled) return;
-        const stream = ev.streams[0] || new MediaStream(ev.track ? [ev.track] : []);
-        setRemoteStreams((prev) => ({ ...prev, [remoteId]: stream }));
+        const t = ev.track;
+        setRemoteStreams((prev) => {
+          const existing = prev[remoteId];
+          if (existing && t) {
+            const dup = existing.getTracks().some((x) => x.id === t.id);
+            if (!dup) {
+              try {
+                existing.addTrack(t);
+              } catch {
+                // ignore duplicate / wrong kind
+              }
+            }
+            return { ...prev, [remoteId]: existing };
+          }
+          const stream =
+            ev.streams[0] || new MediaStream(t ? [t] : []);
+          return { ...prev, [remoteId]: stream };
+        });
       };
       pc.onicecandidate = (ev) => {
         if (ev.candidate)
@@ -228,6 +272,10 @@ export function useCall({
       if (!peerRefs.current[remoteId]) return createPeer(remoteId, asOfferer);
       return peerRefs.current[remoteId];
     };
+
+    /** One offer per pair: avoids glare (both sides offering) and "answer in stable" errors. */
+    const shouldOfferTo = (remoteId: string) =>
+      myPlayerId != null && myPlayerId < remoteId;
 
     (async () => {
       setIsConnecting(true);
@@ -267,22 +315,32 @@ export function useCall({
             const to = msg.to;
             if (to !== myPlayerId) return;
 
-            const pc = getOrCreatePeer(from, false);
             if (msg.type === 'offer') {
+              const pc = getOrCreatePeer(from, false);
               await pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
               const answer = await pc.createAnswer();
               await pc.setLocalDescription(answer);
               sendSignaling({ type: 'answer', from: myPlayerId, to: from, sdp: answer });
             } else if (msg.type === 'answer') {
+              const pc = peerRefs.current[from];
+              if (!pc) return;
+              if (pc.signalingState === 'stable') return;
               await pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
             } else if (msg.type === 'ice') {
-              await pc.addIceCandidate(new RTCIceCandidate(msg.candidate));
+              const pc = peerRefs.current[from];
+              if (!pc) return;
+              try {
+                await pc.addIceCandidate(new RTCIceCandidate(msg.candidate));
+              } catch {
+                // Often arrives before remoteDescription; browser may reject out-of-order ICE.
+              }
             }
           })
           .subscribe(async (status) => {
             if (status !== 'SUBSCRIBED' || cancelled) return;
             for (const p of otherPlayers) {
               const remoteId = p.id;
+              if (!shouldOfferTo(remoteId)) continue;
               const pc = createPeer(remoteId, true);
               const offer = await pc.createOffer();
               await pc.setLocalDescription(offer);
@@ -310,6 +368,7 @@ export function useCall({
         analyserRef.current.ctx.close();
         analyserRef.current = null;
       }
+      localAudioCtxRef.current = null;
       const streamToStop = currentStreamRef.current;
       currentStreamRef.current = null;
       if (streamToStop) {
@@ -328,13 +387,17 @@ export function useCall({
     };
   }, [enabled, lobbyCode, lobbyId, myPlayerId, players.length, otherPlayers, otherPlayerIds, sendSignaling, updateLocalSpeaking]);
 
-  const setMuted = useCallback((muted: boolean) => {
-    setIsMuted(muted);
-    setLocalStream((stream) => {
-      if (stream) stream.getAudioTracks().forEach((t) => (t.enabled = !muted));
-      return stream;
-    });
-  }, []);
+  const setMuted = useCallback(
+    (muted: boolean) => {
+      setIsMuted(muted);
+      setLocalStream((stream) => {
+        if (stream) stream.getAudioTracks().forEach((t) => (t.enabled = !muted));
+        return stream;
+      });
+      tryPlayRemoteAudio();
+    },
+    [tryPlayRemoteAudio],
+  );
 
   return {
     localStream,
@@ -344,5 +407,7 @@ export function useCall({
     speakingPeers,
     callError,
     isConnecting,
+    /** Call after a user gesture if remote audio is silent (browser autoplay policy). */
+    resumeRemoteAudio: tryPlayRemoteAudio,
   };
 }

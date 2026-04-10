@@ -6,12 +6,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Copy, Users, Crown, Settings, Dices, Mic, MicOff } from 'lucide-react';
+import { Copy, Users, Crown, Settings, Dices, Mic, MicOff, Captions } from 'lucide-react';
 import { Lobby, LobbyPlayer } from '@/types/lobby';
 import { Scenario } from '@/types/scenario';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { useCallContext } from '@/contexts/CallContext';
+import { useLobbyTranscriptionPreview } from '@/hooks/useLobbyTranscriptionPreview';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface LobbyWaitingProps {
     lobby: Lobby;
@@ -41,6 +43,7 @@ export const LobbyWaiting = ({
     const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
 
     const call = useCallContext();
+    const captionPreview = useLobbyTranscriptionPreview(!!call && !!myPlayerId, myPlayerId);
 
     const hostPlayer = players.find(p => p.player_number === 1);
     const isHost = hostPlayer?.id === myPlayerId;
@@ -175,14 +178,19 @@ export const LobbyWaiting = ({
                             <Alert className="bg-muted/50">
                                 <AlertDescription>
                                     You are in a live call. Your audio may be transcribed during the roleplay phase.
+                                    If you cannot hear others or speech-to-text stays empty, click
+                                    &quot;Enable call audio and mic transcription&quot; once (browser policy).
                                 </AlertDescription>
                             </Alert>
 
-                            <div className="flex items-center gap-2">
+                            <div className="flex flex-wrap items-center gap-2">
                                 <Button
                                     variant={call.isMuted ? 'destructive' : 'secondary'}
                                     size="sm"
-                                    onClick={() => call.setMuted(!call.isMuted)}
+                                    onClick={() => {
+                                        call.setMuted(!call.isMuted);
+                                        call.ensureTranscriptionStarted();
+                                    }}
                                 >
                                     {call.isMuted ? (
                                         <MicOff className="w-4 h-4 mr-2" />
@@ -190,6 +198,17 @@ export const LobbyWaiting = ({
                                         <Mic className="w-4 h-4 mr-2" />
                                     )}
                                     {call.isMuted ? 'Unmute' : 'Mute'}
+                                </Button>
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => {
+                                        call.resumeCallMedia();
+                                        captionPreview.ensureStarted();
+                                    }}
+                                >
+                                    Enable call audio and mic transcription
                                 </Button>
 
                                 {call.callError && (
@@ -204,6 +223,58 @@ export const LobbyWaiting = ({
                                     </span>
                                 )}
                             </div>
+
+                            <Card className="border-dashed border-primary/30 bg-background/80">
+                                <div className="p-4 space-y-3">
+                                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                                        <div className="flex items-center gap-2 text-sm font-medium">
+                                            <Captions className="w-4 h-4 text-primary" />
+                                            Live subtitle preview (your mic)
+                                        </div>
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="sm"
+                                            className="h-8 text-xs"
+                                            onClick={() => captionPreview.clearPreview()}
+                                        >
+                                            Clear
+                                        </Button>
+                                    </div>
+                                    <p className="text-xs text-muted-foreground">
+                                        For testing speech-to-text in the lobby only. Nothing here is saved; roleplay
+                                        transcripts are still stored only during the roleplay phase.
+                                    </p>
+                                    {!captionPreview.isSupported ? (
+                                        <p className="text-sm text-destructive">
+                                            Speech recognition is not available in this browser. Try Chrome or Edge on
+                                            desktop.
+                                        </p>
+                                    ) : (
+                                        <ScrollArea className="h-36 rounded-md border bg-muted/30 p-3">
+                                            <div className="space-y-1.5 text-sm pr-4">
+                                                {captionPreview.committedLines.length === 0 &&
+                                                    !captionPreview.interimLine && (
+                                                        <p className="text-muted-foreground italic">
+                                                            Speak after unmuting — text should appear here if the mic and
+                                                            browser allow speech recognition.
+                                                        </p>
+                                                    )}
+                                                {captionPreview.committedLines.map((line) => (
+                                                    <p key={line.id} className="leading-snug">
+                                                        {line.text}
+                                                    </p>
+                                                ))}
+                                                {captionPreview.interimLine ? (
+                                                    <p className="leading-snug italic text-muted-foreground">
+                                                        {captionPreview.interimLine}
+                                                    </p>
+                                                ) : null}
+                                            </div>
+                                        </ScrollArea>
+                                    )}
+                                </div>
+                            </Card>
                         </>
                     )}
 

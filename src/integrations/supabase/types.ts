@@ -83,6 +83,11 @@ export type Database = {
           role_description: string | null
           nicknames: string | null
           score: number | null
+          transcripts: Json | null
+          guess_score: number | null
+          role_score: number | null
+          overall_score: number | null
+          roleplay_summary: string | null
         }
         Insert: {
           guesses?: Json | null
@@ -98,6 +103,11 @@ export type Database = {
           role_description?: string | null
           nicknames?: string | null
           score?: number | null
+          transcripts?: Json | null
+          guess_score?: number | null
+          role_score?: number | null
+          overall_score?: number | null
+          roleplay_summary?: string | null
         }
         Update: {
           guesses?: Json | null
@@ -113,6 +123,11 @@ export type Database = {
           role_description?: string | null
           nicknames?: string | null
           score?: number | null
+          transcripts?: Json | null
+          guess_score?: number | null
+          role_score?: number | null
+          overall_score?: number | null
+          roleplay_summary?: string | null
         }
         Relationships: [
           {

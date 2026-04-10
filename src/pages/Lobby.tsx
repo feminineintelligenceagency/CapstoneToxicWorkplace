@@ -13,6 +13,25 @@ import { GuessingPhase } from "@/components/GuessingPhase";
 import { Results } from "@/components/Results";
 import RoleSelection from "@/components/RoleSelection";
 import { CallProvider } from "@/contexts/CallContext";
+import type { TranscriptionEntry } from "@/types/call";
+import { mergeTranscriptionEntries } from "@/lib/mergeTranscriptionEntries";
+
+/** Push local mic transcripts to Supabase without wiping older lines synced earlier in roleplay. */
+async function mergeTranscriptsIntoRow(
+  playerId: string,
+  local: TranscriptionEntry[],
+): Promise<TranscriptionEntry[]> {
+  const { data: row } = await supabase
+    .from("lobby_players")
+    .select("*")
+    .eq("id", playerId)
+    .maybeSingle();
+  const raw = (row as { transcripts?: unknown } | null)?.transcripts;
+  const server = Array.isArray(raw) ? (raw as TranscriptionEntry[]) : [];
+  return mergeTranscriptionEntries([server, local]);
+}
+
+const ROLEPLAY_TRANSCRIPT_SYNC_MS = 12_000;
 
 const Lobby = () => {
   const { code } = useParams<{ code: string }>();
@@ -21,7 +40,7 @@ const Lobby = () => {
   const { scenarios, loading: scenariosLoading } = useScenarios();
 
   const isRoleplayPhaseNow = lobby?.current_phase === "roleplay";
-  const { getTranscriptions, clearTranscriptions } = useTranscription(
+  const { getTranscriptions, clearTranscriptions, ensureRecognitionStarted } = useTranscription(
     isRoleplayPhaseNow,
     myPlayerId,
   );
@@ -55,7 +74,9 @@ const Lobby = () => {
       transcriptUploadedRef.current = true;
       (async () => {
         try {
-          await updatePlayer(myPlayerId, { transcripts: getTranscriptions() });
+          const local = getTranscriptions();
+          const merged = await mergeTranscriptsIntoRow(myPlayerId, local);
+          await updatePlayer(myPlayerId, { transcripts: merged });
           clearTranscriptions();
         } catch (e) {
           transcriptUploadedRef.current = false;
@@ -64,6 +85,25 @@ const Lobby = () => {
       })();
     }
   }, [lobby?.current_phase, myPlayerId, updatePlayer, getTranscriptions, clearTranscriptions]);
+
+  // Each client only transcribes their own mic; periodically sync so a late empty upload cannot wipe earlier lines.
+  useEffect(() => {
+    if (lobby?.current_phase !== "roleplay" || !myPlayerId) return;
+
+    const sync = async () => {
+      try {
+        const local = getTranscriptions();
+        if (local.length === 0) return;
+        const merged = await mergeTranscriptsIntoRow(myPlayerId, local);
+        await updatePlayer(myPlayerId, { transcripts: merged });
+      } catch (e) {
+        console.warn("Roleplay transcript sync failed:", e);
+      }
+    };
+
+    const id = window.setInterval(sync, ROLEPLAY_TRANSCRIPT_SYNC_MS);
+    return () => window.clearInterval(id);
+  }, [lobby?.current_phase, myPlayerId, getTranscriptions, updatePlayer]);
 
   useEffect(() => {
     if (lobby?.current_phase !== "grading") {
@@ -83,7 +123,7 @@ const Lobby = () => {
           .eq("lobby_id", lobbyId)
           .order("player_number", { ascending: true });
 
-        const rows = (latestPlayers ?? []) as {
+        const rows = (latestPlayers ?? []) as unknown as {
           id: string;
           player_number: number;
           player_name: string;
@@ -265,6 +305,9 @@ const Lobby = () => {
       });
     }
 
+    // Let in-flight transcript merges from clients finish before the host reads rows for grading.
+    await new Promise((r) => setTimeout(r, 1500));
+
     await updateLobby({ current_phase: "grading", status: "in_progress" });
   };
 
@@ -390,7 +433,9 @@ const Lobby = () => {
       players={players}
       myPlayerId={myPlayerId}
       inCall={inCall}
-      isRoleplayPhase={isRoleplayPhase}
+      getTranscriptions={getTranscriptions}
+      clearTranscriptions={clearTranscriptions}
+      ensureTranscriptionStarted={ensureRecognitionStarted}
     >
       {node}
     </CallProvider>

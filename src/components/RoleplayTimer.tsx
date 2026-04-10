@@ -354,14 +354,27 @@ export const RoleplayTimer = ({
             {call && (
                 <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between gap-4 flex-wrap">
-                        <Button
-                            variant={call.isMuted ? "destructive" : "secondary"}
-                            size="sm"
-                            onClick={() => call.setMuted(!call.isMuted)}
-                        >
-                            {call.isMuted ? <MicOff className="w-4 h-4 mr-2" /> : <Mic className="w-4 h-4 mr-2" />}
-                            {call.isMuted ? "Unmute" : "Mute"}
-                        </Button>
+                        <div className="flex flex-wrap items-center gap-2">
+                            <Button
+                                variant={call.isMuted ? "destructive" : "secondary"}
+                                size="sm"
+                                onClick={() => {
+                                    call.setMuted(!call.isMuted);
+                                    call.ensureTranscriptionStarted();
+                                }}
+                            >
+                                {call.isMuted ? <MicOff className="w-4 h-4 mr-2" /> : <Mic className="w-4 h-4 mr-2" />}
+                                {call.isMuted ? "Unmute" : "Mute"}
+                            </Button>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={() => call.resumeCallMedia()}
+                            >
+                                Enable call audio and mic transcription
+                            </Button>
+                        </div>
                         <div className="flex gap-2 flex-wrap">
                             {players.map((p) => (
                                 <span
