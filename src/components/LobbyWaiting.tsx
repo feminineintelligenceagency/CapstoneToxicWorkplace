@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Copy, Users, Crown, Settings, Dices, Mic, MicOff, Captions } from 'lucide-react';
+import { Copy, Users, Crown, Settings, Dices, Mic, MicOff, Captions, ChevronDown } from 'lucide-react';
 import { Lobby, LobbyPlayer } from '@/types/lobby';
 import { Scenario } from '@/types/scenario';
 import { toast } from 'sonner';
@@ -14,6 +14,8 @@ import { useState } from 'react';
 import { useCallContext } from '@/contexts/CallContext';
 import { useLobbyTranscriptionPreview } from '@/hooks/useLobbyTranscriptionPreview';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 
 interface LobbyWaitingProps {
     lobby: Lobby;
@@ -41,6 +43,7 @@ export const LobbyWaiting = ({
         lobby.scenario_id ?? 'random'
     );
     const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+    const [captionPreviewOpen, setCaptionPreviewOpen] = useState(true);
 
     const call = useCallContext();
     const captionPreview = useLobbyTranscriptionPreview(!!call && !!myPlayerId, myPlayerId);
@@ -224,56 +227,75 @@ export const LobbyWaiting = ({
                                 )}
                             </div>
 
-                            <Card className="border-dashed border-primary/30 bg-background/80">
-                                <div className="p-4 space-y-3">
-                                    <div className="flex items-center justify-between gap-2 flex-wrap">
-                                        <div className="flex items-center gap-2 text-sm font-medium">
-                                            <Captions className="w-4 h-4 text-primary" />
-                                            Live subtitle preview (your mic)
-                                        </div>
+                            <Card className="border-dashed border-primary/30 bg-background/80 overflow-hidden">
+                                <Collapsible open={captionPreviewOpen} onOpenChange={setCaptionPreviewOpen}>
+                                    <div className="flex items-center gap-1 p-3 pb-2">
+                                        <CollapsibleTrigger asChild>
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                className="flex-1 justify-start gap-2 h-auto py-1.5 px-2 -ml-2 text-left font-medium text-sm"
+                                            >
+                                                <Captions className="w-4 h-4 text-primary shrink-0" />
+                                                <span className="flex-1">Live subtitle preview (your mic)</span>
+                                                <ChevronDown
+                                                    className={cn(
+                                                        'h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200',
+                                                        captionPreviewOpen && 'rotate-180',
+                                                    )}
+                                                />
+                                            </Button>
+                                        </CollapsibleTrigger>
                                         <Button
                                             type="button"
                                             variant="ghost"
                                             size="sm"
-                                            className="h-8 text-xs"
-                                            onClick={() => captionPreview.clearPreview()}
+                                            className="h-8 text-xs shrink-0"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                captionPreview.clearPreview();
+                                            }}
                                         >
                                             Clear
                                         </Button>
                                     </div>
-                                    <p className="text-xs text-muted-foreground">
-                                        For testing speech-to-text in the lobby only. Nothing here is saved; roleplay
-                                        transcripts are still stored only during the roleplay phase.
-                                    </p>
-                                    {!captionPreview.isSupported ? (
-                                        <p className="text-sm text-destructive">
-                                            Speech recognition is not available in this browser. Try Chrome or Edge on
-                                            desktop.
-                                        </p>
-                                    ) : (
-                                        <ScrollArea className="h-36 rounded-md border bg-muted/30 p-3">
-                                            <div className="space-y-1.5 text-sm pr-4">
-                                                {captionPreview.committedLines.length === 0 &&
-                                                    !captionPreview.interimLine && (
-                                                        <p className="text-muted-foreground italic">
-                                                            Speak after unmuting — text should appear here if the mic and
-                                                            browser allow speech recognition.
-                                                        </p>
-                                                    )}
-                                                {captionPreview.committedLines.map((line) => (
-                                                    <p key={line.id} className="leading-snug">
-                                                        {line.text}
-                                                    </p>
-                                                ))}
-                                                {captionPreview.interimLine ? (
-                                                    <p className="leading-snug italic text-muted-foreground">
-                                                        {captionPreview.interimLine}
-                                                    </p>
-                                                ) : null}
-                                            </div>
-                                        </ScrollArea>
-                                    )}
-                                </div>
+                                    <CollapsibleContent className="overflow-hidden">
+                                        <div className="px-4 pb-4 space-y-3 pt-0">
+                                            <p className="text-xs text-muted-foreground">
+                                                For testing speech-to-text in the lobby only. Nothing here is saved;
+                                                roleplay transcripts are still stored only during the roleplay phase.
+                                            </p>
+                                            {!captionPreview.isSupported ? (
+                                                <p className="text-sm text-destructive">
+                                                    Speech recognition is not available in this browser. Try Chrome or Edge
+                                                    on desktop.
+                                                </p>
+                                            ) : (
+                                                <ScrollArea className="h-36 rounded-md border bg-muted/30 p-3">
+                                                    <div className="space-y-1.5 text-sm pr-4">
+                                                        {captionPreview.committedLines.length === 0 &&
+                                                            !captionPreview.interimLine && (
+                                                                <p className="text-muted-foreground italic">
+                                                                    Speak after unmuting — text should appear here if the
+                                                                    mic and browser allow speech recognition.
+                                                                </p>
+                                                            )}
+                                                        {captionPreview.committedLines.map((line) => (
+                                                            <p key={line.id} className="leading-snug">
+                                                                {line.text}
+                                                            </p>
+                                                        ))}
+                                                        {captionPreview.interimLine ? (
+                                                            <p className="leading-snug italic text-muted-foreground">
+                                                                {captionPreview.interimLine}
+                                                            </p>
+                                                        ) : null}
+                                                    </div>
+                                                </ScrollArea>
+                                            )}
+                                        </div>
+                                    </CollapsibleContent>
+                                </Collapsible>
                             </Card>
                         </>
                     )}

@@ -11,6 +11,7 @@ import TutorialPage from "./pages/TutorialPage";
 import Lobby from "./pages/Lobby";
 import Game from "./pages/Game";
 import NotFound from "./pages/NotFound";
+import { SpeechRecognitionBrowserBanner } from "@/components/SpeechRecognitionBrowserBanner";
 
 const queryClient = new QueryClient();
 
@@ -135,6 +136,7 @@ const App = () => {
         <Sonner />
         <Router>
           <Header />
+          <SpeechRecognitionBrowserBanner className="mt-[78px]" />
           <Routes>
             <Route path="/" element={<LobbyEntry />} />
             <Route path="/solo" element={<Index />} />

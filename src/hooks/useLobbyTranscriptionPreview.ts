@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from "react";
+import { isSpeechRecognitionSupported } from "@/lib/speechRecognitionSupport";
 
 // Web Speech API (minimal typings)
 interface SpeechRecognitionEventMap {
@@ -36,6 +37,8 @@ const SpeechRecognitionAPI: SpeechRecognitionConstructor | null =
     ? window.SpeechRecognition || window.webkitSpeechRecognition || null
     : null;
 
+const previewSupported = () => isSpeechRecognitionSupported() && SpeechRecognitionAPI !== null;
+
 /**
  * Lobby-only live captions from your mic for debugging Web Speech.
  * Nothing is persisted or sent to the server.
@@ -49,7 +52,7 @@ export function useLobbyTranscriptionPreview(active: boolean, myPlayerId: string
   > | null>(null);
   const listenRef = useRef(false);
 
-  const isSupported = SpeechRecognitionAPI !== null;
+  const isSupported = previewSupported();
 
   const ensureStarted = useCallback(() => {
     const r = recognitionLiveRef.current;

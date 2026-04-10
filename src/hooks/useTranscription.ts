@@ -1,5 +1,6 @@
 import { useRef, useEffect, useCallback } from "react";
 import type { TranscriptionEntry } from "@/types/call";
+import { isSpeechRecognitionSupported } from "@/lib/speechRecognitionSupport";
 
 // Web Speech API types (not in all TS DOM libs)
 interface SpeechRecognitionEventMap {
@@ -31,10 +32,8 @@ declare global {
   }
 }
 
-export function isSpeechRecognitionAvailable(): boolean {
-  if (typeof window === "undefined") return false;
-  return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
-}
+/** @deprecated use isSpeechRecognitionSupported from @/lib/speechRecognitionSupport */
+export const isSpeechRecognitionAvailable = isSpeechRecognitionSupported;
 
 const SpeechRecognitionAPI: SpeechRecognitionConstructor | null =
   typeof window !== "undefined"
