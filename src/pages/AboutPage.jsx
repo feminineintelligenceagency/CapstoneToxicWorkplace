@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 import homepageImage from "../images/homepage.png";
+import assetmanagerImage from "../images/assetmanager.png";
 import createlobbyImage from "../images/createlobby.png";
 import hostlobbyImage from "../images/hostlobby.png";
 import lobbysettingsImage from "../images/lobbysettings.png";
@@ -22,6 +23,8 @@ import rolerevealImage from "../images/rolereveal.png";
 import roleplayphaseImage from "../images/roleplayphase.png";
 import roleplayassetsImage from "../images/roleplayassets.png";
 import roleplayinfoImage from "../images/roleplayinfo.png";
+import roleguessImage from "../images/roleguess.png";
+import resultsImage from "../images/finalresults.png";
 
 export default function About() {
       const [selectedRole, setSelectedRole] = useState({
@@ -526,6 +529,8 @@ export default function About() {
                               {HOW_STEPS[selectedHowStep]}
                           </h2>
 
+                          <h3 style={{ textAlign: "center" }}> Navigation </h3>
+
                           <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
                               This is the homepage for the web app. Here you are able to easily navigate to all important features and information. At the top of the page, there is a banner
                               that can be used to see supplementaty information and return to this home page if needed:
@@ -545,6 +550,14 @@ export default function About() {
 
                           <img
                               src={homepageImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
+
+                          <h3 style={{ textAlign: "center" }}> Asset Manager </h3>
+
+                          <img
+                              src={assetmanagerImage}
                               alt="Homepage"
                               style={{ width: "100%", borderRadius: "10px" }}
                           />
@@ -737,8 +750,6 @@ export default function About() {
                               alt="Homepage"
                               style={{ width: "100%", borderRadius: "10px" }}
                           />
-
-                         
                       </>
                   )}
 
@@ -748,9 +759,21 @@ export default function About() {
                               {HOW_STEPS[selectedHowStep]}
                           </h2>
 
-                          <h3 style={{ textAlign: "center" }}> Role Selection </h3>
+                          <h3 style={{ textAlign: "center" }}> Role Guessing </h3>
 
+                          <img
+                              src={roleguessImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
 
+                          <h3 style={{ textAlign: "center" }}> Final Results </h3>
+
+                          <img
+                              src={resultsImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
                       </>
                   )}
         </div>
