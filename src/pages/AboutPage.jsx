@@ -17,6 +17,11 @@ import hostlobbyImage from "../images/hostlobby.png";
 import lobbysettingsImage from "../images/lobbysettings.png";
 import joinlobbyImage from "../images/joinlobby.png";
 import playerlobbyImage from "../images/playerlobby.png";
+import roleselectImage from "../images/roleselect.png";
+import rolerevealImage from "../images/rolereveal.png";
+import roleplayphaseImage from "../images/roleplayphase.png";
+import roleplayassetsImage from "../images/roleplayassets.png";
+import roleplayinfoImage from "../images/roleplayinfo.png";
 
 export default function About() {
       const [selectedRole, setSelectedRole] = useState({
@@ -664,9 +669,87 @@ export default function About() {
                               {HOW_STEPS[selectedHowStep]}
                           </h2>
 
-                          <p className="text-muted-foreground" style={{ marginTop: "20px" }}>
-                              This is where you explain {HOW_STEPS[selectedHowStep]} in more detail.
+                          <h3 style={{ textAlign: "center" }}> Role Selection </h3>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              Once the round starts, the first thing that you will be greeted by is the list of roles that you are able to choose from in the given scenario. You must rank these roles on how much
+                              you wish to play as them from greatest to least (with 1 being the one you want to play the most). Once you are done with your rankings, click "Submit Rankings" to let the lobby
+                              know that you are ready to proceed. You do not need to rank all available roles before submitting.
                           </p>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                             REMEMBER! Having a role ranked as your #1 does not guarantee that it will be the role you receive. 
+                          </p>
+
+                          <img
+                              src={roleselectImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
+
+                          <h3 style={{ textAlign: "center" }}> Role Reveal </h3>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              When all players are ready, you will be given a role and all relevant information for playing it such as:
+                          </p>
+
+                          <ul className="text-muted-foreground" style={{ listStyleType: "disc", marginBottom: "20px" }}>
+                              <li>Secret Personality: Your role archetype (Secret) and role name (Revealed to other players)</li>
+                              <li>Personality: A general summary of how the role operates</li>
+                              <li>Objective: Your main goal during the roleplay phase. This is the same for all players</li>
+                              <li>Roleplay Guidelines: Actions that you can take during the roleplay phase that will either gain or lose you points</li>
+                          </ul>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              Once you have read up on this information and believe you understand how to play your role, mark yourself as ready. A start button will appear when all players have
+                              finished their preparations.
+                          </p>
+
+                          <img
+                              src={rolerevealImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
+
+                      </>
+                  )}
+
+                  {activePanel === "how" && selectedHowStep === 4 && (
+                      <>
+                          <h2 style={{ textAlign: "center" }} className="text-2xl">
+                              {HOW_STEPS[selectedHowStep]}
+                          </h2>
+
+                          <img
+                              src={roleplayphaseImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
+
+                          <img
+                              src={roleplayinfoImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
+
+                          <img
+                              src={roleplayassetsImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
+
+                         
+                      </>
+                  )}
+
+                  {activePanel === "how" && selectedHowStep === 5 && (
+                      <>
+                          <h2 style={{ textAlign: "center" }} className="text-2xl">
+                              {HOW_STEPS[selectedHowStep]}
+                          </h2>
+
+                          <h3 style={{ textAlign: "center" }}> Role Selection </h3>
+
 
                       </>
                   )}
