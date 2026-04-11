@@ -12,6 +12,8 @@ import Lobby from "./pages/Lobby";
 import Game from "./pages/Game";
 import NotFound from "./pages/NotFound";
 import { SpeechRecognitionBrowserBanner } from "@/components/SpeechRecognitionBrowserBanner";
+import { AuthProvider } from "@/contexts/AuthContext";
+import AuthPage from "./pages/AuthPage";
 
 const queryClient = new QueryClient();
 
@@ -63,9 +65,9 @@ const App = () => {
             borderRight: "4px solid black",
             textAlign: "center",
             height: "100%",
-              width: "15rem",
-              fontFamily: "Poppins, sans-serif",
-              fontWeight: "500"
+            width: "15rem",
+            fontFamily: "Poppins, sans-serif",
+            fontWeight: "500",
           }}
           onMouseEnter={(e) => (e.currentTarget.style.fontWeight = "700")}
           onMouseLeave={(e) => (e.currentTarget.style.fontWeight = "500")}
@@ -78,12 +80,12 @@ const App = () => {
             color: "black",
             textDecoration: "none",
             padding: "0 30px",
-              textAlign: "center",
-              borderRight: "4px solid black",
+            textAlign: "center",
+            borderRight: "4px solid black",
             height: "100%",
-              width: "15rem",
-              fontFamily: "Poppins, sans-serif",
-              fontWeight: "500"
+            width: "15rem",
+            fontFamily: "Poppins, sans-serif",
+            fontWeight: "500",
           }}
           onMouseEnter={(e) => (e.currentTarget.style.fontWeight = "700")}
           onMouseLeave={(e) => (e.currentTarget.style.fontWeight = "500")}
@@ -98,9 +100,9 @@ const App = () => {
             padding: "0 30px",
             textAlign: "center",
             height: "100%",
-              width: "15rem",
-              fontFamily: "Poppins, sans-serif",
-              fontWeight: "500"
+            width: "15rem",
+            fontFamily: "Poppins, sans-serif",
+            fontWeight: "500",
           }}
           onMouseEnter={(e) => (e.currentTarget.style.fontWeight = "700")}
           onMouseLeave={(e) => (e.currentTarget.style.fontWeight = "500")}
@@ -116,9 +118,9 @@ const App = () => {
             padding: "0 30px",
             textAlign: "center",
             height: "100%",
-              width: "15rem",
-              fontFamily: "Poppins, sans-serif",
-              fontWeight: "500"
+            width: "15rem",
+            fontFamily: "Poppins, sans-serif",
+            fontWeight: "500",
           }}
           onMouseEnter={(e) => (e.currentTarget.style.fontWeight = "700")}
           onMouseLeave={(e) => (e.currentTarget.style.fontWeight = "500")}
@@ -135,19 +137,22 @@ const App = () => {
         <Toaster />
         <Sonner />
         <Router>
-          <Header />
-          <SpeechRecognitionBrowserBanner className="mt-[78px]" />
-          <Routes>
-            <Route path="/" element={<LobbyEntry />} />
-            <Route path="/solo" element={<Index />} />
-            <Route path="/lobby/:code" element={<Lobby />} />
-            <Route path="/game" element={<Game />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/tutorial" element={<TutorialPage />} />
-            <Route path="/contact" element={<Contact />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AuthProvider>
+            <Header />
+            <SpeechRecognitionBrowserBanner className="mt-[78px]" />
+            <Routes>
+              <Route path="/" element={<LobbyEntry />} />
+              <Route path="/solo" element={<Index />} />
+              <Route path="/lobby/:code" element={<Lobby />} />
+              <Route path="/game" element={<Game />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/tutorial" element={<TutorialPage />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/auth" element={<AuthPage />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AuthProvider>
         </Router>
       </TooltipProvider>
     </QueryClientProvider>
