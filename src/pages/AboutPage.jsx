@@ -13,6 +13,10 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 import homepageImage from "../images/homepage.png";
 import createlobbyImage from "../images/createlobby.png";
+import hostlobbyImage from "../images/hostlobby.png";
+import lobbysettingsImage from "../images/lobbysettings.png";
+import joinlobbyImage from "../images/joinlobby.png";
+import playerlobbyImage from "../images/playerlobby.png";
 
 export default function About() {
       const [selectedRole, setSelectedRole] = useState({
@@ -55,8 +59,10 @@ export default function About() {
     ];
 
     const HOW_STEPS = [
-        "Entering a Lobby",
-        "Distribution of Roles",
+        "Home Page",
+        "Lobby Page (Hosting)",
+        "Lobby Page (Joining)",
+        "Role Distribution Phase",
         "Roleplay Phase",
         "Scoring Phase"
     ];
@@ -97,7 +103,15 @@ export default function About() {
           alignItems: "flex-start",
         }}
       >
-        <div style={{ flex: 0.35, textAlign: "left", marginRight: "15px" }}>
+            <div
+                style={{
+                flex: 0.35,
+                textAlign: "left",
+                marginRight: "15px",
+                position: "sticky",
+                top: "100px", 
+                alignSelf: "flex-start",
+            }}>
                 <div
                     style={{
                         border: "1px solid #ccc",
@@ -507,8 +521,6 @@ export default function About() {
                               {HOW_STEPS[selectedHowStep]}
                           </h2>
 
-                          <h3 style={{ textAlign: "center" }}> Home Page </h3>
-
                           <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
                               This is the homepage for the web app. Here you are able to easily navigate to all important features and information. At the top of the page, there is a banner
                               that can be used to see supplementaty information and return to this home page if needed:
@@ -532,13 +544,7 @@ export default function About() {
                               style={{ width: "100%", borderRadius: "10px" }}
                           />
 
-                          <h3 style={{ textAlign: "center" }}> Lobby </h3>
-
-                          <img
-                              src={createlobbyImage}
-                              alt="Homepage"
-                              style={{ width: "100%", borderRadius: "10px" }}
-                          />
+                          
                       </>
                   )}
 
@@ -548,9 +554,61 @@ export default function About() {
                               {HOW_STEPS[selectedHowStep]}
                           </h2>
 
-                          <p className="text-muted-foreground" style={{ marginTop: "20px" }}>
-                              This is where you explain {HOW_STEPS[selectedHowStep]} in more detail.
+                          <h3 style={{ textAlign: "center" }}> Creating A Lobby </h3>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }} >
+                              This is the screen that you will see when you select the "Create Lobby" button in the Home Page. The textbox on top is where you will enter your username that will be displayed
+                              to all other players. If the textbox is left empty, a default name will be issued to you instead. The second text box determines the size of the lobby that you will be playing in.
+                              The lobby has a minimum player limit of 2 and a maximum player limit of 5. Once everything is filled in, click "Create" to start up the lobby.
                           </p>
+
+                          <img
+                              src={createlobbyImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
+
+                          <h3 style={{ textAlign: "center" }}> Lobby Page (Host View) </h3>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              This is the lobby page that you will see when you start up a game as the host. Your name will appear at the top of the player list on the right and be marked by
+                              a crown. You won't be able to start a round alone so you need to share the lobby code with your friends or coworkers. This can be done by clicking the double square
+                              icon next to the code to copy then paste it in a text chat with other potential players. As more players join, their names will appear on the list below you.
+                          </p>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              Below the lobby code, you will see information regarding the voice chat and transcription features for this app. A transcription of what you say during the game is used to 
+                              evaluate your performance and give you a final score at the end of the game, so it is important that you enable your microphone for this app to have the full experience. You
+                              may test the transcripting feature by enabling your mic and reading the live subtitle preview to ensure you are being heard properly.
+                          </p>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              As the host, you will be able to choose the scenario that all players in the lobby will need to roleplay in. You can either choose a scenario yourself or leave
+                              it up to random chance
+                          </p>
+
+                          <img
+                              src={hostlobbyImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              Right above the lobby code you will see a settings icon. Clicking into it will reveal a settings menu where you are allowed to set the amount of time that the round
+                              will last. You may set the rounds to last as long or as short as you want. 
+                          </p>
+
+                          <img
+                              src={lobbysettingsImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              Once all players are in the lobby, you will be able to proceed to the role selection phase and start the game!
+                          </p>
+
+                         
                       </>
                   )}
 
@@ -560,9 +618,43 @@ export default function About() {
                               {HOW_STEPS[selectedHowStep]}
                           </h2>
 
-                          <p className="text-muted-foreground" style={{ marginTop: "20px" }}>
-                              This is where you explain {HOW_STEPS[selectedHowStep]} in more detail.
+                          <h3 style={{ textAlign: "center" }}> Joining a Lobby </h3>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              This is the screen that you will see when you select the "Join Lobby" button in the Home Page. The textbox on top is where you will enter your username that will be displayed
+                              to all other players. If the textbox is left empty, a default name will be issued to you instead. The second textbox is where you paste the lobby code given to you by the host
+                              Once everything is filled in, click "Join" to enter the lobby.
                           </p>
+
+                          <img
+                              src={joinlobbyImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
+
+                          <h3 style={{ textAlign: "center" }}> Lobby Page (Player View) </h3>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              This is the lobby page that you will see when you join a game as a player. You can see your name on the right side of the screen below the host. Just like
+                              the host, you can share the lobby code to invite other players. This can be done by clicking the double square icon next to the code to copy then paste it
+                              in a text chat with other potential players. As more players join, their names will appear on the list below you.
+                          </p>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              Below the lobby code, you will see information regarding the voice chat and transcription features for this app. A transcription of what you say during the game is used to
+                              evaluate your performance and give you a final score at the end of the game, so it is important that you enable your microphone for this app to have the full experience. You
+                              may test the transcripting feature by enabling your mic and reading the live subtitle preview to ensure you are being heard properly.
+                          </p>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              The game will begin once the every player has joined the lobby and the host starts the round.
+                          </p>
+
+                          <img
+                              src={playerlobbyImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
                       </>
                   )}
 
