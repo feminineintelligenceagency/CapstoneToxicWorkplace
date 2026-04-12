@@ -13,6 +13,7 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 import homepageImage from "../images/homepage.png";
 import assetmanagerImage from "../images/assetmanager.png";
+import scenariomanagerImage from "../images/scenariomanager.png";
 import createlobbyImage from "../images/createlobby.png";
 import hostlobbyImage from "../images/hostlobby.png";
 import lobbysettingsImage from "../images/lobbysettings.png";
@@ -556,6 +557,23 @@ export default function About() {
 
                           <h3 style={{ textAlign: "center" }}> Asset Manager </h3>
 
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              You can hover over the box for any available gamemode to reveal a settings icon. Clicking into it will bring up the asset manager. This is one of the most important pages for making
+                              the most out of your experience with this app. The first of the two pages is the scenario manager. Here, you can see a list of all current scenarios available to play under as well as add 
+                              any new scenarios you wish to have. You can create them either individually and manually or by submitting a file to add many at once. 
+                          </p>
+
+                          <img
+                              src={scenariomanagerImage}
+                              alt="Homepage"
+                              style={{ width: "100%", borderRadius: "10px" }}
+                          />
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              The second of the two tabs is the asset manager page. Here, you can upload assets of a wide variety of file types as well as links to be viewed during the roleplay phase. Below, you
+                                can see a list of all files that have been uploaded so far. The assets are tied to specific scenarios, so be mindful of where you are uploading the files when using the asset manager.
+                          </p>
+
                           <img
                               src={assetmanagerImage}
                               alt="Homepage"
@@ -733,17 +751,33 @@ export default function About() {
                               {HOW_STEPS[selectedHowStep]}
                           </h2>
 
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              The roleplay phase is where the main bulk of the game will occur. Players will need to act out their roles in the given time limit in accordance to their role information as 
+                              well as the scenario description on the left hand side of the screen. Please refer to the Tutorial section from the top banner and the main screen for more information on how to get
+                              the most out of your roleplay experience
+                          </p>
+
                           <img
                               src={roleplayphaseImage}
                               alt="Homepage"
                               style={{ width: "100%", borderRadius: "10px" }}
                           />
 
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              No need to worry if you forget any of the information about your role from the Role Distribution Phase. All of it can be viewed whenever you need by clicking the "Role Info" button
+                              above the asset display box. 
+                          </p>
+
                           <img
                               src={roleplayinfoImage}
                               alt="Homepage"
                               style={{ width: "100%", borderRadius: "10px" }}
                           />
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              If you want to display any images, video, or presentations to the other players to aid in the roleplay process, open the asset manager with the "Select Asset" button.
+                              This opens a menu where you can display any files or links that have been previously uploaded to the asset manager in the home menu
+                          </p>
 
                           <img
                               src={roleplayassetsImage}
@@ -761,6 +795,11 @@ export default function About() {
 
                           <h3 style={{ textAlign: "center" }}> Role Guessing </h3>
 
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              The guessing phase is the final phase of the game. After the timer of the roleplay phase ends, you must predict what role each of the other players was acting as. Each player in the
+                              lobby will take turns making their guesses before passing off to the next player. The more correct guesses that you make, the higher your score will be at the end of the game. 
+                          </p>
+
                           <img
                               src={roleguessImage}
                               alt="Homepage"
@@ -768,6 +807,12 @@ export default function About() {
                           />
 
                           <h3 style={{ textAlign: "center" }}> Final Results </h3>
+
+                          <p className="text-muted-foreground" style={{ marginBottom: "20px" }}>
+                              The final scores are given to each player based on both the amount of correct guesses they make in the guessing phase and a score given to them by an LLM grader. In the box displaying
+                              your score, you will be able to see the correct guesses you made of other players role as well as a short summary of the LLM grader's score, showing where you succeeded and failed in your 
+                              roleplay. After seeing this information, you can either return to the lobby or back to the home page of the application.
+                          </p>
 
                           <img
                               src={resultsImage}
