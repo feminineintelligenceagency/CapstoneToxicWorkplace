@@ -21,6 +21,7 @@ import {
   Download,
   Trash2,
   Upload as UploadIcon,
+  FileStack,
 } from "lucide-react";
 import { useS3Upload } from "@/hooks/useS3Upload";
 import { useScenarioAssets } from "@/hooks/useScenarioAssets";
@@ -28,9 +29,59 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useScenarios } from "@/hooks/useScenarios";
 import { ScenarioUpdateInput } from "@/types/scenario";
+import {
+  buildScenarioBundle,
+  parseScenarioBundleJson,
+  type ScenarioBundleEntry,
+} from "@/lib/scenarioBundle";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const UUID_REGEX =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+async function replaceScenarioFromBundle(
+  scenarioId: string,
+  incoming: ScenarioBundleEntry,
+) {
+  const { error: uErr } = await supabase
+    .from("scenarios")
+    .update({
+      scenario_name: incoming.scenario_name.trim(),
+      scenario_seed: incoming.scenario_seed || "",
+      description: incoming.description || "",
+    })
+    .eq("id", scenarioId);
+  if (uErr) throw uErr;
+
+  const { error: dErr } = await supabase
+    .from("scenario_roles")
+    .delete()
+    .eq("scenario_id", scenarioId);
+  if (dErr) throw dErr;
+
+  const incomingRoles = Array.isArray(incoming.roles) ? incoming.roles : [];
+  if (incomingRoles.length > 0) {
+    const roleRows = incomingRoles.map((role, index) => ({
+      scenario_id: scenarioId,
+      personality: role.personality || "Unknown",
+      role_name: role.role_name || `Role ${index + 1}`,
+      role_description: role.role_description || "",
+      guidelines: Array.isArray(role.guidelines) ? role.guidelines : [],
+      order_index:
+        typeof role.order_index === "number" ? role.order_index : index,
+    }));
+    const { error: iErr } = await supabase
+      .from("scenario_roles")
+      .insert(roleRows);
+    if (iErr) throw iErr;
+  }
+}
 
 interface ScenarioEditorProps {
   isOpen: boolean;
@@ -47,6 +98,10 @@ export const ScenarioEditor = ({ isOpen, onClose }: ScenarioEditorProps) => {
   const [fileInput, setFileInput] = useState<File | null>(null);
   const [linkTitle, setLinkTitle] = useState("");
   const [linkUrl, setLinkUrl] = useState("");
+  /** skip: do not overwrite existing names/ids; upsert: replace scenario when export_id exists in DB */
+  const [bulkImportMode, setBulkImportMode] = useState<"skip" | "upsert">(
+    "upsert",
+  );
   const importInputRef = useRef<HTMLInputElement | null>(null);
   const { uploadFile, uploading, error: uploadError } = useS3Upload();
   const {
@@ -336,35 +391,17 @@ export const ScenarioEditor = ({ isOpen, onClose }: ScenarioEditorProps) => {
   };
 
   const handleExportScenarios = () => {
-    const payload = {
-      version: 1,
-      exportedAt: new Date().toISOString(),
-      scenarios: scenarios.map((scenario) => ({
-        export_id: scenario.id,
-        scenario_name: scenario.scenario_name,
-        scenario_seed: scenario.scenario_seed,
-        description: scenario.description,
-        roles: scenario.roles
-          .sort((a, b) => a.order_index - b.order_index)
-          .map((role) => ({
-            personality: role.personality,
-            role_name: role.role_name,
-            role_description: role.role_description,
-            guidelines: role.guidelines,
-            order_index: role.order_index,
-          })),
-      })),
-    };
-
+    const payload = buildScenarioBundle(scenarios);
     const blob = new Blob([JSON.stringify(payload, null, 2)], {
       type: "application/json",
     });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `scenarios-export-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `fia-scenarios-bundle-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
+    toast.success(`Exported ${scenarios.length} scenario(s) to one file.`);
   };
 
   const handleImportClick = () => {
@@ -400,8 +437,10 @@ export const ScenarioEditor = ({ isOpen, onClose }: ScenarioEditorProps) => {
         return;
       }
 
-      let importedCount = 0;
+      let createdCount = 0;
+      let updatedCount = 0;
       let skippedCount = 0;
+
       const seenIds = new Set(scenarios.map((s) => s.id));
       const seenNames = new Set(
         scenarios.map((s) => s.scenario_name.trim().toLowerCase()),
@@ -414,19 +453,41 @@ export const ScenarioEditor = ({ isOpen, onClose }: ScenarioEditorProps) => {
           continue;
         }
 
-        const duplicate =
-          (incoming.export_id && seenIds.has(incoming.export_id)) ||
-          seenNames.has(name.toLowerCase());
-        if (duplicate) {
-          skippedCount += 1;
-          continue;
-        }
-
-        const importId =
+        const exportId =
           incoming.export_id && UUID_REGEX.test(incoming.export_id)
             ? incoming.export_id
             : undefined;
+        const nameTaken = seenNames.has(name.toLowerCase());
+        const idExists = exportId ? seenIds.has(exportId) : false;
 
+        if (bulkImportMode === "upsert" && exportId && idExists) {
+          await replaceScenarioFromBundle(exportId, {
+            ...incoming,
+            scenario_name: name,
+          });
+          updatedCount += 1;
+          continue;
+        }
+
+        if (bulkImportMode === "skip") {
+          const duplicate = (exportId && seenIds.has(exportId)) || nameTaken;
+          if (duplicate) {
+            skippedCount += 1;
+            continue;
+          }
+        } else {
+          /* upsert: new scenario — still skip if name collides with a different scenario */
+          if (nameTaken && !idExists) {
+            skippedCount += 1;
+            continue;
+          }
+          if (exportId && seenIds.has(exportId)) {
+            skippedCount += 1;
+            continue;
+          }
+        }
+
+        const importId = exportId;
         const { data: created, error: createError } = await supabase
           .from("scenarios")
           .insert({
@@ -459,7 +520,7 @@ export const ScenarioEditor = ({ isOpen, onClose }: ScenarioEditorProps) => {
           if (roleError) throw roleError;
         }
 
-        importedCount += 1;
+        createdCount += 1;
         seenIds.add(created.id);
         seenNames.add(name.toLowerCase());
       }
@@ -523,6 +584,73 @@ export const ScenarioEditor = ({ isOpen, onClose }: ScenarioEditorProps) => {
               className="hidden"
               onChange={handleImportFile}
             />
+            <Card className="space-y-3 border-dashed p-4">
+              <div className="flex items-start gap-2">
+                <FileStack className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground" />
+                <div className="min-w-0 space-y-1">
+                  <p className="text-sm font-semibold">
+                    Bulk backup &amp; restore
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    One JSON file contains every scenario (names, seeds,
+                    descriptions, roles). Importing creates separate scenarios
+                    in the database, or updates existing rows when{" "}
+                    <span className="font-medium text-foreground">
+                      export_id
+                    </span>{" "}
+                    matches (default).
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+                <div className="min-w-0 flex-1 space-y-1.5">
+                  <Label htmlFor="bulk-import-mode" className="text-xs">
+                    When importing
+                  </Label>
+                  <Select
+                    value={bulkImportMode}
+                    onValueChange={(v) =>
+                      setBulkImportMode(v as "skip" | "upsert")
+                    }
+                  >
+                    <SelectTrigger
+                      id="bulk-import-mode"
+                      className="h-9 text-left text-sm"
+                    >
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="upsert">
+                        Update if export_id exists, add new scenarios otherwise
+                      </SelectItem>
+                      <SelectItem value="skip">
+                        Add only — skip if name or export_id already exists
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    onClick={handleExportScenarios}
+                  >
+                    <Download className="mr-2 h-4 w-4" />
+                    Export all to one file
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    onClick={handleImportClick}
+                  >
+                    <UploadIcon className="mr-2 h-4 w-4" />
+                    Import from file
+                  </Button>
+                </div>
+              </div>
+            </Card>
             <div className="flex flex-wrap gap-2">
               <Button
                 type="button"
