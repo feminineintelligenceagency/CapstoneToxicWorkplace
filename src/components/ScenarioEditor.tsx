@@ -27,6 +27,10 @@ import { useS3Upload } from "@/hooks/useS3Upload";
 import { useScenarioAssets } from "@/hooks/useScenarioAssets";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  createLinkFilePayload,
+  validateAndNormalizeUrl,
+} from "@/lib/linkSanitize";
 import { useScenarios } from "@/hooks/useScenarios";
 import { ScenarioUpdateInput } from "@/types/scenario";
 import {
@@ -192,50 +196,50 @@ export const ScenarioEditor = ({ isOpen, onClose }: ScenarioEditorProps) => {
       return;
     }
 
-    let parsedUrl: URL;
+    // Validate and normalize the URL using centralized helper
+    let normalizedUrl: string;
     try {
-      parsedUrl = new URL(linkUrl.trim());
-      if (!["http:", "https:"].includes(parsedUrl.protocol)) {
-        toast.error("Only http and https links are supported");
-        return;
-      }
-    } catch {
-      toast.error("Please enter a valid URL");
+      normalizedUrl = validateAndNormalizeUrl(linkUrl.trim());
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Please enter a valid URL";
+      toast.error(message);
       return;
     }
 
-    const timestamp = new Date().toISOString();
-    const safeTitle = (linkTitle.trim() || parsedUrl.hostname).replace(
-      /[^\w.-]+/g,
-      "-",
-    );
-    const fileName = `${safeTitle}-${Date.now()}.link.json`;
-    const path = `scenario-${selectedScenarioId}/${fileName}`;
-    const payload = JSON.stringify({
-      title: linkTitle.trim() || parsedUrl.hostname,
-      url: parsedUrl.toString(),
-      createdAt: timestamp,
-    });
+    try {
+      // Create a safe filename and JSON body for the .link.json using helper
+      const { fileName, body } = createLinkFilePayload(
+        linkTitle,
+        normalizedUrl,
+      );
+      const path = `scenario-${selectedScenarioId}/${fileName}`;
 
-    const linkFile = new File([payload], fileName, {
-      type: "application/json",
-    });
-    const { error } = await supabase.storage
-      .from("assets")
-      .upload(path, linkFile, {
-        cacheControl: "3600",
-        upsert: false,
+      const linkFile = new File([body], fileName, {
+        type: "application/json",
       });
 
-    if (error) {
-      toast.error(error.message || "Failed to save link");
-      return;
-    }
+      const { error } = await supabase.storage
+        .from("assets")
+        .upload(path, linkFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
 
-    setLinkTitle("");
-    setLinkUrl("");
-    toast.success("Link saved successfully");
-    await refetchAssets();
+      if (error) {
+        toast.error(error.message || "Failed to save link");
+        return;
+      }
+
+      setLinkTitle("");
+      setLinkUrl("");
+      toast.success("Link saved successfully");
+      await refetchAssets();
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Failed to save link";
+      toast.error(message);
+    }
   };
 
   const updateRoleField = (
