@@ -4,7 +4,7 @@
 
 - **WebRTC** is used for peer-to-peer audio. When you create or join a lobby, you are automatically in a live call.
 - **Speech Recognition** (Browser / `webkitSpeechRecognition`) is used to transcribe speech only during the **roleplay phase**. Transcriptions are stored for future LLM use and are not sent anywhere yet.
-- **UI**: Mute/unmute and a “who is talking” indicator (e.g. border around the player in the lobby and in the roleplay phase).
+- **UI**: Mute/unmute and a "who is talking" indicator (e.g. border around the player in the lobby and in the roleplay phase).
 
 ## Environment variables
 
@@ -30,7 +30,7 @@ If these three are set, the app will add the TURN server to the WebRTC ICE confi
 - **WebRTC / call**: `src/hooks/useCall.ts`, `src/lib/webrtc-config.ts`, `src/contexts/CallContext.tsx`.
 - **Transcription**: `src/hooks/useTranscription.ts`. Transcriptions are kept in a ref and exposed via `getTranscriptions()` for future use (e.g. LLM).
 - **Types**: `src/types/call.ts` (`SignalingMessage`, `TranscriptionEntry`).
-- **UI**: Lobby waiting room and roleplay phase use `useCallContext()` for mute and “who is talking” (e.g. border); transcription notice is shown in both.
+- **UI**: Lobby waiting room and roleplay phase use `useCallContext()` for mute and "who is talking" (e.g. border); transcription notice is shown in both.
 
 ## Transcriptions
 

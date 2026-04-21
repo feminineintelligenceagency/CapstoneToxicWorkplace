@@ -10,7 +10,7 @@ Technical documentation, user-facing flows, API references, and practices for on
 - **Solo path** (`/solo`): Local-only game using `GameContext` and the same UI phases without Supabase.
 - **Scenarios**: Toxic Workplace (primary); additional scenario families exist in types (`cultscenarios`, `familyscenarios`) but may be gated in the UI.
 
-For narrative “how to play,” see the root [`README.md`](../README.md).
+For narrative “how to play,” see the repository root [`README.md`](../README.md).
 
 ---
 
@@ -87,8 +87,8 @@ flowchart TB
 | `src/integrations/supabase/` | Generated `client.ts`, `types.ts` — **do not hand-edit `client.ts`** (comment in file). |
 | `src/llm/` | Grading client and transcript shaping. |
 | `src/lib/scenarioBundle.ts` | JSON bundle format for import/export of scenarios (`fia-scenario-bundle`, version 2). |
-| `CALL_AND_TRANSCRIPTION.md` | Deep dive on WebRTC + speech (root). |
-| `SCENARIO_MANAGER.md` | Scenario editor, storage layout, asset UX (root). |
+| [`CALL_AND_TRANSCRIPTION.md`](./CALL_AND_TRANSCRIPTION.md) | WebRTC + speech. |
+| [`SCENARIO_MANAGER.md`](./SCENARIO_MANAGER.md) | Scenario editor, storage layout, asset UX. |
 | `src/integrations/ssr/server-caption.ts` | Standalone Express + `wrtc` + Google Speech sample — **not wired into the Vite app**; treat as reference or remove if unused. |
 
 Path alias: `@/` → `src/` (see `vite.config.ts` and `tsconfig`).
@@ -121,7 +121,7 @@ Defined in [`src/App.tsx`](../src/App.tsx):
 - **Tables**: `lobbies`, `lobby_players`, `scenarios`, `scenario_roles` (and related fields per generated types).
 - **RPC**: e.g. `generate_lobby_code` (see `useLobby.ts`).
 - **Realtime**: `supabase.channel(...).on('postgres_changes', ...)` for lobby sync; separate channels for WebRTC signaling in `useCall.ts`.
-- **Storage**: bucket **`assets`** — public URLs for uploaded media; paths often scoped per scenario (see `SCENARIO_MANAGER.md`).
+- **Storage**: bucket **`assets`** — public URLs for uploaded media; paths often scoped per scenario (see [SCENARIO_MANAGER.md](./SCENARIO_MANAGER.md)).
 - **Edge Functions**: `supabase.functions.invoke('grade-roleplay-transcripts', { body })` from [`gradeRoleplayTranscripts.ts`](../src/llm/gradeRoleplayTranscripts.ts).
 
 **Engineering note**: Row Level Security (RLS), policies, and the Edge Function implementation live in the Supabase project, not in this repo. New engineers need dashboard access or exported migrations to reproduce the backend.
@@ -183,7 +183,7 @@ Add new `VITE_*` variables to [`src/vite-env.d.ts`](../src/vite-env.d.ts) for Ty
 | Component / hook | Responsibility |
 |------------------|----------------|
 | `SpeechRecognitionBrowserBanner` | Warns when speech APIs are unsupported. |
-| `ScenarioEditor` | Edit scenarios, manage DB + storage assets (see `SCENARIO_MANAGER.md`). |
+| `ScenarioEditor` | Edit scenarios, manage DB + storage assets (see [SCENARIO_MANAGER.md](./SCENARIO_MANAGER.md)). |
 | `useLobby` | CRUD + realtime for lobbies/players. |
 | `CallProvider` / `useCallContext` | Mute, speaking indicators, transcript accessors. |
 
@@ -220,7 +220,7 @@ npm run preview   # optional local verification
 
 ### 8.4 Scenario editor and assets
 
-See [`SCENARIO_MANAGER.md`](../SCENARIO_MANAGER.md): open editor from the Toxic Workplace card, upload to the `assets` bucket, use **Select Asset** during roleplay.
+See [SCENARIO_MANAGER.md](./SCENARIO_MANAGER.md): open editor from the Toxic Workplace card, upload to the `assets` bucket, use **Select Asset** during roleplay.
 
 ---
 
@@ -242,8 +242,8 @@ See [`SCENARIO_MANAGER.md`](../SCENARIO_MANAGER.md): open editor from the Toxic 
 - [ ] Supabase project access (tables, RLS, Storage bucket `assets`, Edge Function `grade-roleplay-transcripts`).
 - [ ] `.env` populated with `VITE_SUPABASE_*` (and TURN if production voice quality requires it).
 - [ ] Remove or implement `lobbyGuessFetch` in `LobbyEntry.tsx` (`ai.capstone.ssree.dev` is currently unused).
-- [ ] Read [`CALL_AND_TRANSCRIPTION.md`](../CALL_AND_TRANSCRIPTION.md) for voice + transcript behavior.
-- [ ] Read [`SCENARIO_MANAGER.md`](../SCENARIO_MANAGER.md) for asset pipeline.
+- [ ] Read [CALL_AND_TRANSCRIPTION.md](./CALL_AND_TRANSCRIPTION.md) for voice + transcript behavior.
+- [ ] Read [SCENARIO_MANAGER.md](./SCENARIO_MANAGER.md) for asset pipeline.
 - [ ] Run `npm run build` and smoke-test `/`, `/lobby/:code`, and `/solo`.
 
 ---
@@ -252,9 +252,9 @@ See [`SCENARIO_MANAGER.md`](../SCENARIO_MANAGER.md): open editor from the Toxic 
 
 | Document | Topics |
 |----------|--------|
-| [`README.md`](../README.md) | Feature list, install, player-facing description. |
-| [`CALL_AND_TRANSCRIPTION.md`](../CALL_AND_TRANSCRIPTION.md) | WebRTC, Speech Recognition, env vars, file locations. |
-| [`SCENARIO_MANAGER.md`](../SCENARIO_MANAGER.md) | Scenario editor UX, S3/Storage layout, troubleshooting. |
+| [`README.md`](../README.md) | Feature list, install, player-facing description (root; GitHub default). |
+| [`CALL_AND_TRANSCRIPTION.md`](./CALL_AND_TRANSCRIPTION.md) | WebRTC, Speech Recognition, env vars, file locations. |
+| [`SCENARIO_MANAGER.md`](./SCENARIO_MANAGER.md) | Scenario editor UX, S3/Storage layout, troubleshooting. |
 
 ---
 
