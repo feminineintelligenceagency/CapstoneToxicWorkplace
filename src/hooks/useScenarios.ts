@@ -48,25 +48,29 @@ export const useScenarios = () => {
       setLoading(true);
       setError(null);
 
-      const [{ data: scenarioRows, error: scenarioError }, { data: roleRows, error: roleError }] =
-        await Promise.all([
-          supabase
-            .from("scenarios")
-            .select("*")
-            .eq("is_active", true)
-            .order("created_at", { ascending: true }),
-          supabase
-            .from("scenario_roles")
-            .select("*")
-            .order("order_index", { ascending: true }),
-        ]);
+      const [
+        { data: scenarioRows, error: scenarioError },
+        { data: roleRows, error: roleError },
+      ] = await Promise.all([
+        supabase
+          .from("scenarios")
+          .select("*")
+          .eq("is_active", true)
+          .order("created_at", { ascending: true }),
+        supabase
+          .from("scenario_roles")
+          .select("*")
+          .order("order_index", { ascending: true }),
+      ]);
 
       if (scenarioError) throw scenarioError;
       if (roleError) throw roleError;
 
       setScenarios(mapScenarioRows(scenarioRows || [], roleRows || []));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch scenarios");
+      setError(
+        err instanceof Error ? err.message : "Failed to fetch scenarios",
+      );
       setScenarios([]);
     } finally {
       setLoading(false);
@@ -95,11 +99,13 @@ export const useScenarios = () => {
         .filter((id): id is string => Boolean(id));
 
       if (existingRoleIds.length > 0) {
+        // Build a safe list for the NOT IN clause
+        const inList = existingRoleIds.map((id) => `"${id}"`).join(",");
         const { error: deleteRemovedError } = await supabase
           .from("scenario_roles")
           .delete()
           .eq("scenario_id", scenarioId)
-          .not("id", "in", `(${existingRoleIds.map((id) => `"${id}"`).join(",")})`);
+          .not("id", "in", `(${inList})`);
         if (deleteRemovedError) throw deleteRemovedError;
       } else {
         const { error: clearRolesError } = await supabase
@@ -109,20 +115,51 @@ export const useScenarios = () => {
         if (clearRolesError) throw clearRolesError;
       }
 
-      const upsertPayload = payload.roles.map((role, idx) => ({
-        id: role.id,
-        scenario_id: scenarioId,
-        personality: role.personality,
-        role_name: role.role_name,
-        role_description: role.role_description,
-        guidelines: role.guidelines,
-        order_index: role.order_index ?? idx,
-      }));
+      // Prepare role rows but do NOT send a null id for new roles.
+      // Split into rows that should be inserted (no id) and rows that should be upserted (have an id).
+      const roleRows = payload.roles.map((role, idx) => {
+        // Base row without id
+        const baseRow: {
+          id?: string;
+          scenario_id: string;
+          personality: string;
+          role_name: string;
+          role_description: string;
+          guidelines: string[] | unknown;
+          order_index: number;
+        } = {
+          scenario_id: scenarioId,
+          personality: role.personality,
+          role_name: role.role_name,
+          role_description: role.role_description,
+          guidelines: role.guidelines,
+          order_index: role.order_index ?? idx,
+        };
 
-      if (upsertPayload.length > 0) {
+        // Only include id when it's a non-empty string (existing role). This prevents sending `id: null`.
+        if (role.id && typeof role.id === "string" && role.id.trim() !== "") {
+          baseRow.id = role.id;
+        }
+
+        return baseRow;
+      });
+
+      const toInsert = roleRows.filter((r) => !("id" in r));
+      const toUpsert = roleRows.filter((r) => "id" in r);
+
+      // Insert new roles (no id) so Postgres will use the default gen_random_uuid()
+      if (toInsert.length > 0) {
+        const { error: insertError } = await supabase
+          .from("scenario_roles")
+          .insert(toInsert as any);
+        if (insertError) throw insertError;
+      }
+
+      // Upsert existing roles by id
+      if (toUpsert.length > 0) {
         const { error: upsertError } = await supabase
           .from("scenario_roles")
-          .upsert(upsertPayload, { onConflict: "id" });
+          .upsert(toUpsert as any, { onConflict: "id" });
         if (upsertError) throw upsertError;
       }
 
@@ -145,6 +182,7 @@ export const useScenarios = () => {
 
     if (error) throw error;
 
+    // Insert the default role without specifying `id` so DB generates it.
     await supabase.from("scenario_roles").insert({
       scenario_id: data.id,
       personality: "New Personality",
