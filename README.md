@@ -62,3 +62,4 @@ Technical and operational docs live in **[`docs/`](./docs/README.md)**:
 | [Engineering handbook](./docs/ENGINEERING_HANDBOOK.md) | Architecture, APIs, components, handoff |
 | [Call & transcription](./docs/CALL_AND_TRANSCRIPTION.md) | WebRTC, speech recognition, env vars |
 | [Scenario manager](./docs/SCENARIO_MANAGER.md) | Scenario editor, Supabase Storage assets |
+
