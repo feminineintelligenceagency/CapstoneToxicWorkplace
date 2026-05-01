@@ -472,7 +472,8 @@ const Lobby = () => {
     return wrap(
       <RoleReveal
         players={players}
-        myPlayerId={myPlayerId}
+            myPlayerId={myPlayerId}
+            lobby={lobby}
         onNext={handleNextPhase}
         onReady={handleReady}
       />,

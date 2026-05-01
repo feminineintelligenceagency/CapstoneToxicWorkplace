@@ -121,8 +121,9 @@ const Game = () => {
     case 'roleReveal':
       return <RoleReveal 
         players={players} 
-        myPlayerId={myPlayerId} 
-        onNext={() => {}} // This should be handled by the lobby component
+          myPlayerId={myPlayerId}
+          lobby={lobby}
+          onNext={() => { }} // This should be handled by the lobby component
       />;
     case 'roleplay':
       return <RoleplayTimer 
