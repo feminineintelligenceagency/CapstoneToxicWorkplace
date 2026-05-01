@@ -38,10 +38,6 @@ export const RoleReveal = ({
         if (myPlayer) {
             const newReadyState = myPlayer.ready_for_roleplay || false;
             setIsReady(newReadyState);
-            console.log(
-                `[RoleReveal] Player ${myPlayer.id} ready state updated to:`,
-                newReadyState
-            );
         }
     }, [myPlayer]);
 
@@ -55,17 +51,8 @@ export const RoleReveal = ({
     const allPlayersReady = players.every((p) => p.ready_for_roleplay);
     const readyCount = players.filter((p) => p.ready_for_roleplay).length;
 
-    console.log(
-        `[RoleReveal] Ready status - Count: ${readyCount}/${players.length}, All ready: ${allPlayersReady}`,
-        players.map((p) => ({ id: p.id, ready: p.ready_for_roleplay }))
-    );
-
     const handleReadyToggle = () => {
         const newReadyState = !isReady;
-        console.log(
-            `[RoleReveal] Toggle ready button pressed, new state:`,
-            newReadyState
-        );
         setIsReady(newReadyState);
         onReady(newReadyState);
     };

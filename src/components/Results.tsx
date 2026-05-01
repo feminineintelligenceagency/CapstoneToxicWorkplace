@@ -1,10 +1,8 @@
-import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { LobbyPlayer } from '@/types/lobby';
 import { Trophy, CheckCircle2, XCircle } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { prepareTranscriptsForGrading } from '@/llm/prepareTranscriptsForGrading';
 
 interface ResultsProps {
   players: LobbyPlayer[];
@@ -12,23 +10,6 @@ interface ResultsProps {
 }
 
 export const Results = ({ players, onReset }: ResultsProps) => {
-  useEffect(() => {
-    console.log(
-      '[Results] Raw transcripts per player (from lobby state):',
-      players.map((p) => ({
-        playerId: p.id,
-        playerName: p.player_name,
-        transcriptCount: p.transcripts?.length ?? 0,
-        transcripts: p.transcripts,
-      })),
-    );
-    const prepared = prepareTranscriptsForGrading(players);
-    console.log(
-      '[Results] Prepared grading payload (utterances + conversation; scenario may differ from the live grading call if scenario was set only server-side):',
-      prepared,
-    );
-  }, [players]);
-
   const getOverallScore = (p: LobbyPlayer) => p.overall_score ?? p.score;
 
   const maxScore = Math.max(...players.map((p) => getOverallScore(p)));

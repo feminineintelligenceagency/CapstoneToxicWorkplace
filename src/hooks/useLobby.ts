@@ -39,8 +39,6 @@ export const useLobby = (lobbyCode?: string) => {
           .order("player_number", { ascending: true });
 
         if (playersData) {
-          console.log("Fetched players:", playersData); // Debug log
-          console.log("Current myPlayerId:", myPlayerId); // Debug log
           // Map players data - role_description, nicknames, guidelines, and ranked_choices should now be in database
           const mappedPlayers: LobbyPlayer[] = playersData.map((p) => {
             const row = p as Database["public"]["Tables"]["lobby_players"]["Row"] & {
@@ -186,7 +184,6 @@ export const useLobby = (lobbyCode?: string) => {
         .select()
         .single();
       if (playerData) {
-        console.log("CreateLobby - Setting myPlayerId to:", playerData.id); // Debug log
         setMyPlayerId(playerData.id);
         localStorage.setItem("myPlayerId", playerData.id);
       }
@@ -203,7 +200,6 @@ export const useLobby = (lobbyCode?: string) => {
   const joinLobby = async (code: string, playerName: string = "Player") => {
     setLoading(true);
     try {
-      console.log("Joining lobby with player name:", playerName); // Debug log
       const { data: lobbyData } = await supabase
         .from("lobbies")
         .select("*")
@@ -229,24 +225,18 @@ export const useLobby = (lobbyCode?: string) => {
         player_number: playerCount + 1,
         player_name: playerName,
       };
-      console.log("Inserting player data:", insertData); // Debug log
-
       const { data: playerData } = await supabase
         .from("lobby_players")
         .insert(insertData)
         .select()
         .single();
-      console.log("Player data after insert:", playerData); // Debug log
-
       if (playerData) {
-        console.log("Setting myPlayerId to:", playerData.id); // Debug log
         setMyPlayerId(playerData.id);
         localStorage.setItem("myPlayerId", playerData.id);
       }
       toast.success(`Joined lobby ${code}!`);
       return true;
-    } catch (error) {
-      console.error("Error joining lobby:", error); // Debug log
+    } catch {
       toast.error("Failed to join lobby");
       return false;
     } finally {
@@ -292,7 +282,6 @@ export const useLobby = (lobbyCode?: string) => {
     if (myPlayerId && players.length > 0) {
       const isPlayerInLobby = players.some((p) => p.id === myPlayerId);
       if (!isPlayerInLobby) {
-        console.log("Player not found in current lobby, clearing myPlayerId");
         clearMyPlayerId();
       }
     }

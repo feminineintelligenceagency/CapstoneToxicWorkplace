@@ -89,7 +89,6 @@ flowchart TB
 | `src/lib/scenarioBundle.ts` | JSON bundle format for import/export of scenarios (`fia-scenario-bundle`, version 2). |
 | [`CALL_AND_TRANSCRIPTION.md`](./CALL_AND_TRANSCRIPTION.md) | WebRTC + speech. |
 | [`SCENARIO_MANAGER.md`](./SCENARIO_MANAGER.md) | Scenario editor, storage layout, asset UX. |
-| `src/integrations/ssr/server-caption.ts` | Standalone Express + `wrtc` + Google Speech sample — **not wired into the Vite app**; treat as reference or remove if unused. |
 
 Path alias: `@/` → `src/` (see `vite.config.ts` and `tsconfig`).
 

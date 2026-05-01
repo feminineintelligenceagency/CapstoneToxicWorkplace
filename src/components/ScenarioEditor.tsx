@@ -347,8 +347,6 @@ export const ScenarioEditor = ({ isOpen, onClose }: ScenarioEditorProps) => {
         : typeof error === "object"
           ? JSON.stringify(error)
           : String(error);
-      const errStack = isErrorInstance && error.stack ? error.stack : undefined;
-
       // User-facing message with actionable suggestions.
       const userMessageParts = [
         "Failed to create scenario.",
@@ -358,18 +356,6 @@ export const ScenarioEditor = ({ isOpen, onClose }: ScenarioEditorProps) => {
         "If the problem persists, copy the error details and contact support.",
       ];
       const userMessage = userMessageParts.join(" ");
-
-      // Debug details for console (kept verbose).
-      const debugDetails = {
-        name: errName,
-        message: errMessage,
-        stack: errStack,
-      };
-
-      // Log verbose details to the console for developers.
-      // This keeps the toast readable while preserving full context for debugging.
-      // eslint-disable-next-line no-console
-      console.error("handleCreateScenario error:", debugDetails, error);
 
       // Show an amplified error message to the user (includes the short error text).
       toast.error(`${userMessage}\n\nError: ${errMessage}`);

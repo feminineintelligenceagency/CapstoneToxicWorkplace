@@ -48,7 +48,7 @@ npm run dev
 
 # or for production
 npm run build
-npm start
+npm run preview
 ```
 
 ---

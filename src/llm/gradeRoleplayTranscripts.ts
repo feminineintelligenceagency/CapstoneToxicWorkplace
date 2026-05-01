@@ -23,11 +23,6 @@ export type RoleplayGradingResult = {
 export async function gradeRoleplayTranscripts(
   payload: GradingPayload,
 ): Promise<RoleplayGradingResult> {
-  console.log(
-    "[grade-roleplay-transcripts] Request body sent to edge function (compare with OpenAI / function logs):",
-    payload,
-  );
-
   const { data, error } = await supabase.functions.invoke("grade-roleplay-transcripts", {
     body: payload,
   });
