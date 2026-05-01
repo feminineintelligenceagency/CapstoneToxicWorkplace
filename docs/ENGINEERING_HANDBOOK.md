@@ -138,7 +138,6 @@ Defined in [`src/App.tsx`](../src/App.tsx):
 
 ### 5.4 Optional / ancillary HTTP
 
-- **`https://ai.capstone.ssree.dev/api/player`**: Referenced in [`LobbyEntry.tsx`](../src/pages/LobbyEntry.tsx) as `lobbyGuessFetch`, but **not called anywhere** in that file — treat as dead code or a stub for a future integration; remove or wire up intentionally.
 - **Asset HEAD/check**: [`useScenarioAssets.ts`](../src/hooks/useScenarioAssets.ts) may `fetch` public storage URLs to validate assets.
 
 ### 5.5 LLM grading contract (client side)
@@ -240,7 +239,6 @@ See [SCENARIO_MANAGER.md](./SCENARIO_MANAGER.md): open editor from the Toxic Wor
 
 - [ ] Supabase project access (tables, RLS, Storage bucket `assets`, Edge Function `grade-roleplay-transcripts`).
 - [ ] `.env` populated with `VITE_SUPABASE_*` (and TURN if production voice quality requires it).
-- [ ] Remove or implement `lobbyGuessFetch` in `LobbyEntry.tsx` (`ai.capstone.ssree.dev` is currently unused).
 - [ ] Read [CALL_AND_TRANSCRIPTION.md](./CALL_AND_TRANSCRIPTION.md) for voice + transcript behavior.
 - [ ] Read [SCENARIO_MANAGER.md](./SCENARIO_MANAGER.md) for asset pipeline.
 - [ ] Run `npm run build` and smoke-test `/`, `/lobby/:code`, and `/solo`.

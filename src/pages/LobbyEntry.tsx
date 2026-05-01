@@ -9,12 +9,6 @@ import { useLobby } from "@/hooks/useLobby";
 import { useToast } from "@/hooks/use-toast";
 import { ScenarioEditor } from "@/components/ScenarioEditor";
 
-const lobbyGuessFetch = async () => {
-  const url = "https://ai.capstone.ssree.dev/api/player";
-  const c = await fetch(url);
-  return (await c.json()).body;
-};
-
 const LobbyEntry = () => {
   const [mode, setMode] = useState<"menu" | "create" | "join">("menu");
   const [lobbyCode, setLobbyCode] = useState("");
