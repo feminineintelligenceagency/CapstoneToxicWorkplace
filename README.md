@@ -1,65 +1,59 @@
-# 🎭 Role Guessers
+# Role Guessers
 
-**Role Guessers** is a fast-paced web-based party game where players join lobbies, receive secret roles, and try to uncover everyone else’s identities. The player who correctly guesses the most roles wins!
+Role Guessers is a roleplay-based social deduction training application.  
+Its core purpose is to help women recognize and respond to toxic workplace archetypes and dynamics in a controlled, repeatable environment.
 
----
+## Project Purpose
 
-## 🚀 Features
+This project is designed to:
 
-- 🧩 **Lobby System** – Create or join a room with a unique code.  
-- 🕵️ **Hidden Roles** – Each player is assigned a random role at the start of the game.  
-- 💬 **Social Deduction Gameplay** – Chat, strategize, and make your guesses about who’s who.  
-- 🏆 **Scoring System** – Earn points for every correct guess. The player with the most points at the end wins!  
-- ⏱️ **Timed Rounds** – Keep the game moving with timed rounds or guess phases.  
+- Expose players to realistic toxic behavior patterns through structured scenarios.
+- Build pattern recognition for manipulative, coercive, dismissive, and undermining archetypes.
+- Practice verbal response strategies in live roleplay before real-world exposure.
+- Provide reflection through post-round scoring and LLM-assisted summaries.
 
----
+The goal is not only gameplay; it is experiential learning and preparation.
 
-## 🧠 How to Play
+## How the Experience Works
 
-1. **Join a Lobby**  
-   Enter a room code or create a new lobby and share the code with your friends.
+1. Create or join a lobby.
+2. Choose a scenario (Toxic Workplace flow is currently implemented).
+3. Receive a hidden role with behavioral guidelines.
+4. Complete timed roleplay while voice and transcripts are captured.
+5. Enter the guessing phase and identify other players' archetypes.
+6. Review results, scores, and roleplay feedback.
 
-2. **Get Your Role**  
-   Once the game starts, you’ll be secretly assigned a role (e.g., Detective, Villain, Healer, etc.).
+## Core Features
 
-3. **Observe and Guess**  
-   Chat, observe others’ behavior, and try to deduce who holds which role.
+- Lobby-based multiplayer sessions.
+- Scenario-driven role assignment with roleplay guidelines.
+- Built-in voice call support (WebRTC).
+- Speech transcription during roleplay.
+- Guessing and scoring phases.
+- LLM-assisted roleplay grading and player summaries.
+- Scenario editor with asset support.
 
-4. **Make Your Guesses**  
-   Before time runs out, submit your guesses for each player’s role.
-
-5. **Reveal and Score**  
-   After all guesses are in, roles are revealed and points are tallied.  
-   The player with the most correct guesses wins!
-
----
-
-## ⚙️ Installation & Setup
+## Installation and Setup
 
 ```bash
-# Clone the repository
 git clone https://github.com/msuedago/CapstoneToxicWorkplace.git
-
-# Install dependencies
+cd CapstoneToxicWorkplace
 npm install
-
-# Start the development server
 npm run dev
+```
 
-# or for production
+Production preview:
+
+```bash
 npm run build
 npm run preview
 ```
 
----
+## Documentation
 
-## 📚 Documentation
+Technical and operational docs are in [`docs/`](./docs/README.md):
 
-Technical and operational docs live in **[`docs/`](./docs/README.md)**:
-
-| Document | Description |
-|----------|-------------|
-| [Engineering handbook](./docs/ENGINEERING_HANDBOOK.md) | Architecture, APIs, components, handoff |
-| [Call & transcription](./docs/CALL_AND_TRANSCRIPTION.md) | WebRTC, speech recognition, env vars |
-| [Scenario manager](./docs/SCENARIO_MANAGER.md) | Scenario editor, Supabase Storage assets |
+- [Engineering handbook](./docs/ENGINEERING_HANDBOOK.md): architecture, APIs, components, handoff.
+- [Call and transcription](./docs/CALL_AND_TRANSCRIPTION.md): WebRTC, speech recognition, environment variables.
+- [Scenario manager](./docs/SCENARIO_MANAGER.md): scenario editing and asset management.
 
